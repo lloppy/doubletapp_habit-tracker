@@ -3,6 +3,6 @@
     <string name="back_button">back</string>
     <string name="item_entry_title">add item</string>
     <string name="item_edit_title">edit item</string>
-    <string name="entry">Create new habit</string>
+    <string name="create_habit">Create new habit</string>
     <string name="detail">Детали привычки</string>
 </resources>

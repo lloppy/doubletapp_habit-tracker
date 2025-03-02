@@ -9,12 +9,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittracker.ui.screens.home.HabitTrackerScreen
 import com.example.habittracker.ui.screens.home.HomeDestination
+import com.example.habittracker.ui.screens.item.AddHabitDestination
+import com.example.habittracker.ui.screens.item.AddHabitScreen
+import com.example.habittracker.ui.screens.item.EditHabitScreen
 import com.example.habittracker.ui.screens.item.HabitDetailDestination
 import com.example.habittracker.ui.screens.item.HabitDetailScreen
 import com.example.habittracker.ui.screens.item.HabitEditDestination
-import com.example.habittracker.ui.screens.item.HabitEditScreen
-import com.example.habittracker.ui.screens.item.HabitEntryDestination
-import com.example.habittracker.ui.screens.item.HabitEntryScreen
 
 @Composable
 fun HabitNavigation(
@@ -28,7 +28,7 @@ fun HabitNavigation(
         composable(route = HomeDestination.route) {
             HabitTrackerScreen(
                 onClickAddItem = {
-                    navController.navigate(HabitEntryDestination.route)
+                    navController.navigate(AddHabitDestination.route)
                 },
                 onClickHabit = {
                     navController.navigate("${HabitDetailDestination.route}/$it")
@@ -68,23 +68,16 @@ fun HabitNavigation(
                 type = NavType.StringType
             })
         ) {
-            HabitEditScreen(
+            EditHabitScreen(
                 navigateBack = { navController.navigateUp() },
                 modifier = Modifier
             )
         }
 
         composable(
-            route = HabitEntryDestination.routeWithArgs,
-            arguments = listOf(navArgument(HabitEntryDestination.itemIdArg) {
-                type = NavType.StringType
-            })
-        ) { backStackEntry ->
-            val habitName = backStackEntry.arguments?.getString(HabitEntryDestination.itemIdArg)
-                ?: error("${HabitEntryDestination.itemIdArg} cannot be null")
-
-            HabitEntryScreen(
-                habitName = habitName,
+            route = AddHabitDestination.route,
+        ) {
+            AddHabitScreen(
                 navigateBack = { navController.navigateUp() },
                 modifier = Modifier
             )

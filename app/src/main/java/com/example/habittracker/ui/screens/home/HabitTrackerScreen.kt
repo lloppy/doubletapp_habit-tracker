@@ -42,7 +42,7 @@ object HomeDestination : NavigationDestination {
 fun HabitTrackerScreen(
     onClickAddItem: () -> Unit,
     onClickHabit: (String) -> Unit,
-    onClickEdit: () -> Unit,
+    onClickEdit: (String) -> Unit,
     onClickDelete: () -> Unit,
     modifier: Modifier,
     viewModel: HabitTrackerViewModel = viewModel()
@@ -96,7 +96,7 @@ fun HabitTrackerScreen(
 fun HabitContent(
     habits: List<Habit>,
     onClickHabit: (String) -> Unit,
-    onClickEdit: () -> Unit,
+    onClickEdit: (String) -> Unit,
     onClickDelete: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
@@ -106,7 +106,7 @@ fun HabitContent(
             SwipeableCard(
                 habit = habit,
                 onClickHabit = { onClickHabit(habit.name) },
-                onClickEdit = onClickEdit,
+                onClickEdit =  { onClickEdit(habit.name) },
                 onClickDelete = onClickDelete,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.habittracker.data.FakeRepository
 import com.example.habittracker.model.Habit
@@ -11,7 +12,8 @@ import com.example.habittracker.model.HabitPeriodicity
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 
-class HabitEntryViewModel(
+class HabitDetailViewModel(
+    savedStateHandle: SavedStateHandle,
     private val repository: FakeRepository = FakeRepository()
 ) : ViewModel() {
     var entryUiState by mutableStateOf(HabitEntryState())

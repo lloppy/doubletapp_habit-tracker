@@ -5,24 +5,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.AppViewModelProvider
-import com.example.habittracker.ui.screens.home.HabitTrackerViewModel
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
-object HabitEntryDestination : NavigationDestination {
-    override val route = "entry_habit"
-    override val title = R.string.entry
+object HabitEditDestination : NavigationDestination {
+    override val route = "edit_habit"
+    override val title = R.string.item_edit_title
     const val itemIdArg = "itemId"
     val routeWithArgs = "$route/{$itemIdArg}"
 }
 
 @Composable
-fun HabitEntryScreen(
-    habitName: String,
+fun EditHabitScreen(
     navigateBack: () -> Boolean,
     modifier: Modifier = Modifier,
-    viewModel: HabitEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val selectedHabit = viewModel.entryUiState.currentHabit
 
