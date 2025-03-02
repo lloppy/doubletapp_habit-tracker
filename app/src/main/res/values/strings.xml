@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">HabitTracker</string>
-    <string name="back_button">Назад</string>
+    <string name="back_button">back</string>
+    <string name="item_entry_title">add item</string>
+    <string name="entry">Create new habit</string>
+    <string name="detail">Детали привычки</string>
 </resources>

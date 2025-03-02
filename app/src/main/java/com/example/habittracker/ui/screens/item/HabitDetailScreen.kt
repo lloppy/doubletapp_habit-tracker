@@ -9,8 +9,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import com.example.habittracker.R
 import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.HabitAppBar
+import com.example.habittracker.ui.screens.navigation.NavigationDestination
+
+
+object HabitDetailDestination: NavigationDestination {
+    override val route = "detail_habit"
+    override val title = R.string.detail
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
