@@ -4,12 +4,12 @@ import androidx.compose.ui.graphics.Color
 
 
 data class Habit(
-    val name: String,
-    val description: String,
+    val name: String = "",
+    val description: String = "",
     val priority: HabitPriority = HabitPriority.MEDIUM,
-    val type: HabitType,
-    val periodicity: HabitPeriodicity,
-    val color: Color
+    val type: HabitType = HabitType.NOT_SELECTED,
+    val periodicity: HabitPeriodicity = HabitPeriodicity(""),
+    val color: Color = Color.LightGray
 )
 
 class HabitPeriodicity(
@@ -17,17 +17,16 @@ class HabitPeriodicity(
     val daysOfWeek: List<String> = emptyList()
 )
 
-
 enum class HabitType {
+    NOT_SELECTED,
     SPORT,
     STUDY,
     RELAXATION,
     PRODUCTIVITY
 }
 
-
 enum class HabitPriority(val priorityName: String) {
     LOW("Низкий"),
     MEDIUM("Сердний"),
-    HIGH("Высокий")
+    HIGH("Высокий");
 }

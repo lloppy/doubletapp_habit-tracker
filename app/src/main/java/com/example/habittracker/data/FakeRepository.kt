@@ -9,7 +9,7 @@ import com.example.habittracker.model.HabitType
 class FakeRepository() {
 
 
-    private val habits = listOf(
+    private val habits = mutableListOf(
         Habit(
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
@@ -44,6 +44,7 @@ class FakeRepository() {
         )
     )
 
+    fun insert(habit: Habit) = habits.add(habit)
 
     fun getHabits(): List<Habit> = habits
 

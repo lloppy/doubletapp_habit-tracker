@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.HabitAppBar
-import com.example.habittracker.ui.screens.HabitTrackerState
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
 object HomeDestination : NavigationDestination {
@@ -40,11 +40,14 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitTrackerScreen(
-    uiState: HabitTrackerState,
     onClickAddItem: () -> Unit,
     onClickHabit: (String) -> Unit,
-    modifier: Modifier
+    onClickEdit: () -> Unit,
+    onClickDelete: () -> Unit,
+    modifier: Modifier,
+    viewModel: HabitTrackerViewModel = viewModel()
 ) {
+    val uiState = viewModel.uiState
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -79,6 +82,8 @@ fun HabitTrackerScreen(
                 HabitContent(
                     habits = uiState.habits,
                     onClickHabit = onClickHabit,
+                    onClickEdit = onClickEdit,
+                    onClickDelete = onClickDelete,
                     modifier = modifier,
                     contentPadding = paddingValue
                 )
@@ -91,14 +96,18 @@ fun HabitTrackerScreen(
 fun HabitContent(
     habits: List<Habit>,
     onClickHabit: (String) -> Unit,
+    onClickEdit: () -> Unit,
+    onClickDelete: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
     LazyColumn(modifier = modifier.padding(contentPadding)) {
         items(items = habits, key = { it.name }) { habit ->
-            HabitCard(
+            SwipeableCard(
                 habit = habit,
                 onClickHabit = { onClickHabit(habit.name) },
+                onClickEdit = onClickEdit,
+                onClickDelete = onClickDelete,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.padding_small))
