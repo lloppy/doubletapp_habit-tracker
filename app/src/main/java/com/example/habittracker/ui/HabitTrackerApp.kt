@@ -1,55 +1,49 @@
 package com.example.habittracker.ui
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.habittracker.R
-import com.example.habittracker.ui.screens.HabitTrackerScreen
-import com.example.habittracker.ui.screens.HabitTrackerState
-import com.example.habittracker.ui.screens.HabitTrackerViewModel
+import com.example.habittracker.ui.screens.navigation.HabitNavigation
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitTrackerApp(
-    modifier: Modifier = Modifier
+    navController: NavHostController = rememberNavController()
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val viewModel: HabitTrackerViewModel = viewModel()
-
-     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { TopAppBar(scrollBehavior) }
-    ) { paddingValue ->
-
-        HabitTrackerScreen(
-            uiState = viewModel.uiState,
-            onClickHabit = viewModel::onClickHabit,
-            modifier = Modifier,
-            contentPadding = paddingValue
-        )
-    }
+    HabitNavigation(navController = navController)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
+@OptIn(ExperimentalMaterial3Api::class)
+fun HabitAppBar(
+    title: String,
+    canNavigateBack: Boolean,
+    scrollBehavior: TopAppBarScrollBehavior,
+    navigateUp: () -> Unit = { }
+) {
     CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.headlineSmall,
-            )
-        },
+        title = { Text(text = title, style = MaterialTheme.typography.headlineSmall) },
         scrollBehavior = scrollBehavior,
-        modifier = modifier
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back_button)
+                    )
+                }
+            }
+        }
     )
 }
+

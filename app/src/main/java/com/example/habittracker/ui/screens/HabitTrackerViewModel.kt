@@ -9,7 +9,9 @@ import com.example.habittracker.data.FakeRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class HabitTrackerViewModel : ViewModel() {
+class HabitTrackerViewModel(
+    private val repository: FakeRepository = FakeRepository()
+): ViewModel() {
     var uiState: HabitTrackerState by mutableStateOf(HabitTrackerState.Loading)
         private set
 
@@ -21,17 +23,18 @@ class HabitTrackerViewModel : ViewModel() {
         uiState = HabitTrackerState.Loading
         viewModelScope.launch {
             delay(DELAY_FOR_IMITATE_LOADING)
-            val listResult = FakeRepository.getHabits()
+            val listResult = repository.getHabits()
             uiState = HabitTrackerState.Success(listResult)
         }
 
     }
 
-    fun onClickHabit() {
 
-    }
+    fun getDetailsFor(habitName: String) =
+         repository.getSingleHabit(habitName)
+
 
     companion object {
-        const val DELAY_FOR_IMITATE_LOADING = 5000L
+        const val DELAY_FOR_IMITATE_LOADING = 3000L
     }
 }

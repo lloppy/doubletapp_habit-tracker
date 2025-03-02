@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens
+package com.example.habittracker.ui.screens.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,34 +11,55 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
+import com.example.habittracker.ui.HabitAppBar
+import com.example.habittracker.ui.screens.HabitTrackerState
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitTrackerScreen(
     uiState: HabitTrackerState,
-    onClickHabit: () -> Unit,
-    modifier: Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    onClickHabit: (String) -> Unit,
+    modifier: Modifier
 ) {
-    when (uiState) {
-        is HabitTrackerState.Loading -> {
-            LoadingScreen()
-        }
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-        is HabitTrackerState.Success -> {
-            HabitContent(
-                habits = uiState.habits,
-                onClickHabit = onClickHabit,
-                modifier = modifier,
-                contentPadding = contentPadding
+    Scaffold(
+        topBar = {
+            HabitAppBar(
+                title = stringResource(R.string.app_name),
+                canNavigateBack = false,
+                scrollBehavior = scrollBehavior
             )
+        },
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+    ) { paddingValue ->
+
+        when (uiState) {
+            is HabitTrackerState.Loading -> {
+                LoadingScreen()
+            }
+
+            is HabitTrackerState.Success -> {
+                HabitContent(
+                    habits = uiState.habits,
+                    onClickHabit = onClickHabit,
+                    modifier = modifier,
+                    contentPadding = paddingValue
+                )
+            }
         }
     }
 }
@@ -46,7 +67,7 @@ fun HabitTrackerScreen(
 @Composable
 fun HabitContent(
     habits: List<Habit>,
-    onClickHabit: () -> Unit,
+    onClickHabit: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
@@ -54,7 +75,7 @@ fun HabitContent(
         items(items = habits, key = { it.name }) { habit ->
             HabitCard(
                 habit = habit,
-                onClickHabit = onClickHabit,
+                onClickHabit = { onClickHabit(habit.name) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.padding_small))
