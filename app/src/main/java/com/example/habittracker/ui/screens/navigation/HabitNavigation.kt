@@ -13,6 +13,7 @@ import com.example.habittracker.ui.screens.home.HabitTrackerScreen
 import com.example.habittracker.ui.screens.home.HomeDestination
 import com.example.habittracker.ui.screens.item.HabitDetailDestination
 import com.example.habittracker.ui.screens.item.HabitDetailScreen
+import com.example.habittracker.ui.screens.item.HabitEntryDestination
 import com.example.habittracker.ui.screens.item.HabitEntryScreen
 
 @Composable
@@ -28,7 +29,9 @@ fun HabitNavigation(
         composable(route = HomeDestination.route) {
             HabitTrackerScreen(
                 uiState = viewModel.uiState,
-                onClickAddItem = {},
+                onClickAddItem = {
+                    navController.navigate(HabitEntryDestination.route)
+                },
                 onClickHabit = { habitName ->
                     navController.navigate(HabitDetailDestination.route + "/$habitName")
                 },
@@ -52,7 +55,7 @@ fun HabitNavigation(
             )
         }
 
-        composable(route = HabitDetailDestination.route) {
+        composable(route = HabitEntryDestination.route) {
             HabitEntryScreen(
 
             )
