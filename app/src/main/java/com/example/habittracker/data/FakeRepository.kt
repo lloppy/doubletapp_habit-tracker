@@ -5,11 +5,11 @@ import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitPeriodicity
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class FakeRepository() {
-
-
-    private val habits = mutableListOf(
+object FakeRepository {
+    private val originalHabits = mutableListOf(
         Habit(
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
@@ -44,11 +44,13 @@ class FakeRepository() {
         )
     )
 
-    fun insert(habit: Habit) = habits.add(habit)
+    private val _habits = MutableStateFlow<List<Habit>>(originalHabits)
+    val habits: StateFlow<List<Habit>> = _habits
 
-    fun getHabits(): List<Habit> = habits
+    fun insert(habit: Habit) {
+        _habits.value += habit
+    }
 
-    fun getSingleHabit(habitName: String) = habits
+    fun getSingleHabit(habitName: String) = habits.value
         .find { it.name == habitName }
-
 }

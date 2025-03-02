@@ -1,5 +1,6 @@
 package com.example.habittracker.ui.screens.navigation
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -79,7 +80,7 @@ fun HabitNavigation(
         ) {
             AddHabitScreen(
                 navigateBack = { navController.navigateUp() },
-                modifier = Modifier
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

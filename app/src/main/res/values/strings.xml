@@ -5,4 +5,6 @@
     <string name="item_edit_title">edit item</string>
     <string name="create_habit">Create new habit</string>
     <string name="detail">Детали привычки</string>
+    <string name="create">Create</string>
+    <string name="no_items">Привычки еще не созданы</string>
 </resources>

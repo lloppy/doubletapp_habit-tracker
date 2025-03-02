@@ -2,6 +2,7 @@ package com.example.habittracker.ui.screens.item
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,7 +30,7 @@ object AddHabitDestination : NavigationDestination {
 fun AddHabitScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AddHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: HabitDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -52,8 +53,13 @@ fun AddHabitScreen(
                 value = "new",
                 onValueChange = { }
             )
+
+            Button(onClick = {
+                viewModel.saveFakeItem()
+                navigateBack.invoke()
+            }) {
+                Text(text = stringResource(R.string.create))
+            }
         }
     }
-
-
 }

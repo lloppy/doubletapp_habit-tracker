@@ -9,7 +9,7 @@ import com.example.habittracker.data.FakeRepository
 
 class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: FakeRepository = FakeRepository()
+    private val repository: FakeRepository
 ) : ViewModel() {
     private val habitName: String = checkNotNull(savedStateHandle[HabitEditDestination.itemIdArg])
 

@@ -14,7 +14,7 @@ import com.example.habittracker.model.HabitType
 
 class HabitDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: FakeRepository = FakeRepository()
+    private val repository: FakeRepository
 ) : ViewModel() {
     var entryUiState by mutableStateOf(HabitEntryState())
         private set
@@ -35,6 +35,19 @@ class HabitDetailViewModel(
         if (validateInput()) {
             repository.insert(habit = entryUiState.currentHabit.toHabit())
         }
+    }
+
+    fun saveFakeItem() {
+        repository.insert(
+            habit = Habit(
+                name = "Новая привычка",
+                description = "saveFakeItem - нужна для тестирования сздания новой заметки",
+                priority = HabitPriority.MEDIUM,
+                type = HabitType.RELAXATION,
+                periodicity = HabitPeriodicity("Раз в неделю"),
+                color = Color.Blue
+            )
+        )
     }
 
     fun getDetailsFor(habitName: String) =

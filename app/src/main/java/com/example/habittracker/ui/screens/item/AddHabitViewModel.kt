@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.habittracker.data.FakeRepository
 
 class AddHabitViewModel(
-    private val repository: FakeRepository = FakeRepository()
+    private val repository: FakeRepository
 ) : ViewModel() {
 
     var entryUiState by mutableStateOf(HabitEntryState())

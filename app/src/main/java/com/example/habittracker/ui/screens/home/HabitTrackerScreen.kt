@@ -21,14 +21,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
+import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.HabitAppBar
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
@@ -45,9 +49,10 @@ fun HabitTrackerScreen(
     onClickEdit: (String) -> Unit,
     onClickDelete: () -> Unit,
     modifier: Modifier,
-    viewModel: HabitTrackerViewModel = viewModel()
+    viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val uiState = viewModel.uiState
+    val uiState by viewModel.uiState.collectAsState()
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -73,14 +78,14 @@ fun HabitTrackerScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { paddingValue ->
 
-        when (uiState) {
+        when (val state = uiState) {
             is HabitTrackerState.Loading -> {
                 LoadingScreen()
             }
 
             is HabitTrackerState.Success -> {
                 HabitContent(
-                    habits = uiState.habits,
+                    habits = state.habits,
                     onClickHabit = onClickHabit,
                     onClickEdit = onClickEdit,
                     onClickDelete = onClickDelete,
@@ -101,18 +106,27 @@ fun HabitContent(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
-    LazyColumn(modifier = modifier.padding(contentPadding)) {
-        items(items = habits, key = { it.name }) { habit ->
-            SwipeableCard(
-                habit = habit,
-                onClickHabit = { onClickHabit(habit.name) },
-                onClickEdit =  { onClickEdit(habit.name) },
-                onClickDelete = onClickDelete,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.padding_small))
-                    .aspectRatio(1.5f)
-            )
+    if (habits.isEmpty()) {
+        Text(
+            text = stringResource(R.string.no_items),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(contentPadding),
+        )
+    } else {
+        LazyColumn(modifier = modifier.padding(contentPadding)) {
+            items(items = habits, key = { it.name }) { habit ->
+                SwipeableCard(
+                    habit = habit,
+                    onClickHabit = { onClickHabit(habit.name) },
+                    onClickEdit = { onClickEdit(habit.name) },
+                    onClickDelete = onClickDelete,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(dimensionResource(R.dimen.padding_small))
+                        .aspectRatio(1.5f)
+                )
+            }
         }
     }
 }

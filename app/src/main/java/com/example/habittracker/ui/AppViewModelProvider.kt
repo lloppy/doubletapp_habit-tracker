@@ -11,7 +11,7 @@ import com.example.habittracker.ui.screens.item.HabitDetailViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
-        val repository: FakeRepository = FakeRepository()
+        val repository: FakeRepository = FakeRepository
 
         initializer {
             HabitTrackerViewModel(
