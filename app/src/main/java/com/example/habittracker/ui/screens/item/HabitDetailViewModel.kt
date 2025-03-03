@@ -19,7 +19,7 @@ class HabitDetailViewModel(
     var entryUiState by mutableStateOf(HabitEntryState())
         private set
 
-    fun updateEntryState(newHabit: HabitDetails) {
+    fun updateUiState(newHabit: HabitDetails) {
         entryUiState = HabitEntryState(currentHabit = newHabit, validateInput(newHabit))
     }
 
@@ -27,7 +27,7 @@ class HabitDetailViewModel(
         return with(uiState) {
             name.isNotBlank()
                     && description.isNotBlank()
-                    && periodicity.isNotBlank()
+                    && type.isNotBlank()
         }
     }
 
@@ -35,19 +35,6 @@ class HabitDetailViewModel(
         if (validateInput()) {
             repository.insert(habit = entryUiState.currentHabit.toHabit())
         }
-    }
-
-    fun saveFakeItem() {
-        repository.insert(
-            habit = Habit(
-                name = "Новая привычка",
-                description = "saveFakeItem - нужна для тестирования сздания новой заметки",
-                priority = HabitPriority.MEDIUM,
-                type = HabitType.RELAXATION,
-                periodicity = HabitPeriodicity("Раз в неделю"),
-                color = Color.Blue
-            )
-        )
     }
 
     fun getDetailsFor(habitName: String) =
@@ -65,19 +52,17 @@ data class HabitDetails(
     val description: String = "",
     val priority: String = "",
     val type: String = "",
-    val periodicity: String = "",
+    val frequency: String = "",
+    val repeatedTimes: String = "1",
     val color: Color = Color.Green,
 )
 
 fun HabitDetails.toHabit(): Habit = Habit(
     name = name,
     description = description,
-    priority = HabitPriority.valueOf(priority),
-    type = HabitType.valueOf(type),
-    periodicity = HabitPeriodicity(
-        frequency = periodicity,
-        daysOfWeek = emptyList() //TODO()
-    ),
+    priority = HabitPriority.entries.first{it.priorityName == priority},
+    type = HabitType.entries.first{it.typeName == type},
+    periodicity = HabitPeriodicity(frequency = frequency, repeatedTimes = repeatedTimes.toInt()),
     color = color //TODO()
 )
 
@@ -87,6 +72,7 @@ fun Habit.toUiState(): HabitDetails = HabitDetails(
     description = description,
     priority = priority.name,
     type = type.name,
-    periodicity = periodicity.frequency,
+    frequency = periodicity.frequency,
+    repeatedTimes = periodicity.repeatedTimes.toString(),
     color = color //TODO()
 )

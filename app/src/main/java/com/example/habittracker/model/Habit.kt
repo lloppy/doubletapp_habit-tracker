@@ -6,23 +6,22 @@ import androidx.compose.ui.graphics.Color
 data class Habit(
     val name: String = "",
     val description: String = "",
+    val type: HabitType,
     val priority: HabitPriority = HabitPriority.MEDIUM,
-    val type: HabitType = HabitType.NOT_SELECTED,
     val periodicity: HabitPeriodicity = HabitPeriodicity(""),
     val color: Color = Color.LightGray
 )
 
 class HabitPeriodicity(
     val frequency: String,
-    val daysOfWeek: List<String> = emptyList()
+    val repeatedTimes: Int = 1
 )
 
-enum class HabitType {
-    NOT_SELECTED,
-    SPORT,
-    STUDY,
-    RELAXATION,
-    PRODUCTIVITY
+enum class HabitType(val typeName: String) {
+    SPORT("Спорт"),
+    STUDY("Учеба"),
+    RELAXATION("Отдых"),
+    PRODUCTIVITY("Продуктивность")
 }
 
 enum class HabitPriority(val priorityName: String) {

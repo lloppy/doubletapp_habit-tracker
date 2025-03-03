@@ -2,5 +2,7 @@
 <resources>
     <dimen name="loading_circle">70.dp</dimen>
     <dimen name="padding_small">4.dp</dimen>
+    <dimen name="padding_medium">14.dp</dimen>
     <dimen name="padding_large">24.dp</dimen>
+    <dimen name="color_cirle">24.dp</dimen>
 </resources>

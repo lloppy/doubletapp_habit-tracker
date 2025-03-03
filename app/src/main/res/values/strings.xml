@@ -7,4 +7,10 @@
     <string name="detail">Детали привычки</string>
     <string name="create">Create</string>
     <string name="no_items">Привычки еще не созданы</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="color">Color</string>
+    <string name="prority">Priority</string>
+    <string name="repeatedTimes">Сколько раз повторять</string>
+    <string name="frequency">Frequency</string>
 </resources>
