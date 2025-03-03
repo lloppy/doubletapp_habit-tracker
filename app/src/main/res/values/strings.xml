@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HabitTracker</string>
+    <string name="app_name">Habit Tracker</string>
     <string name="back_button">back</string>
     <string name="item_entry_title">add item</string>
     <string name="item_edit_title">edit item</string>
