@@ -50,13 +50,12 @@ fun HabitNavigation(
                 type = NavType.StringType
             })
         ) { backStackEntry ->
-            val habitName = backStackEntry.arguments?.getString(HabitDetailDestination.itemIdArg)
+            val habitId = backStackEntry.arguments?.getString(HabitDetailDestination.itemIdArg)
                 ?: error("${HabitDetailDestination.itemIdArg} cannot be null")
 
             HabitDetailScreen(
-                habitName = habitName,
                 onClickEdit = {
-                    navController.navigate("${HabitEditDestination.route}/$habitName")
+                    navController.navigate("${HabitEditDestination.route}/$habitId")
                 },
                 navigateBack = { navController.navigateUp() },
                 modifier = Modifier

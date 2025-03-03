@@ -1,78 +1,30 @@
 package com.example.habittracker.ui.screens.item
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.habittracker.data.FakeRepository
-import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitPeriodicity
-import com.example.habittracker.model.HabitPriority
-import com.example.habittracker.model.HabitType
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class HabitDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: FakeRepository
+    repository: FakeRepository
 ) : ViewModel() {
-    var entryUiState by mutableStateOf(HabitEntryState())
-        private set
+    private val habitId: String = checkNotNull(savedStateHandle[HabitDetailDestination.itemIdArg])
 
-    fun updateUiState(newHabit: HabitDetails) {
-        entryUiState = HabitEntryState(currentHabit = newHabit, validateInput(newHabit))
-    }
+    val uiState = repository.getSingleHabit(habitId)
+        .filterNotNull()
+        .map { HabitDetailsUiState(habitDetails = it.toUiState()) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = HabitDetailsUiState()
+        )
 
-    private fun validateInput(uiState: HabitDetails = entryUiState.currentHabit): Boolean {
-        return with(uiState) {
-            name.isNotBlank()
-                    && description.isNotBlank()
-                    && type.isNotBlank()
-        }
-    }
-
-    fun saveItem() {
-        if (validateInput()) {
-            repository.insert(habit = entryUiState.currentHabit.toHabit())
-        }
-    }
-
-    fun getDetailsFor(habitName: String) =
-        checkNotNull(repository.getSingleHabit(habitName))
 
 }
 
-data class HabitEntryState(
-    val currentHabit: HabitDetails = HabitDetails(),
-    val isEntryValid: Boolean = false
-)
-
-data class HabitDetails(
-    val name: String = "",
-    val description: String = "",
-    val priority: String = "",
-    val type: String = "",
-    val frequency: String = "",
-    val repeatedTimes: String = "1",
-    val color: Color = Color.Green,
-)
-
-fun HabitDetails.toHabit(): Habit = Habit(
-    name = name,
-    description = description,
-    priority = HabitPriority.entries.first{it.priorityName == priority},
-    type = HabitType.entries.first{it.typeName == type},
-    periodicity = HabitPeriodicity(frequency = frequency, repeatedTimes = repeatedTimes.toInt()),
-    color = color //TODO()
-)
-
-
-fun Habit.toUiState(): HabitDetails = HabitDetails(
-    name = name,
-    description = description,
-    priority = priority.name,
-    type = type.name,
-    frequency = periodicity.frequency,
-    repeatedTimes = periodicity.repeatedTimes.toString(),
-    color = color //TODO()
-)
+data class HabitDetailsUiState(val habitDetails: HabitDetails = HabitDetails())

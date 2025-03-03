@@ -1,9 +1,11 @@
 package com.example.habittracker.model
 
 import androidx.compose.ui.graphics.Color
+import java.util.UUID
 
 
 data class Habit(
+    val id: String = UUID.randomUUID().toString(),
     val name: String = "",
     val description: String = "",
     val type: HabitType,

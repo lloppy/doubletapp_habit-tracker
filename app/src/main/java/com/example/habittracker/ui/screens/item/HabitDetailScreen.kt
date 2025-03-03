@@ -12,13 +12,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.HabitAppBar
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
@@ -33,19 +34,18 @@ object HabitDetailDestination: NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitDetailScreen(
-    habitName: String,
     onClickEdit: () -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HabitDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val selectedHabit: Habit = viewModel.getDetailsFor(habitName)
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             HabitAppBar(
-                title = selectedHabit.name,
+                title = uiState.habitDetails.name,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
@@ -67,7 +67,7 @@ fun HabitDetailScreen(
     ) { paddingValue ->
 
         Column(modifier = modifier.padding(paddingValue)) {
-            Text(text = selectedHabit.name)
+            Text(text = uiState.habitDetails.name)
         }
     }
 }

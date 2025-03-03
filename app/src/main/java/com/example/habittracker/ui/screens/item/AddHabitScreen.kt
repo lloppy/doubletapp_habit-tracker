@@ -58,7 +58,7 @@ object AddHabitDestination : NavigationDestination {
 fun AddHabitScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HabitDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AddHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
     Scaffold(
@@ -106,7 +106,7 @@ fun AddHabitScreen(
 }
 
 @Composable
-private fun HabitInputForm(
+fun HabitInputForm(
     habitDetails: HabitDetails,
     onValueChange: (HabitDetails) -> Unit = {},
     modifier: Modifier

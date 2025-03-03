@@ -118,8 +118,8 @@ fun HabitContent(
             items(items = habits, key = { it.name }) { habit ->
                 SwipeableCard(
                     habit = habit,
-                    onClickHabit = { onClickHabit(habit.name) },
-                    onClickEdit = { onClickEdit(habit.name) },
+                    onClickHabit = { onClickHabit(habit.id) },
+                    onClickEdit = { onClickEdit(habit.id) },
                     onClickDelete = onClickDelete,
                     modifier = Modifier
                         .fillMaxWidth()

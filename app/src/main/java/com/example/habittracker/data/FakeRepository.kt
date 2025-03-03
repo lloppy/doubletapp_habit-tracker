@@ -5,8 +5,10 @@ import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitPeriodicity
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 
 object FakeRepository {
     private val originalHabits = mutableListOf(
@@ -51,6 +53,18 @@ object FakeRepository {
         _habits.value += habit
     }
 
-    fun getSingleHabit(habitName: String) = habits.value
-        .find { it.name == habitName }
+    fun getSingleHabit(habitId: String): Flow<Habit> =
+        flow {
+            val habit = checkNotNull(habits.value.find { it.id == habitId })
+            emit(habit)
+        }
+
+    fun updateItem(habit: Habit) {
+        val updatedHabits = _habits.value.toMutableList()
+        val index = updatedHabits.indexOfFirst { it.id == habit.id }
+        if (index != -1) {
+            updatedHabits[index] = habit
+            _habits.value = updatedHabits
+        }
+    }
 }
