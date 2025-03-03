@@ -62,10 +62,4 @@ class EditHabitViewModel(
         }
     }
 
-    fun saveItem() {
-        if (validateInput()) {
-            repository.insert(habit = entryUiState.currentHabit.toHabit())
-        }
-    }
-
 }

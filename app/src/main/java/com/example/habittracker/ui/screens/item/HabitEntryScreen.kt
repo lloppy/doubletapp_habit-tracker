@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
@@ -115,7 +116,10 @@ fun HabitInputForm(
         value = habitDetails.name,
         label = { Text(text = stringResource(R.string.name)) },
         onValueChange = { onValueChange(habitDetails.copy(name = it)) },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences
+        ),
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
     )
@@ -124,7 +128,10 @@ fun HabitInputForm(
         value = habitDetails.description,
         label = { Text(text = stringResource(R.string.description)) },
         onValueChange = { onValueChange(habitDetails.copy(description = it)) },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences
+        ),
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
     )
@@ -158,7 +165,10 @@ fun HabitInputForm(
         value = habitDetails.frequency,
         label = { Text(text = stringResource(R.string.frequency)) },
         onValueChange = { onValueChange(habitDetails.copy(frequency = it)) },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences
+        ),
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
     )
@@ -169,7 +179,8 @@ fun HabitInputForm(
         onValueChange = { onValueChange(habitDetails.copy(repeatedTimes = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Number
+            keyboardType = KeyboardType.Number,
+            capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
         modifier = Modifier.fillMaxWidth()

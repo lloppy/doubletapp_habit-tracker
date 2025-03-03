@@ -35,9 +35,6 @@ fun HabitNavigation(
                 onClickEdit = {
                     navController.navigate("${EditHabitDestination.route}/$it")
                 },
-                onClickDelete = {
-
-                },
                 modifier = Modifier
             )
         }

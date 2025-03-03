@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,7 +26,6 @@ fun SwipeableCard(
     habit: Habit,
     onClickHabit: () -> Unit,
     onClickEdit: () -> Unit,
-    onClickDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val dismissState = rememberSwipeToDismissBoxState()
@@ -36,10 +34,6 @@ fun SwipeableCard(
         when (dismissState.currentValue) {
             SwipeToDismissBoxValue.EndToStart -> {
                 onClickEdit()
-                dismissState.reset()
-            }
-            SwipeToDismissBoxValue.StartToEnd -> {
-                onClickDelete()
                 dismissState.reset()
             }
             else -> { /* No action needed */ }
@@ -55,16 +49,6 @@ fun SwipeableCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AnimatedVisibility(
-                    visible = dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd,
-                    enter = fadeIn()
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete"
-                    )
-                }
-
                 Spacer(modifier = Modifier.weight(1f))
 
                 AnimatedVisibility(

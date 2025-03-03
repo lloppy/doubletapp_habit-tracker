@@ -47,7 +47,6 @@ fun HabitTrackerScreen(
     onClickAddItem: () -> Unit,
     onClickHabit: (String) -> Unit,
     onClickEdit: (String) -> Unit,
-    onClickDelete: () -> Unit,
     modifier: Modifier,
     viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -88,7 +87,6 @@ fun HabitTrackerScreen(
                     habits = state.habits,
                     onClickHabit = onClickHabit,
                     onClickEdit = onClickEdit,
-                    onClickDelete = onClickDelete,
                     modifier = modifier,
                     contentPadding = paddingValue
                 )
@@ -102,7 +100,6 @@ fun HabitContent(
     habits: List<Habit>,
     onClickHabit: (String) -> Unit,
     onClickEdit: (String) -> Unit,
-    onClickDelete: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
@@ -120,7 +117,6 @@ fun HabitContent(
                     habit = habit,
                     onClickHabit = { onClickHabit(habit.id) },
                     onClickEdit = { onClickEdit(habit.id) },
-                    onClickDelete = onClickDelete,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_small))
