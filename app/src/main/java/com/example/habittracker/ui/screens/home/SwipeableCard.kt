@@ -24,6 +24,8 @@ import com.example.habittracker.model.Habit
 @Composable
 fun SwipeableCard(
     habit: Habit,
+    onIncreaseRepeated: () -> Unit,
+    onDecreaseRepeated: () -> Unit,
     onClickHabit: () -> Unit,
     onClickEdit: () -> Unit,
     modifier: Modifier = Modifier
@@ -71,6 +73,8 @@ fun SwipeableCard(
     ) {
         HabitCard(
             habit = habit,
+            onIncreaseRepeated = onIncreaseRepeated,
+            onDecreaseRepeated = onDecreaseRepeated,
             onClickHabit = onClickHabit,
             modifier = modifier
         )

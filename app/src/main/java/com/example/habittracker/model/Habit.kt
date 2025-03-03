@@ -16,14 +16,16 @@ data class Habit(
 
 class HabitPeriodicity(
     val frequency: String,
-    val repeatedTimes: Int = 1
+    val repeatedTimes: Int = 1,
+    val currentRepeated: Int = 0
 )
 
-enum class HabitType(val typeName: String) {
-    SPORT("Спорт"),
-    STUDY("Учеба"),
-    RELAXATION("Отдых"),
-    PRODUCTIVITY("Продуктивность")
+enum class HabitType(val typeName: String, val emoji: String) {
+    SPORT("Спорт", "\uD83C\uDFC6"),
+    STUDY("Учеба", "\uD83E\uDDE0"),
+    RELAXATION("Отдых","\uD83E\uDDD8"),
+    PRODUCTIVITY("Продуктивность", "\uD83D\uDD0B"),
+    HEALTH("Здоровье", "\uD83C\uDF3F")
 }
 
 enum class HabitPriority(val priorityName: String) {

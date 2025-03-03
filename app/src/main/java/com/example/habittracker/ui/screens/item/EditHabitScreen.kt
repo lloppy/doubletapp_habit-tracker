@@ -35,6 +35,7 @@ fun EditHabitScreen(
     modifier: Modifier = Modifier,
     viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val paddingMedium = dimensionResource(R.dimen.padding_medium)
 
     Scaffold(
         topBar = {
@@ -52,12 +53,12 @@ fun EditHabitScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(
                     top = paddingValue.calculateTopPadding()
-                        .plus(dimensionResource(R.dimen.padding_medium)),
-                    start = dimensionResource(R.dimen.padding_medium),
-                    end = dimensionResource(R.dimen.padding_medium),
+                        .plus(paddingMedium),
+                    start = paddingMedium,
+                    end = paddingMedium,
                     bottom = paddingValue.calculateBottomPadding()
                 ),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+            verticalArrangement = Arrangement.spacedBy(paddingMedium)
         ) {
 
             HabitInputForm(

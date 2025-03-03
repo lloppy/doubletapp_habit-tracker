@@ -34,7 +34,6 @@ class HabitEntryViewModel(
     private fun validateInput(uiState: HabitDetails = entryUiState.currentHabit): Boolean {
         return with(uiState) {
             name.isNotBlank()
-                    && description.isNotBlank()
                     && type.isNotBlank()
                     && canParseInt(uiState.repeatedTimes)
         }

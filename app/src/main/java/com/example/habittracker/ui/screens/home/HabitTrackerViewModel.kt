@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class HabitTrackerViewModel(
-    repository: FakeRepository
+    private val repository: FakeRepository
 ): ViewModel() {
     val uiState: StateFlow<HabitTrackerState> =
         repository.habits.map {
@@ -21,6 +21,16 @@ class HabitTrackerViewModel(
             initialValue = HabitTrackerState.Loading
 
         )
+
+    fun increaseRepeated(habitId: String){
+        repository.increaseQuantity(habitId = habitId)
+
+    }
+
+    fun decreaseRepeated(habitId: String) {
+        repository.decreaseQuantity(habitId = habitId)
+    }
+
 
     companion object {
         const val DELAY_FOR_IMITATE_LOADING = 1_000L

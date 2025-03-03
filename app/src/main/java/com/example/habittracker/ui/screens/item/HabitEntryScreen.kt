@@ -1,6 +1,7 @@
 package com.example.habittracker.ui.screens.item
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,6 +62,8 @@ fun HabitEntryScreen(
     modifier: Modifier = Modifier,
     viewModel: HabitEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val paddingMedium = dimensionResource(R.dimen.padding_medium)
+
     Scaffold(
         topBar = {
             HabitAppBar(
@@ -77,12 +80,12 @@ fun HabitEntryScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(
                     top = paddingValue.calculateTopPadding()
-                        .plus(dimensionResource(R.dimen.padding_medium)),
-                    start = dimensionResource(R.dimen.padding_medium),
-                    end = dimensionResource(R.dimen.padding_medium),
+                        .plus(paddingMedium),
+                    start = paddingMedium,
+                    end = paddingMedium,
                     bottom = paddingValue.calculateBottomPadding()
                 ),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+            verticalArrangement = Arrangement.spacedBy(paddingMedium)
         ) {
 
             HabitInputForm(
@@ -115,7 +118,7 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitDetails.name,
-        label = { Text(text = stringResource(R.string.set_name) + required) },
+        label = { Text(text = stringResource(R.string.set_name, required)) },
         onValueChange = { onValueChange(habitDetails.copy(name = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -127,7 +130,7 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitDetails.description,
-        label = { Text(text = stringResource(R.string.set_description) + required) },
+        label = { Text(text = stringResource(R.string.set_description)) },
         onValueChange = { onValueChange(habitDetails.copy(description = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -137,15 +140,17 @@ fun HabitInputForm(
         modifier = Modifier.fillMaxWidth()
     )
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
-    ) {
-        ColorCard(
-            habitColor = habitDetails.color,
-            modifier = modifier.weight(0.5f)
-        )
-    }
+    HabitTypeCard(
+        selectedValue = habitDetails.type,
+        onOptionSelected = { onValueChange(habitDetails.copy(type = it)) },
+        options = HabitType.entries,
+        label = stringResource(R.string.set_type, required),
+    )
+
+    ColorCard(
+        habitColor = habitDetails.color,
+        modifier = modifier.fillMaxWidth()
+    )
 
     PriorityCard(
         selectedValue = habitDetails.priority,
@@ -153,13 +158,6 @@ fun HabitInputForm(
         label = stringResource(R.string.set_priority),
         onOptionSelected = { onValueChange(habitDetails.copy(priority = it)) },
         modifier = modifier.fillMaxWidth()
-    )
-
-    HabitTypeCard(
-        selectedValue = habitDetails.type,
-        onOptionSelected = { onValueChange(habitDetails.copy(type = it)) },
-        options = HabitType.entries,
-        label = stringResource(R.string.set_type) + required,
     )
 
     OutlinedTextField(
@@ -201,7 +199,12 @@ fun HabitTypeCard(
 
     Column(modifier.selectableGroup()) {
         options.forEach { option ->
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { onOptionSelected(option.typeName) }),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 RadioButton(
                     selected = (option.typeName == selectedValue),
                     onClick = { onOptionSelected(option.typeName) }
@@ -225,7 +228,7 @@ fun ColorCard(
     ) {
         Box(
             modifier = Modifier
-                .size(dimensionResource(R.dimen.color_cirle))
+                .size(dimensionResource(R.dimen.color_circle))
                 .clip(CircleShape)
                 .background(habitColor)
         )
@@ -233,6 +236,7 @@ fun ColorCard(
         Text(stringResource(R.string.color))
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

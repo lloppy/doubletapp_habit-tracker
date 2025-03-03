@@ -64,8 +64,8 @@ fun HabitAppBar(
                 }) {
                     Icon(
                         painter = painterResource(
-                            if (isDark) R.drawable.baseline_dark_mode_24
-                            else R.drawable.baseline_light_mode_24
+                            if (isDark) R.drawable.ic_dark_mode
+                            else R.drawable.ic_light_mode
                         ),
                         contentDescription = "switch theme"
                     )

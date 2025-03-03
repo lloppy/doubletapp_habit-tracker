@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -85,6 +84,8 @@ fun HabitTrackerScreen(
             is HabitTrackerState.Success -> {
                 HabitContent(
                     habits = state.habits,
+                    onIncreaseRepeated = viewModel::increaseRepeated,
+                    onDecreaseRepeated = viewModel::decreaseRepeated,
                     onClickHabit = onClickHabit,
                     onClickEdit = onClickEdit,
                     modifier = modifier,
@@ -98,6 +99,8 @@ fun HabitTrackerScreen(
 @Composable
 fun HabitContent(
     habits: List<Habit>,
+    onIncreaseRepeated: (String) -> Unit,
+    onDecreaseRepeated: (String) -> Unit,
     onClickHabit: (String) -> Unit,
     onClickEdit: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -108,32 +111,29 @@ fun HabitContent(
             text = stringResource(R.string.no_items),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.fillMaxWidth().padding(contentPadding),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(contentPadding),
         )
     } else {
         LazyColumn(modifier = modifier.padding(contentPadding)) {
             items(items = habits, key = { it.name }) { habit ->
                 SwipeableCard(
                     habit = habit,
+                    onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
+                    onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
                     onClickHabit = { onClickHabit(habit.id) },
                     onClickEdit = { onClickEdit(habit.id) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_small))
-                        .aspectRatio(1.5f)
+                        .aspectRatio(3f)
                 )
             }
         }
     }
 }
 
-@Composable
-fun HabitCard(habit: Habit, onClickHabit: () -> Unit, modifier: Modifier) {
-    Card(modifier = modifier, onClick = onClickHabit) {
-        Text(text = habit.name)
-        Text(text = habit.periodicity.repeatedTimes.toString())
-    }
-}
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
