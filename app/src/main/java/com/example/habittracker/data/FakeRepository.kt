@@ -46,7 +46,9 @@ object FakeRepository {
         )
     )
 
-    private val _habits = MutableStateFlow<List<Habit>>(originalHabits)
+    private val emptyHabits = emptyList<Habit>()
+
+    private val _habits = MutableStateFlow<List<Habit>>(emptyHabits)
     val habits: StateFlow<List<Habit>> = _habits
 
     fun insert(habit: Habit) {

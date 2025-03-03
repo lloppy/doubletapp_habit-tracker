@@ -11,7 +11,7 @@
     <string name="description">Description</string>
     <string name="color">Color</string>
     <string name="prority">Priority</string>
-    <string name="repeatedTimes">Сколько раз повторять</string>
+    <string name="repeatedTimes">Сколько раз в день повторять</string>
     <string name="frequency">Frequency</string>
     <string name="save">Сохранить</string>
 </resources>

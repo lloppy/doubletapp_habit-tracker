@@ -11,7 +11,12 @@ import com.example.habittracker.model.HabitPeriodicity
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 
-class AddHabitViewModel(
+data class HabitEntryState(
+    val currentHabit: HabitDetails = HabitDetails(),
+    val isEntryValid: Boolean = false,
+)
+
+class HabitEntryViewModel(
     private val repository: FakeRepository
 ) : ViewModel() {
 
@@ -19,7 +24,10 @@ class AddHabitViewModel(
         private set
 
     fun updateUiState(newHabit: HabitDetails) {
-        entryUiState = HabitEntryState(currentHabit = newHabit, validateInput(newHabit))
+        entryUiState = HabitEntryState(
+            currentHabit = newHabit,
+            isEntryValid = validateInput(newHabit)
+        )
     }
 
     private fun validateInput(uiState: HabitDetails = entryUiState.currentHabit): Boolean {
@@ -27,8 +35,14 @@ class AddHabitViewModel(
             name.isNotBlank()
                     && description.isNotBlank()
                     && type.isNotBlank()
+                    && canParseInt(uiState.repeatedTimes)
         }
     }
+
+    private fun canParseInt(repeatedTimes: String): Boolean {
+        return repeatedTimes.toIntOrNull() != null
+    }
+
 
     fun saveItem() {
         if (validateInput()) {
@@ -37,19 +51,13 @@ class AddHabitViewModel(
     }
 }
 
-
-data class HabitEntryState(
-    val currentHabit: HabitDetails = HabitDetails(),
-    val isEntryValid: Boolean = false
-)
-
 data class HabitDetails(
     val name: String = "",
     val description: String = "",
     val priority: String = "",
     val type: String = "",
     val frequency: String = "",
-    val repeatedTimes: String = "1",
+    val repeatedTimes: String = "",
     val color: Color = Color.Green,
 )
 

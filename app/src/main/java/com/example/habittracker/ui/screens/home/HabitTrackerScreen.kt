@@ -111,7 +111,7 @@ fun HabitContent(
             text = stringResource(R.string.no_items),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier.fillMaxWidth().padding(contentPadding),
         )
     } else {
         LazyColumn(modifier = modifier.padding(contentPadding)) {
@@ -135,6 +135,7 @@ fun HabitContent(
 fun HabitCard(habit: Habit, onClickHabit: () -> Unit, modifier: Modifier) {
     Card(modifier = modifier, onClick = onClickHabit) {
         Text(text = habit.name)
+        Text(text = habit.periodicity.repeatedTimes.toString())
     }
 }
 

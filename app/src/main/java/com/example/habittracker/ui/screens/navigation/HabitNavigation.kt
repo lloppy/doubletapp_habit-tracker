@@ -10,12 +10,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittracker.ui.screens.home.HabitTrackerScreen
 import com.example.habittracker.ui.screens.home.HomeDestination
-import com.example.habittracker.ui.screens.item.AddHabitDestination
-import com.example.habittracker.ui.screens.item.AddHabitScreen
+import com.example.habittracker.ui.screens.item.EditHabitDestination
 import com.example.habittracker.ui.screens.item.EditHabitScreen
-import com.example.habittracker.ui.screens.item.HabitDetailDestination
-import com.example.habittracker.ui.screens.item.HabitDetailScreen
-import com.example.habittracker.ui.screens.item.HabitEditDestination
+import com.example.habittracker.ui.screens.item.HabitEntryDestination
+import com.example.habittracker.ui.screens.item.HabitEntryScreen
 
 @Composable
 fun HabitNavigation(
@@ -29,13 +27,13 @@ fun HabitNavigation(
         composable(route = HomeDestination.route) {
             HabitTrackerScreen(
                 onClickAddItem = {
-                    navController.navigate(AddHabitDestination.route)
+                    navController.navigate(HabitEntryDestination.route)
                 },
                 onClickHabit = {
-                    navController.navigate("${HabitDetailDestination.route}/$it")
+                    navController.navigate("${EditHabitDestination.route}/$it")
                 },
                 onClickEdit = {
-                    navController.navigate("${HabitEditDestination.route}/$it")
+                    navController.navigate("${EditHabitDestination.route}/$it")
                 },
                 onClickDelete = {
 
@@ -45,26 +43,8 @@ fun HabitNavigation(
         }
 
         composable(
-            route = HabitDetailDestination.routeWithArgs,
-            arguments = listOf(navArgument(HabitDetailDestination.itemIdArg) {
-                type = NavType.StringType
-            })
-        ) { backStackEntry ->
-            val habitId = backStackEntry.arguments?.getString(HabitDetailDestination.itemIdArg)
-                ?: error("${HabitDetailDestination.itemIdArg} cannot be null")
-
-            HabitDetailScreen(
-                onClickEdit = {
-                    navController.navigate("${HabitEditDestination.route}/$habitId")
-                },
-                navigateBack = { navController.navigateUp() },
-                modifier = Modifier
-            )
-        }
-
-        composable(
-            route = HabitEditDestination.routeWithArgs,
-            arguments = listOf(navArgument(HabitEditDestination.itemIdArg) {
+            route = EditHabitDestination.routeWithArgs,
+            arguments = listOf(navArgument(EditHabitDestination.itemIdArg) {
                 type = NavType.StringType
             })
         ) {
@@ -75,9 +55,9 @@ fun HabitNavigation(
         }
 
         composable(
-            route = AddHabitDestination.route,
+            route = HabitEntryDestination.route,
         ) {
-            AddHabitScreen(
+            HabitEntryScreen(
                 navigateBack = { navController.navigateUp() },
                 modifier = Modifier.fillMaxWidth()
             )

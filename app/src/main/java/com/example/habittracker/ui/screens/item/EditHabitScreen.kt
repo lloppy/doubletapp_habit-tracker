@@ -21,7 +21,7 @@ import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.HabitAppBar
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
-object HabitEditDestination : NavigationDestination {
+object EditHabitDestination : NavigationDestination {
     override val route = "edit_habit"
     override val title = R.string.item_edit_title
     const val itemIdArg = "itemId"
@@ -39,7 +39,7 @@ fun EditHabitScreen(
     Scaffold(
         topBar = {
             HabitAppBar(
-                title = stringResource(HabitEditDestination.title),
+                title = stringResource(EditHabitDestination.title),
                 canNavigateBack = true,
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
                 navigateUp = navigateBack

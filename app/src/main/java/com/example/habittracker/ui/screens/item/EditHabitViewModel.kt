@@ -17,13 +17,16 @@ class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
     private val repository: FakeRepository
 ) : ViewModel() {
-    private val habitName: String = checkNotNull(savedStateHandle[HabitEditDestination.itemIdArg])
+    private val habitName: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
     var entryUiState by mutableStateOf(HabitEntryState())
         private set
 
     fun updateUiState(newHabit: HabitDetails) {
-        entryUiState = HabitEntryState(currentHabit = newHabit, validateInput(newHabit))
+        entryUiState = HabitEntryState(
+            currentHabit = newHabit,
+            isEntryValid = validateInput(newHabit)
+        )
     }
 
     init {
@@ -45,7 +48,12 @@ class EditHabitViewModel(
             name.isNotBlank()
                     && description.isNotBlank()
                     && type.isNotBlank()
+                    && canParseInt(uiState.repeatedTimes)
         }
+    }
+
+    private fun canParseInt(repeatedTimes: String): Boolean {
+        return repeatedTimes.toIntOrNull() != null
     }
 
     fun updateItem(){
@@ -54,5 +62,10 @@ class EditHabitViewModel(
         }
     }
 
+    fun saveItem() {
+        if (validateInput()) {
+            repository.insert(habit = entryUiState.currentHabit.toHabit())
+        }
+    }
 
 }

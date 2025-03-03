@@ -48,23 +48,22 @@ import com.example.habittracker.ui.HabitAppBar
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 import kotlin.enums.EnumEntries
 
-object AddHabitDestination : NavigationDestination {
-    override val route = "add_habit"
+object HabitEntryDestination : NavigationDestination {
+    override val route = "entry_habit"
     override val title = R.string.create_habit
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddHabitScreen(
+fun HabitEntryScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AddHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: HabitEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
     Scaffold(
         topBar = {
             HabitAppBar(
-                title = stringResource(AddHabitDestination.title),
+                title = stringResource(HabitEntryDestination.title),
                 canNavigateBack = true,
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
                 navigateUp = navigateBack
@@ -166,8 +165,8 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitDetails.repeatedTimes,
-        label = { Text(text = stringResource(R.string.repeatedTimes)) },
-        onValueChange = { habitDetails.copy(repeatedTimes = it) },
+        placeholder = { Text(text = stringResource(R.string.repeatedTimes)) },
+        onValueChange = { onValueChange(habitDetails.copy(repeatedTimes = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Number
