@@ -1,5 +1,6 @@
 package com.example.habittracker.data
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitPeriodicity
@@ -51,7 +52,7 @@ object FakeRepository {
     private val _habits = MutableStateFlow<List<Habit>>(emptyHabits)
     val habits: StateFlow<List<Habit>> = _habits
 
-    fun insert(habit: Habit) {
+    fun addHabit(habit: Habit) {
         _habits.value += habit
     }
 
@@ -68,5 +69,9 @@ object FakeRepository {
             updatedHabits[index] = habit
             _habits.value = updatedHabits
         }
+        Log.e("check", habits.value.last().name)
+        Log.e("check", habit.name)
+        Log.e("check", habits.value.last().id)
+        Log.e("check", habit.id)
     }
 }

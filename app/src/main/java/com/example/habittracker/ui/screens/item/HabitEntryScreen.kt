@@ -45,7 +45,7 @@ import com.example.habittracker.R
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.AppViewModelProvider
-import com.example.habittracker.ui.HabitAppBar
+import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 import kotlin.enums.EnumEntries
 
@@ -111,10 +111,11 @@ fun HabitInputForm(
     onValueChange: (HabitDetails) -> Unit = {},
     modifier: Modifier
 ) {
+    val required = "*"
 
     OutlinedTextField(
         value = habitDetails.name,
-        label = { Text(text = stringResource(R.string.name)) },
+        label = { Text(text = stringResource(R.string.set_name) + required) },
         onValueChange = { onValueChange(habitDetails.copy(name = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -126,7 +127,7 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitDetails.description,
-        label = { Text(text = stringResource(R.string.description)) },
+        label = { Text(text = stringResource(R.string.set_description) + required) },
         onValueChange = { onValueChange(habitDetails.copy(description = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -149,7 +150,7 @@ fun HabitInputForm(
     PriorityCard(
         selectedValue = habitDetails.priority,
         options = HabitPriority.entries,
-        label = "Назначить приоритет",
+        label = stringResource(R.string.set_priority),
         onOptionSelected = { onValueChange(habitDetails.copy(priority = it)) },
         modifier = modifier.fillMaxWidth()
     )
@@ -158,12 +159,12 @@ fun HabitInputForm(
         selectedValue = habitDetails.type,
         onOptionSelected = { onValueChange(habitDetails.copy(type = it)) },
         options = HabitType.entries,
-        label = "Тип привычки",
+        label = stringResource(R.string.set_type) + required,
     )
 
     OutlinedTextField(
         value = habitDetails.frequency,
-        label = { Text(text = stringResource(R.string.frequency)) },
+        label = { Text(text = stringResource(R.string.set_frequency)) },
         onValueChange = { onValueChange(habitDetails.copy(frequency = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -175,7 +176,7 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitDetails.repeatedTimes,
-        placeholder = { Text(text = stringResource(R.string.repeatedTimes)) },
+        placeholder = { Text(text = stringResource(R.string.set_repeated_times)) },
         onValueChange = { onValueChange(habitDetails.copy(repeatedTimes = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,

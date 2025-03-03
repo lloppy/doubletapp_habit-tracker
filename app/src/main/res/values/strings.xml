@@ -7,11 +7,13 @@
     <string name="detail">Детали привычки</string>
     <string name="create">Create</string>
     <string name="no_items">Привычки еще не созданы</string>
-    <string name="name">Name</string>
-    <string name="description">Description</string>
+    <string name="set_name">Name</string>
+    <string name="set_description">Description</string>
     <string name="color">Color</string>
     <string name="prority">Priority</string>
-    <string name="repeatedTimes">Сколько раз в день повторять</string>
-    <string name="frequency">Frequency</string>
+    <string name="set_repeated_times">Сколько раз в день повторять</string>
+    <string name="set_frequency">Frequency</string>
     <string name="save">Сохранить</string>
+    <string name="set_type">Тип привычки</string>
+    <string name="set_priority">Назначить приоритет</string>
 </resources>

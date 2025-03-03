@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.ui.AppViewModelProvider
-import com.example.habittracker.ui.HabitAppBar
+import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
 object EditHabitDestination : NavigationDestination {

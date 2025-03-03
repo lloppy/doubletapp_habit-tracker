@@ -10,6 +10,7 @@ import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitPeriodicity
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
+import java.util.UUID
 
 data class HabitEntryState(
     val currentHabit: HabitDetails = HabitDetails(),
@@ -40,18 +41,19 @@ class HabitEntryViewModel(
     }
 
     private fun canParseInt(repeatedTimes: String): Boolean {
-        return repeatedTimes.toIntOrNull() != null
+        return repeatedTimes.toIntOrNull() != null || repeatedTimes.isBlank()
     }
 
 
     fun saveItem() {
         if (validateInput()) {
-            repository.insert(habit = entryUiState.currentHabit.toHabit())
+            repository.addHabit(habit = entryUiState.currentHabit.toHabit())
         }
     }
 }
 
 data class HabitDetails(
+    val id: String = UUID.randomUUID().toString(),
     val name: String = "",
     val description: String = "",
     val priority: String = "",
@@ -62,16 +64,23 @@ data class HabitDetails(
 )
 
 fun HabitDetails.toHabit(): Habit = Habit(
+    id = id,
     name = name,
     description = description,
-    priority = HabitPriority.entries.first{it.priorityName == priority},
-    type = HabitType.entries.first{it.typeName == type},
-    periodicity = HabitPeriodicity(frequency = frequency, repeatedTimes = repeatedTimes.toInt()),
+    priority = HabitPriority.entries.firstOrNull { it.priorityName == priority }
+        ?: HabitPriority.MEDIUM,
+    type = HabitType.entries.firstOrNull { it.typeName == type }
+        ?: HabitType.PRODUCTIVITY,
+    periodicity = HabitPeriodicity(
+        frequency = frequency,
+        repeatedTimes = repeatedTimes.toIntOrNull() ?: 1
+    ),
     color = color //TODO()
 )
 
 
 fun Habit.toUiState(): HabitDetails = HabitDetails(
+    id = id,
     name = name,
     description = description,
     priority = priority.priorityName,
