@@ -17,7 +17,6 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         val repository: FakeRepository = FakeRepository
 
-
         initializer {
             MainViewModel(
                 themeRepository = ThemeRepository(habitApplication().applicationContext)
@@ -42,9 +41,7 @@ object AppViewModelProvider {
                 repository = repository
             )
         }
-
     }
-
 }
 
 fun CreationExtras.habitApplication(): HabitTrackerApplication =

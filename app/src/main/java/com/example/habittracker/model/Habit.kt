@@ -10,12 +10,12 @@ data class Habit(
     val description: String = "",
     val type: HabitType,
     val priority: HabitPriority = HabitPriority.MEDIUM,
-    val periodicity: HabitPeriodicity = HabitPeriodicity(""),
+    val periodicity: HabitPeriodicity = HabitPeriodicity(),
     val color: Color = Color.LightGray
 )
 
 class HabitPeriodicity(
-    val frequency: String,
+    val frequency: String = "",
     val repeatedTimes: Int = 1,
     val currentRepeated: Int = 0
 )

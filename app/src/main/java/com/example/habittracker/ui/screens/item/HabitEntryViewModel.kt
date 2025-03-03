@@ -13,7 +13,7 @@ import com.example.habittracker.model.HabitType
 import java.util.UUID
 
 data class HabitEntryState(
-    val currentHabit: HabitDetails = HabitDetails(),
+    val currentHabit: HabitEntity = HabitEntity(),
     val isEntryValid: Boolean = false,
 )
 
@@ -24,14 +24,14 @@ class HabitEntryViewModel(
     var entryUiState by mutableStateOf(HabitEntryState())
         private set
 
-    fun updateUiState(newHabit: HabitDetails) {
+    fun updateUiState(newHabit: HabitEntity) {
         entryUiState = HabitEntryState(
             currentHabit = newHabit,
             isEntryValid = validateInput(newHabit)
         )
     }
 
-    private fun validateInput(uiState: HabitDetails = entryUiState.currentHabit): Boolean {
+    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean {
         return with(uiState) {
             name.isNotBlank()
                     && type.isNotBlank()
@@ -51,7 +51,7 @@ class HabitEntryViewModel(
     }
 }
 
-data class HabitDetails(
+data class HabitEntity(
     val id: String = UUID.randomUUID().toString(),
     val name: String = "",
     val description: String = "",
@@ -62,7 +62,7 @@ data class HabitDetails(
     val color: Color = Color.Green,
 )
 
-fun HabitDetails.toHabit(): Habit = Habit(
+fun HabitEntity.toHabit(): Habit = Habit(
     id = id,
     name = name,
     description = description,
@@ -78,7 +78,7 @@ fun HabitDetails.toHabit(): Habit = Habit(
 )
 
 
-fun Habit.toUiState(): HabitDetails = HabitDetails(
+fun Habit.toUiState(): HabitEntity = HabitEntity(
     id = id,
     name = name,
     description = description,

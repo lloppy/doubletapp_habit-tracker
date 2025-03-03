@@ -79,8 +79,7 @@ fun HabitEntryScreen(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
                 .padding(
-                    top = paddingValue.calculateTopPadding()
-                        .plus(paddingMedium),
+                    top = paddingValue.calculateTopPadding().plus(paddingMedium),
                     start = paddingMedium,
                     end = paddingMedium,
                     bottom = paddingValue.calculateBottomPadding()
@@ -89,7 +88,7 @@ fun HabitEntryScreen(
         ) {
 
             HabitInputForm(
-                habitDetails = viewModel.entryUiState.currentHabit,
+                habitEntity = viewModel.entryUiState.currentHabit,
                 onValueChange = viewModel::updateUiState,
                 modifier = modifier
             )
@@ -110,16 +109,16 @@ fun HabitEntryScreen(
 
 @Composable
 fun HabitInputForm(
-    habitDetails: HabitDetails,
-    onValueChange: (HabitDetails) -> Unit = {},
+    habitEntity: HabitEntity,
+    onValueChange: (HabitEntity) -> Unit = {},
     modifier: Modifier
 ) {
     val required = "*"
 
     OutlinedTextField(
-        value = habitDetails.name,
+        value = habitEntity.name,
         label = { Text(text = stringResource(R.string.set_name, required)) },
-        onValueChange = { onValueChange(habitDetails.copy(name = it)) },
+        onValueChange = { onValueChange(habitEntity.copy(name = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
@@ -129,9 +128,9 @@ fun HabitInputForm(
     )
 
     OutlinedTextField(
-        value = habitDetails.description,
+        value = habitEntity.description,
         label = { Text(text = stringResource(R.string.set_description)) },
-        onValueChange = { onValueChange(habitDetails.copy(description = it)) },
+        onValueChange = { onValueChange(habitEntity.copy(description = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
@@ -141,29 +140,29 @@ fun HabitInputForm(
     )
 
     HabitTypeCard(
-        selectedValue = habitDetails.type,
-        onOptionSelected = { onValueChange(habitDetails.copy(type = it)) },
+        selectedValue = habitEntity.type,
+        onOptionSelected = { onValueChange(habitEntity.copy(type = it)) },
         options = HabitType.entries,
         label = stringResource(R.string.set_type, required),
     )
 
     ColorCard(
-        habitColor = habitDetails.color,
+        habitColor = habitEntity.color,
         modifier = modifier.fillMaxWidth()
     )
 
     PriorityCard(
-        selectedValue = habitDetails.priority,
+        selectedValue = habitEntity.priority,
         options = HabitPriority.entries,
         label = stringResource(R.string.set_priority),
-        onOptionSelected = { onValueChange(habitDetails.copy(priority = it)) },
+        onOptionSelected = { onValueChange(habitEntity.copy(priority = it)) },
         modifier = modifier.fillMaxWidth()
     )
 
     OutlinedTextField(
-        value = habitDetails.frequency,
+        value = habitEntity.frequency,
         label = { Text(text = stringResource(R.string.set_frequency)) },
-        onValueChange = { onValueChange(habitDetails.copy(frequency = it)) },
+        onValueChange = { onValueChange(habitEntity.copy(frequency = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
@@ -173,9 +172,9 @@ fun HabitInputForm(
     )
 
     OutlinedTextField(
-        value = habitDetails.repeatedTimes,
+        value = habitEntity.repeatedTimes,
         placeholder = { Text(text = stringResource(R.string.set_repeated_times)) },
-        onValueChange = { onValueChange(habitDetails.copy(repeatedTimes = it)) },
+        onValueChange = { onValueChange(habitEntity.copy(repeatedTimes = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Number,

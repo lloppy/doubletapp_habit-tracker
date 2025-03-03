@@ -52,8 +52,7 @@ fun EditHabitScreen(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
                 .padding(
-                    top = paddingValue.calculateTopPadding()
-                        .plus(paddingMedium),
+                    top = paddingValue.calculateTopPadding().plus(paddingMedium),
                     start = paddingMedium,
                     end = paddingMedium,
                     bottom = paddingValue.calculateBottomPadding()
@@ -62,7 +61,7 @@ fun EditHabitScreen(
         ) {
 
             HabitInputForm(
-                habitDetails = viewModel.entryUiState.currentHabit,
+                habitEntity = viewModel.entryUiState.currentHabit,
                 onValueChange = viewModel::updateUiState,
                 modifier = modifier
             )

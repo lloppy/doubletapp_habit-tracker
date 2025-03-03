@@ -19,17 +19,11 @@ class HabitTrackerViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = DELAY_FOR_IMITATE_LOADING),
             initialValue = HabitTrackerState.Loading
-
         )
 
-    fun increaseRepeated(habitId: String){
-        repository.increaseQuantity(habitId = habitId)
+    fun increaseRepeated(habitId: String) = repository.increaseQuantity(habitId = habitId)
 
-    }
-
-    fun decreaseRepeated(habitId: String) {
-        repository.decreaseQuantity(habitId = habitId)
-    }
+    fun decreaseRepeated(habitId: String) = repository.decreaseQuantity(habitId = habitId)
 
 
     companion object {

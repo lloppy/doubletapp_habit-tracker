@@ -19,7 +19,6 @@ import com.example.habittracker.ui.screens.item.HabitEntryScreen
 fun HabitNavigation(
     navController: NavHostController
 ) {
-
     NavHost(
         navController = navController,
         startDestination = HomeDestination.route

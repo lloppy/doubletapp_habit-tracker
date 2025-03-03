@@ -22,7 +22,7 @@ class EditHabitViewModel(
     var entryUiState by mutableStateOf(HabitEntryState())
         private set
 
-    fun updateUiState(newHabit: HabitDetails) {
+    fun updateUiState(newHabit: HabitEntity) {
         entryUiState = HabitEntryState(
             currentHabit = newHabit,
             isEntryValid = validateInput(newHabit)
@@ -43,22 +43,21 @@ class EditHabitViewModel(
         }
     }
 
-    private fun validateInput(uiState: HabitDetails = entryUiState.currentHabit): Boolean {
-        return with(uiState) {
+    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
+        with(uiState) {
             name.isNotBlank()
                     && type.isNotBlank()
                     && canParseInt(uiState.repeatedTimes)
         }
-    }
 
-    private fun canParseInt(repeatedTimes: String): Boolean {
-        return repeatedTimes.toIntOrNull() != null
-    }
 
-    fun updateItem(){
+    private fun canParseInt(repeatedTimes: String): Boolean =
+        repeatedTimes.toIntOrNull() != null
+
+
+    fun updateItem() {
         if (validateInput()) {
             repository.updateItem(habit = entryUiState.currentHabit.toHabit())
         }
     }
-
 }
