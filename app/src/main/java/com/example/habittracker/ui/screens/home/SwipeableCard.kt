@@ -32,11 +32,17 @@ fun SwipeableCard(
 
     LaunchedEffect(dismissState.currentValue) {
         when (dismissState.currentValue) {
+            SwipeToDismissBoxValue.StartToEnd -> {
+                dismissState.reset()
+            }
+
             SwipeToDismissBoxValue.EndToStart -> {
                 onClickEdit()
                 dismissState.reset()
             }
-            else -> { /* No action needed */ }
+
+            else -> { /* No action needed */
+            }
         }
     }
 
@@ -60,6 +66,7 @@ fun SwipeableCard(
                         contentDescription = "Edit"
                     )
                 }
+
             }
         }
     ) {
