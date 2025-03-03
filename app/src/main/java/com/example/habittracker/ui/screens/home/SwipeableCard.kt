@@ -41,8 +41,7 @@ fun SwipeableCard(
                 dismissState.reset()
             }
 
-            else -> { /* No action needed */
-            }
+            else -> { /* No action needed */ }
         }
     }
 
