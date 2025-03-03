@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,7 +25,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -60,27 +60,28 @@ fun AddHabitScreen(
     modifier: Modifier = Modifier,
     viewModel: HabitDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
         topBar = {
             HabitAppBar(
                 title = stringResource(AddHabitDestination.title),
                 canNavigateBack = true,
-                scrollBehavior = scrollBehavior,
+                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
                 navigateUp = navigateBack
             )
-        },
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+        }
     ) { paddingValue ->
 
         Column(
-            modifier = modifier.padding(
-                top = paddingValue.calculateTopPadding()
-                    .plus(dimensionResource(R.dimen.padding_medium)),
-                start = dimensionResource(R.dimen.padding_medium),
-                end = dimensionResource(R.dimen.padding_medium)
-            ),
+            modifier = modifier
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    top = paddingValue.calculateTopPadding()
+                        .plus(dimensionResource(R.dimen.padding_medium)),
+                    start = dimensionResource(R.dimen.padding_medium),
+                    end = dimensionResource(R.dimen.padding_medium),
+                    bottom = paddingValue.calculateBottomPadding()
+                ),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
         ) {
 
@@ -111,7 +112,7 @@ private fun HabitInputForm(
     modifier: Modifier
 ) {
 
-    TextField(
+    OutlinedTextField(
         value = habitDetails.name,
         label = { Text(text = stringResource(R.string.name)) },
         onValueChange = { onValueChange(habitDetails.copy(name = it)) },
@@ -120,7 +121,7 @@ private fun HabitInputForm(
         modifier = Modifier.fillMaxWidth()
     )
 
-    TextField(
+    OutlinedTextField(
         value = habitDetails.description,
         label = { Text(text = stringResource(R.string.description)) },
         onValueChange = { onValueChange(habitDetails.copy(description = it)) },
@@ -154,7 +155,7 @@ private fun HabitInputForm(
         label = "Тип привычки",
     )
 
-    TextField(
+    OutlinedTextField(
         value = habitDetails.frequency,
         label = { Text(text = stringResource(R.string.frequency)) },
         onValueChange = { onValueChange(habitDetails.copy(frequency = it)) },
@@ -163,8 +164,7 @@ private fun HabitInputForm(
         modifier = Modifier.fillMaxWidth()
     )
 
-
-    TextField(
+    OutlinedTextField(
         value = habitDetails.repeatedTimes,
         label = { Text(text = stringResource(R.string.repeatedTimes)) },
         onValueChange = { habitDetails.copy(repeatedTimes = it) },

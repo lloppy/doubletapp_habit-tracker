@@ -19,7 +19,7 @@ object HabitEditDestination : NavigationDestination {
 fun EditHabitScreen(
     navigateBack: () -> Boolean,
     modifier: Modifier = Modifier,
-    viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: HabitDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val selectedHabit = viewModel.entryUiState.currentHabit
 
