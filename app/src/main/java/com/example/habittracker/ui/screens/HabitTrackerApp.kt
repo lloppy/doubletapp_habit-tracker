@@ -30,7 +30,6 @@ fun HabitTrackerApp(
     )
 }
 
-
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun HabitAppBar(

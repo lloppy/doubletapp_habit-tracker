@@ -3,6 +3,7 @@ package com.example.habittracker.ui.screens.item
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.shared.HabitInputForm
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
 object EditHabitDestination : NavigationDestination {
@@ -72,7 +74,7 @@ fun EditHabitScreen(
                     navigateBack()
                 },
                 enabled = viewModel.entryUiState.isEntryValid,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth().height(dimensionResource(R.dimen.button_size))
             ) {
                 Text(text = stringResource(R.string.save))
             }

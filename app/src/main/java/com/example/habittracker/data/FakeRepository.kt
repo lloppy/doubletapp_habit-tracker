@@ -43,6 +43,7 @@ object FakeRepository {
     private fun updateHabitQuantity(habitId: String, delta: Int) {
         val updatedHabits = _habits.value.toMutableList()
         val index = updatedHabits.indexOfFirst { it.id == habitId }
+
         if (index != -1) {
             val currentRepeated = updatedHabits[index].periodicity.currentRepeated
             val newRepeated = currentRepeated + delta

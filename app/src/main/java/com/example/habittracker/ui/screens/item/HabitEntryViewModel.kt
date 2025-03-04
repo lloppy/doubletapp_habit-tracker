@@ -33,15 +33,12 @@ class HabitEntryViewModel(
 
     private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean {
         return with(uiState) {
-            name.isNotBlank()
-                    && type.isNotBlank()
-                    && canParseInt(uiState.repeatedTimes)
+            name.isNotBlank() && type.isNotBlank() && canParseInt(uiState.repeatedTimes)
         }
     }
 
-    private fun canParseInt(repeatedTimes: String): Boolean {
-        return repeatedTimes.toIntOrNull() != null || repeatedTimes.isBlank()
-    }
+    private fun canParseInt(repeatedTimes: String): Boolean =
+        repeatedTimes.toIntOrNull() != null || repeatedTimes.isBlank()
 
 
     fun saveItem() {
@@ -55,26 +52,34 @@ data class HabitEntity(
     val id: String = UUID.randomUUID().toString(),
     val name: String = "",
     val description: String = "",
-    val priority: String = "",
+
     val type: String = "",
+    val priority: String = "",
+
     val frequency: String = "",
     val repeatedTimes: String = "",
-    val color: Color = Color.Green,
+    val currentRepeated: String = "",
+
+    val color: Color = Color.Yellow
 )
 
 fun HabitEntity.toHabit(): Habit = Habit(
     id = id,
     name = name,
     description = description,
+
     priority = HabitPriority.entries.firstOrNull { it.priorityName == priority }
         ?: HabitPriority.MEDIUM,
     type = HabitType.entries.firstOrNull { it.typeName == type }
         ?: HabitType.PRODUCTIVITY,
+
     periodicity = HabitPeriodicity(
         frequency = frequency,
-        repeatedTimes = repeatedTimes.toIntOrNull() ?: 1
+        repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
+        currentRepeated = currentRepeated.toIntOrNull() ?: 0
     ),
-    color = color //TODO()
+
+    color = color
 )
 
 
@@ -82,9 +87,13 @@ fun Habit.toUiState(): HabitEntity = HabitEntity(
     id = id,
     name = name,
     description = description,
+
     priority = priority.priorityName,
     type = type.typeName,
+
     frequency = periodicity.frequency,
     repeatedTimes = periodicity.repeatedTimes.toString(),
-    color = color //TODO()
+    currentRepeated = periodicity.currentRepeated.toString(),
+
+    color = color
 )

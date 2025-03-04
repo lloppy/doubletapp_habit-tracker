@@ -33,6 +33,7 @@ import com.example.habittracker.R
 import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.home.components.SwipeableCard
 import com.example.habittracker.ui.screens.navigation.NavigationDestination
 
 object HomeDestination : NavigationDestination {

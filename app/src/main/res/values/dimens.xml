@@ -9,4 +9,7 @@
     <dimen name="emoji_size">32.sp</dimen>
 
     <dimen name="line_height">18.sp</dimen>
+    <dimen name="button_size">50.dp</dimen>
+    <dimen name="corner_round">18.dp</dimen>
+    <dimen name="color_selector_height">120.dp</dimen>
 </resources>

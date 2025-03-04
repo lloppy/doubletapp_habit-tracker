@@ -19,7 +19,11 @@
     <string name="set_priority">Назначить приоритет</string>
 
     <string name="priority">Priority</string>
-    <string name="color">Color</string>
+    <string name="current_color">Текущий цвет</string>
+    <string name="change_color">Изменить цвет</string>
     <string name="times">раз</string>
+    <string name="select_color">Выберите цвет привычки</string>
+    <string name="ok">Ок</string>
+    <string name="cancel">Отмена</string>
 
 </resources>

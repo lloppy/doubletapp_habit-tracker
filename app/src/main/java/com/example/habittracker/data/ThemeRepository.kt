@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.example.habittracker.ui.theme.AppTheme
 
 
-class ThemeRepository(private val context: Context) {
+class ThemeRepository(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(SHAR_PREF_THEME_KEY, Context.MODE_PRIVATE)
 
