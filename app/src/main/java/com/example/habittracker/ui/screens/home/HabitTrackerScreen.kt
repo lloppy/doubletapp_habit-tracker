@@ -22,6 +22,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -32,9 +33,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.AppViewModelProvider
+import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.home.components.SwipeableCard
-import com.example.habittracker.ui.screens.navigation.NavigationDestination
+import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
     override val route = "home"
@@ -45,12 +46,13 @@ object HomeDestination : NavigationDestination {
 @Composable
 fun HabitTrackerScreen(
     onClickAddItem: () -> Unit,
-    onClickHabit: (String) -> Unit,
-    onClickEdit: (String) -> Unit,
+    onClickHabit: (Int) -> Unit,
+    onClickEdit: (Int) -> Unit,
     modifier: Modifier,
     viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -85,9 +87,26 @@ fun HabitTrackerScreen(
             is HabitTrackerState.Success -> {
                 HabitContent(
                     habits = state.habits,
-                    onIncreaseRepeated = viewModel::increaseRepeated,
-                    onDecreaseRepeated = viewModel::decreaseRepeated,
-                    onClickHabit = onClickHabit,
+                    onIncreaseRepeated = {
+                        coroutineScope.launch {
+                            viewModel.increaseRepeated(it)
+                        }
+                    },
+                    onDecreaseRepeated = {
+                        coroutineScope.launch {
+                            viewModel.decreaseRepeated(it)
+                        }
+                    },
+                    onClickHabit = {
+                        coroutineScope.launch {
+                            onClickHabit.invoke(it)
+                        }
+                    },
+                    onClickDelete = {
+                        coroutineScope.launch {
+                            viewModel.deleteItemById(it)
+                        }
+                    },
                     onClickEdit = onClickEdit,
                     modifier = modifier,
                     contentPadding = paddingValue
@@ -100,10 +119,11 @@ fun HabitTrackerScreen(
 @Composable
 fun HabitContent(
     habits: List<Habit>,
-    onIncreaseRepeated: (String) -> Unit,
-    onDecreaseRepeated: (String) -> Unit,
-    onClickHabit: (String) -> Unit,
-    onClickEdit: (String) -> Unit,
+    onIncreaseRepeated: (Int) -> Unit,
+    onDecreaseRepeated: (Int) -> Unit,
+    onClickHabit: (Int) -> Unit,
+    onClickDelete: (Int) -> Unit,
+    onClickEdit: (Int) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
@@ -124,6 +144,7 @@ fun HabitContent(
                     onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
                     onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
                     onClickHabit = { onClickHabit(habit.id) },
+                    onClickDelete = { onClickDelete(habit.id) },
                     onClickEdit = { onClickEdit(habit.id) },
                     modifier = Modifier
                         .fillMaxWidth()

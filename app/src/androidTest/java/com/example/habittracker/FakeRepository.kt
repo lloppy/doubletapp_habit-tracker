@@ -1,13 +1,12 @@
-package com.example.habittracker.data
+package com.example.habittracker
 
 import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitPeriodicity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 
-object FakeRepository {
+class FakeRepository {
 
     private val emptyHabits = emptyList<Habit>()
 
@@ -18,7 +17,7 @@ object FakeRepository {
         _habits.value += habit
     }
 
-    fun getSingleHabit(habitId: String): Flow<Habit> =
+    fun getSingleHabit(habitId: Int): Flow<Habit> =
         flow {
             val habit = checkNotNull(habits.value.find { it.id == habitId })
             emit(habit)
@@ -37,23 +36,22 @@ object FakeRepository {
         _habits.value = emptyHabits
     }
 
-    private fun updateHabitQuantity(habitId: String, delta: Int) {
+    private fun updateHabitQuantity(habitId: Int, delta: Int) {
         val updatedHabits = _habits.value.toMutableList()
         val index = updatedHabits.indexOfFirst { it.id == habitId }
 
         if (index != -1) {
-            val currentRepeated = updatedHabits[index].periodicity.currentRepeated
+            val currentRepeated = updatedHabits[index].quantity
             val newRepeated = currentRepeated + delta
 
-            if ((delta > 0 && newRepeated <= updatedHabits[index].periodicity.repeatedTimes) ||
+            if ((delta > 0 && newRepeated <= updatedHabits[index].repeatedTimes) ||
                 (delta < 0 && newRepeated >= 0)
             ) {
                 val updatedHabit = updatedHabits[index].copy(
-                    periodicity = HabitPeriodicity(
-                        frequency = updatedHabits[index].periodicity.frequency,
-                        repeatedTimes = updatedHabits[index].periodicity.repeatedTimes,
-                        currentRepeated = newRepeated
-                    )
+                        frequency = updatedHabits[index].frequency,
+                        repeatedTimes = updatedHabits[index].repeatedTimes,
+                        quantity = newRepeated
+
                 )
                 updatedHabits[index] = updatedHabit
                 _habits.value = updatedHabits
@@ -61,11 +59,11 @@ object FakeRepository {
         }
     }
 
-    fun increaseQuantity(habitId: String) {
+    fun increaseQuantity(habitId: Int) {
         updateHabitQuantity(habitId, 1)
     }
 
-    fun decreaseQuantity(habitId: String) {
+    fun decreaseQuantity(habitId: Int) {
         updateHabitQuantity(habitId, -1)
     }
 }

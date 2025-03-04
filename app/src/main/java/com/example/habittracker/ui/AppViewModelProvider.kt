@@ -6,7 +6,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.habittracker.HabitTrackerApplication
-import com.example.habittracker.data.FakeRepository
 import com.example.habittracker.data.ThemeRepository
 import com.example.habittracker.ui.screens.MainViewModel
 import com.example.habittracker.ui.screens.home.HabitTrackerViewModel
@@ -15,7 +14,6 @@ import com.example.habittracker.ui.screens.item.HabitEntryViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
-        val repository: FakeRepository = FakeRepository
 
         initializer {
             MainViewModel(
@@ -25,20 +23,20 @@ object AppViewModelProvider {
 
         initializer {
             HabitTrackerViewModel(
-                repository = repository
+                repository = habitApplication().container.habitsRepository
             )
         }
 
         initializer {
             HabitEntryViewModel(
-                repository = repository
+                repository = habitApplication().container.habitsRepository
             )
         }
 
         initializer {
             EditHabitViewModel(
                 this.createSavedStateHandle(),
-                repository = repository
+                repository = habitApplication().container.habitsRepository
             )
         }
     }

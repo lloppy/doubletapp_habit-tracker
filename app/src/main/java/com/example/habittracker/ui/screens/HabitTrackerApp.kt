@@ -16,8 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.habittracker.LocalTheme
 import com.example.habittracker.R
+import com.example.habittracker.ui.navigation.HabitNavigation
 import com.example.habittracker.ui.screens.home.HomeDestination
-import com.example.habittracker.ui.screens.navigation.HabitNavigation
 import com.example.habittracker.ui.theme.AppTheme
 import com.example.habittracker.ui.theme.LocalThemeChange
 

@@ -8,7 +8,7 @@
       <SelectionState runConfigName="HabitRepositoryTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="daoInsert_insertsItemIntoDB()">
+      <SelectionState runConfigName="HabitsRepositoryTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

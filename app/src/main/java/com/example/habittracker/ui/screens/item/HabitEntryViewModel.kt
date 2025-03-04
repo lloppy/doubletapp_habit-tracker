@@ -5,12 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.habittracker.data.FakeRepository
+import com.example.habittracker.data.HabitsRepository
 import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitPeriodicity
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
-import java.util.UUID
 
 data class HabitEntryState(
     val currentHabit: HabitEntity = HabitEntity(),
@@ -18,7 +16,7 @@ data class HabitEntryState(
 )
 
 class HabitEntryViewModel(
-    private val repository: FakeRepository
+    private val repository: HabitsRepository
 ) : ViewModel() {
 
     var entryUiState by mutableStateOf(HabitEntryState())
@@ -41,25 +39,22 @@ class HabitEntryViewModel(
         repeatedTimes.toIntOrNull() != null || repeatedTimes.isBlank()
 
 
-    fun saveItem() {
+    suspend fun saveItem() {
         if (validateInput()) {
-            repository.addHabit(habit = entryUiState.currentHabit.toHabit())
+            repository.insert(habit = entryUiState.currentHabit.toHabit())
         }
     }
 }
 
 data class HabitEntity(
-    val id: String = UUID.randomUUID().toString(),
+    val id: Int = 0,
     val name: String = "",
     val description: String = "",
-
     val type: String = "",
     val priority: String = "",
-
     val frequency: String = "",
     val repeatedTimes: String = "",
-    val currentRepeated: String = "",
-
+    val quantity: String = "",
     val color: Color = Color.Yellow
 )
 
@@ -73,11 +68,9 @@ fun HabitEntity.toHabit(): Habit = Habit(
     type = HabitType.entries.firstOrNull { it.typeName == type }
         ?: HabitType.PRODUCTIVITY,
 
-    periodicity = HabitPeriodicity(
-        frequency = frequency,
-        repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
-        currentRepeated = currentRepeated.toIntOrNull() ?: 0
-    ),
+    frequency = frequency,
+    repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
+    quantity = quantity.toIntOrNull() ?: 0,
 
     color = color
 )
@@ -91,9 +84,9 @@ fun Habit.toUiState(): HabitEntity = HabitEntity(
     priority = priority.priorityName,
     type = type.typeName,
 
-    frequency = periodicity.frequency,
-    repeatedTimes = periodicity.repeatedTimes.toString(),
-    currentRepeated = periodicity.currentRepeated.toString(),
+    frequency = frequency,
+    repeatedTimes = repeatedTimes.toString(),
+    quantity = quantity.toString(),
 
     color = color
 )

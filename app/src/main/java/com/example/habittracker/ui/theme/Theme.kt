@@ -256,13 +256,13 @@ fun HabitTrackerTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
-    val colorScheme = if (isDarkTheme) darkColorScheme() else lightColorScheme()
+    val colorScheme = if (isDarkTheme) darkScheme else lightScheme
 
-  MaterialTheme(
-    colorScheme = colorScheme,
-    typography = typography,
-    content = content
-  )
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = typography,
+        content = content
+    )
 }
 
 enum class AppTheme {

@@ -2,28 +2,36 @@
     <string name="app_name">Habit Tracker</string>
     <string name="back_button">back</string>
     <string name="item_entry_title">add item</string>
+
     <string name="item_edit_title">Редактировать</string>
     <string name="create_habit">Создать новую привычку</string>
 
     <string name="save">Сохранить</string>
     <string name="detail">Детали привычки</string>
-    <string name="create">Create</string>
+    <string name="create">Готово</string>
 
     <string name="no_items">Привычки еще не созданы</string>
 
-    <string name="set_name">Name%s</string>
-    <string name="set_description">Description</string>
+    <string name="set_name">Название%s</string>
+    <string name="set_description">Описание</string>
     <string name="set_repeated_times">Сколько раз в день повторять</string>
     <string name="set_frequency">Частота</string>
     <string name="set_type">Тип привычки%s</string>
     <string name="set_priority">Назначить приоритет</string>
+    <string name="priority">Приоритет</string>
 
-    <string name="priority">Priority</string>
     <string name="current_color">Текущий цвет</string>
     <string name="change_color">Изменить цвет</string>
     <string name="times">раз</string>
     <string name="select_color">Выберите цвет привычки</string>
     <string name="ok">Ок</string>
+
     <string name="cancel">Отмена</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+
+    <string name="delete_habit">Удаление привычки</string>
+    <string name="sure_delete">Вы уверены, что хотите удалить эту привычку?</string>
+    <string name="confirm">Подтвердить</string>
 
 </resources>

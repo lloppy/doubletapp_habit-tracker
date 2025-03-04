@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.FakeRepository
+import com.example.habittracker.data.HabitsRepository
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
 
 class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: FakeRepository
+    private val repository: HabitsRepository
 ) : ViewModel() {
-    private val habitName: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
+    private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
     var entryUiState by mutableStateOf(HabitEntryState())
         private set
@@ -31,7 +31,7 @@ class EditHabitViewModel(
 
     init {
         viewModelScope.launch {
-            entryUiState = repository.getSingleHabit(habitName)
+            entryUiState = repository.getHabit(checkNotNull(stringId.toIntOrNull()))
                 .filterNotNull()
                 .map {
                     HabitEntryState(
@@ -53,9 +53,13 @@ class EditHabitViewModel(
         repeatedTimes.toIntOrNull() != null
 
 
-    fun updateItem() {
+    suspend fun updateItem() {
         if (validateInput()) {
-            repository.updateItem(habit = entryUiState.currentHabit.toHabit())
+            repository.update(newHabit = entryUiState.currentHabit.toHabit())
         }
+    }
+
+    suspend fun deleteItem() {
+        repository.delete(entryUiState.currentHabit.toHabit())
     }
 }

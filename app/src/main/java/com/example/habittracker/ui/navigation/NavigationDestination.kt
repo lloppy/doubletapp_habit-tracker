@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.navigation
+package com.example.habittracker.ui.navigation
 
 interface NavigationDestination {
     val route: String
