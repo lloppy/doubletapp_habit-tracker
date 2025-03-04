@@ -27,7 +27,7 @@ class HabitTrackerViewModel(
 
 
     companion object {
-        const val DELAY_FOR_IMITATE_LOADING = 1_000L
+        const val DELAY_FOR_IMITATE_LOADING = 3_000L
     }
 }
 
