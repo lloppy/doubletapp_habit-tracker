@@ -91,13 +91,10 @@ fun EditHabitScreen(
         Column(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
+                .padding(horizontal =  dimensionResource(R.dimen.padding_medium))
                 .padding(
-                    top = paddingValue.calculateTopPadding()
-                        .plus(dimensionResource(R.dimen.padding_medium)),
-                    start = dimensionResource(R.dimen.padding_medium),
-                    end = dimensionResource(R.dimen.padding_medium),
-                    bottom = paddingValue.calculateBottomPadding()
-                        .plus(dimensionResource(R.dimen.padding_medium))
+                    top = paddingValue.calculateTopPadding().plus(dimensionResource(R.dimen.padding_medium)),
+                    bottom = paddingValue.calculateBottomPadding().plus(dimensionResource(R.dimen.padding_medium))
                 ),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
         ) {
@@ -134,6 +131,5 @@ fun EditHabitScreen(
             }
         }
     }
-
 }
 

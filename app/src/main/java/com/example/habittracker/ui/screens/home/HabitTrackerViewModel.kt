@@ -17,7 +17,7 @@ class HabitTrackerViewModel(
             HabitTrackerState.Success(it)
         }.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = DELAY_FOR_IMITATE_LOADING),
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING),
             initialValue = HabitTrackerState.Loading
         )
 
@@ -35,7 +35,7 @@ class HabitTrackerViewModel(
 
 
     companion object {
-        const val DELAY_FOR_IMITATE_LOADING = 3_000L
+        const val DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING = 3_000L
     }
 }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.habittracker.HabitTrackerApplication
-import com.example.habittracker.data.ThemeRepository
 import com.example.habittracker.ui.screens.MainViewModel
 import com.example.habittracker.ui.screens.home.HabitTrackerViewModel
 import com.example.habittracker.ui.screens.item.EditHabitViewModel
@@ -17,7 +16,7 @@ object AppViewModelProvider {
 
         initializer {
             MainViewModel(
-                themeRepository = ThemeRepository(habitApplication().applicationContext)
+                themeRepository = habitApplication().container.themeRepository
             )
         }
 

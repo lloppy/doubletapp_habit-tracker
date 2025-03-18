@@ -4,6 +4,7 @@ import android.content.Context
 
 interface AppContainer {
     val habitsRepository: HabitsRepository
+    val themeRepository: ThemeRepository
 }
 
 class AppDataContainer(private val context: Context) : AppContainer {
@@ -13,5 +14,6 @@ class AppDataContainer(private val context: Context) : AppContainer {
             habitDao = OfflineDatabase.getDatabase(context).habitDao()
         )
     }
+    override val themeRepository: ThemeRepository = ThemeRepository(context)
 
 }

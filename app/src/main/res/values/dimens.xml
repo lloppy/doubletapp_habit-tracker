@@ -12,4 +12,6 @@
     <dimen name="button_size">50.dp</dimen>
     <dimen name="corner_round">18.dp</dimen>
     <dimen name="color_selector_height">120.dp</dimen>
+
+    <dimen name="min_habit_card_width">350.dp</dimen>
 </resources>

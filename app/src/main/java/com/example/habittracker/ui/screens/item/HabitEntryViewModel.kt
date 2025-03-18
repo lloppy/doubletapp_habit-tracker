@@ -29,14 +29,12 @@ class HabitEntryViewModel(
         )
     }
 
-    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean {
-        return with(uiState) {
-            name.isNotBlank() && type.isNotBlank() && canParseInt(uiState.repeatedTimes)
-        }
-    }
+    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
+        with(uiState) { name.isNotBlank() && type.isNotBlank() && canParseInt(uiState.repeatedTimes) }
+
 
     private fun canParseInt(repeatedTimes: String): Boolean =
-        repeatedTimes.toIntOrNull() != null || repeatedTimes.isBlank()
+        with(repeatedTimes) { toIntOrNull() != null || isBlank() }
 
 
     suspend fun saveItem() {

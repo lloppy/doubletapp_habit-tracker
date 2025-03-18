@@ -114,5 +114,4 @@ fun HabitInputForm(
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
     )
-
 }
