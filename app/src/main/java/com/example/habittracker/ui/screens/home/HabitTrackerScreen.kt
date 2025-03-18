@@ -49,6 +49,7 @@ fun HabitTrackerScreen(
     onClickAddItem: () -> Unit,
     onClickHabit: (Int) -> Unit,
     onClickEdit: (Int) -> Unit,
+    onClickOpenDrawer: () -> Unit,
     modifier: Modifier,
     viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -62,7 +63,8 @@ fun HabitTrackerScreen(
             HabitAppBar(
                 title = stringResource(HomeDestination.title),
                 canNavigateBack = false,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                onClickOpenDrawer = onClickOpenDrawer
             )
         },
         floatingActionButton = {
@@ -142,7 +144,7 @@ fun HabitContent(
             columns = GridCells.Adaptive(dimensionResource(R.dimen.min_habit_card_width)),
             modifier = modifier,
             contentPadding = contentPadding,
-        ){
+        ) {
             items(items = habits, key = { it.name }) { habit ->
                 SwipeableCard(
                     habit = habit,
@@ -160,7 +162,6 @@ fun HabitContent(
         }
     }
 }
-
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {

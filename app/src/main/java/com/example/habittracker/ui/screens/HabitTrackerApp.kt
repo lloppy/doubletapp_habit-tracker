@@ -2,6 +2,7 @@ package com.example.habittracker.ui.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -35,8 +36,10 @@ fun HabitTrackerApp(
 fun HabitAppBar(
     title: String,
     canNavigateBack: Boolean,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    onClickOpenDrawer: () -> Unit = { },
     navigateUp: () -> Unit = { }
+
 ) {
     val isDark = LocalTheme.current.isDark
     val onChangeTheme = LocalThemeChange.current
@@ -54,6 +57,13 @@ fun HabitAppBar(
                         contentDescription = stringResource(R.string.back_button)
                     )
                 }
+            } else {
+                IconButton(onClick = onClickOpenDrawer) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = stringResource(R.string.menu_button)
+                    )
+                }
             }
         },
         actions = {
@@ -66,7 +76,7 @@ fun HabitAppBar(
                             if (isDark) R.drawable.ic_dark_mode
                             else R.drawable.ic_light_mode
                         ),
-                        contentDescription = "switch theme"
+                        contentDescription = stringResource(R.string.switch_theme)
                     )
                 }
             }

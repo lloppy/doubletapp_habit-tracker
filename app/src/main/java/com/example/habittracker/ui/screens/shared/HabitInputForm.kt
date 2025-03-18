@@ -18,8 +18,8 @@ import com.example.habittracker.R
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.HabitEntity
-import com.example.habittracker.ui.screens.shared.elements.PriorityCard
-import com.example.habittracker.ui.screens.shared.elements.TypeCard
+import com.example.habittracker.ui.screens.shared.components.PriorityCard
+import com.example.habittracker.ui.screens.shared.components.TypeCard
 
 
 @Composable

@@ -33,5 +33,8 @@
     <string name="delete_habit">Удаление привычки</string>
     <string name="sure_delete">Вы уверены, что хотите удалить эту привычку?</string>
     <string name="confirm">Подтвердить</string>
+    <string name="info_destination">О приложении</string>
+    <string name="menu_button">меню</string>
+    <string name="switch_theme">Поменять тему</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.shared.elements
+package com.example.habittracker.ui.screens.shared.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
