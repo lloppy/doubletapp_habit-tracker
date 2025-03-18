@@ -17,6 +17,7 @@
     <string name="set_repeated_times">Сколько раз в день повторять</string>
     <string name="set_frequency">Частота</string>
     <string name="set_type">Тип привычки%s</string>
+    <string name="set_category">Категория привычки%s</string>
     <string name="set_priority">Назначить приоритет</string>
     <string name="priority">Приоритет</string>
 

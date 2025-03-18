@@ -15,9 +15,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.habittracker.R
+import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.HabitEntity
+import com.example.habittracker.ui.screens.shared.components.CategoryCard
 import com.example.habittracker.ui.screens.shared.components.PriorityCard
 import com.example.habittracker.ui.screens.shared.components.TypeCard
 
@@ -69,11 +71,11 @@ fun HabitInputForm(
         modifier = Modifier.fillMaxWidth()
     )
 
-    TypeCard(
-        selectedValue = habitEntity.type,
-        onOptionSelected = { onValueChange(habitEntity.copy(type = it)) },
-        options = HabitType.entries,
-        label = stringResource(R.string.set_type, required),
+    CategoryCard(
+        selectedValue = habitEntity.category,
+        onOptionSelected = { onValueChange(habitEntity.copy(category = it)) },
+        options = HabitCategory.entries,
+        label = stringResource(R.string.set_category, required),
     )
 
     ChooseColorButton(
@@ -81,12 +83,20 @@ fun HabitInputForm(
         onClick = { openDialog.value = true },
         modifier = modifier.fillMaxWidth()
     )
-
+    
     PriorityCard(
         selectedValue = habitEntity.priority,
         options = HabitPriority.entries,
         label = stringResource(R.string.set_priority),
         onOptionSelected = { onValueChange(habitEntity.copy(priority = it)) },
+        modifier = modifier.fillMaxWidth()
+    )
+
+    TypeCard(
+        selectedValue = habitEntity.type,
+        onOptionSelected = { onValueChange(habitEntity.copy(type = it)) },
+        options = HabitType.entries,
+        label = stringResource(R.string.set_type, required),
         modifier = modifier.fillMaxWidth()
     )
 

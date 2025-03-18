@@ -125,7 +125,7 @@ fun HabitCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
         ) {
-            EmojiBox(habit.color, habit.type.getEmoji())
+            EmojiBox(habit.color, habit.category.getEmoji())
 
             Column(
                 modifier = Modifier.weight(1.2f),

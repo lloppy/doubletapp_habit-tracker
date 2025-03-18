@@ -6,40 +6,40 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.habittracker.model.HabitType
+import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.ui.screens.info.FeatureCard
 import kotlin.enums.EnumEntries
 
 @Composable
-fun TypeCard(
+fun CategoryCard(
     selectedValue: String,
-    onOptionSelected: (String) -> Unit,
-    options: EnumEntries<HabitType>,
+    onOptionSelected: (String) -> Unit = {},
+    options: EnumEntries<HabitCategory>,
     label: String,
     modifier: Modifier = Modifier
 ) {
-    FeatureCard(label){
+    FeatureCard(label) {
         Column(modifier.selectableGroup()) {
             options.forEach { option ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(onClick = { onOptionSelected(option.impactName) }),
+                        .clickable(onClick = { onOptionSelected(option.categoryName) }),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = (option.impactName == selectedValue),
-                        onClick = { onOptionSelected(option.impactName) },
-                        colors = RadioButtonDefaults.colors(selectedColor = option.getColor(), unselectedColor = option.getColor().copy(alpha = 0.8f))
+                        selected = (option.categoryName == selectedValue),
+                        onClick = { onOptionSelected(option.categoryName) }
                     )
-                    Text(text = option.impactName, color = option.getColor())
+                    Text(text = option.categoryName)
                 }
             }
         }
     }
 }
+
+

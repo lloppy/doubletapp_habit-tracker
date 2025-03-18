@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.habittracker.data.HabitsRepository
 import com.example.habittracker.model.Habit
+import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 
@@ -30,7 +31,10 @@ class HabitEntryViewModel(
     }
 
     private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
-        with(uiState) { name.isNotBlank() && type.isNotBlank() && canParseInt(uiState.repeatedTimes) }
+        with(uiState) { name.isNotBlank()
+                    && category.isNotBlank()
+                    && type.isNotBlank()
+                    && canParseInt(uiState.repeatedTimes) }
 
 
     private fun canParseInt(repeatedTimes: String): Boolean =
@@ -49,6 +53,7 @@ data class HabitEntity(
     val name: String = "",
     val description: String = "",
     val type: String = "",
+    val category: String = "",
     val priority: String = "",
     val frequency: String = "",
     val repeatedTimes: String = "",
@@ -63,8 +68,10 @@ fun HabitEntity.toHabit(): Habit = Habit(
 
     priority = HabitPriority.entries.firstOrNull { it.priorityName == priority }
         ?: HabitPriority.MEDIUM,
-    type = HabitType.entries.firstOrNull { it.typeName == type }
-        ?: HabitType.PRODUCTIVITY,
+    category = HabitCategory.entries.firstOrNull { it.categoryName == category }
+        ?: HabitCategory.PRODUCTIVITY,
+    type = HabitType.entries.firstOrNull { it.impactName == type }
+        ?: HabitType.POSITIVE,
 
     frequency = frequency,
     repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
@@ -80,7 +87,8 @@ fun Habit.toUiState(): HabitEntity = HabitEntity(
     description = description,
 
     priority = priority.priorityName,
-    type = type.typeName,
+    category = category.categoryName,
+    type = type.impactName,
 
     frequency = frequency,
     repeatedTimes = repeatedTimes.toString(),

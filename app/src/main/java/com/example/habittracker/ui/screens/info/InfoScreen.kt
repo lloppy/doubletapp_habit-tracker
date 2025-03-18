@@ -148,7 +148,7 @@ private fun BulletPoint(text: String) {
 }
 
 @Composable
-private fun FeatureCard(
+fun FeatureCard(
     title: String,
     content: @Composable () -> Unit
 ) {
