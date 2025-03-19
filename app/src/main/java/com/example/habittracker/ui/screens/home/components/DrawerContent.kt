@@ -5,11 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.DrawerItem
-import com.example.habittracker.ui.screens.home.HomeDestination
-import com.example.habittracker.ui.screens.info.InfoDestination
+import com.example.habittracker.ui.navigation.drawerItems
 
 @Composable
 fun DrawerContent(
@@ -36,21 +30,6 @@ fun DrawerContent(
     onClickCloseDrawer: () -> Unit
 ) {
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
-
-    val drawerItems = listOf(
-        DrawerItem(
-            title = "Habits",
-            selectedIcon = Icons.Filled.Menu,
-            unselectedIcon = Icons.Outlined.Menu,
-            route = HomeDestination.route
-        ),
-        DrawerItem(
-            title = "Info",
-            selectedIcon = Icons.Filled.Info,
-            unselectedIcon = Icons.Outlined.Info,
-            route = InfoDestination.route,
-        )
-    )
 
     Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
         Image(painterResource(R.drawable.ic_launcher_foreground), contentDescription = null)

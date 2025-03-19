@@ -83,7 +83,7 @@ fun HabitInputForm(
         onClick = { openDialog.value = true },
         modifier = modifier.fillMaxWidth()
     )
-    
+
     PriorityCard(
         selectedValue = habitEntity.priority,
         options = HabitPriority.entries,

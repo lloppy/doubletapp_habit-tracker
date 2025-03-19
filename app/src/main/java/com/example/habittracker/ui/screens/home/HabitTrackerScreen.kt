@@ -1,5 +1,7 @@
 package com.example.habittracker.ui.screens.home
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
@@ -33,9 +35,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
+import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.ui.navigation.pagerItems
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.home.components.HabitPageType
+import com.example.habittracker.ui.screens.home.components.HabitPager
 import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
@@ -130,37 +136,47 @@ fun HabitContent(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
-    if (habits.isEmpty()) {
-        Text(
-            text = stringResource(R.string.no_items),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(contentPadding),
-        )
-    } else {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(dimensionResource(R.dimen.min_habit_card_width)),
-            modifier = modifier,
-            contentPadding = contentPadding,
-        ) {
-            items(items = habits, key = { it.name }) { habit ->
-                SwipeableCard(
-                    habit = habit,
-                    onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
-                    onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
-                    onClickHabit = { onClickHabit(habit.id) },
-                    onClickDelete = { onClickDelete(habit.id) },
-                    onClickEdit = { onClickEdit(habit.id) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(dimensionResource(R.dimen.padding_small))
-                        .aspectRatio(3f)
+    HabitPager(
+        pagerItems = pagerItems,
+        modifier = modifier.padding(contentPadding),
+        content = { pageType ->
+            val filteredHabits = habits.filter {
+                when (pageType) {
+                    HabitPageType.ALL -> true
+                    HabitPageType.ONLY_POSITIVE -> it.type == HabitType.POSITIVE
+                    HabitPageType.ONLY_NEGATIVE -> it.type == HabitType.NEGATIVE
+                }
+            }
+
+            if (filteredHabits.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.no_items),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.fillMaxWidth(),
                 )
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(dimensionResource(R.dimen.min_habit_card_width)),
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    items(items = filteredHabits, key = { it.name }) { habit ->
+                        HabitCard(
+                            habit = habit,
+                            onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
+                            onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(dimensionResource(R.dimen.padding_small))
+                                .aspectRatio(4f)
+                                .clickable(onClick = { onClickHabit(habit.id) })
+                        )
+                    }
+                }
             }
         }
-    }
+    )
 }
 
 @Composable
