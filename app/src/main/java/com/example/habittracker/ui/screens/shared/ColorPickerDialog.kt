@@ -64,7 +64,7 @@ fun ColorPickerDialog(
 }
 
 @Composable
-fun ColorMapSelector(
+private fun ColorMapSelector(
     modifier: Modifier = Modifier,
     onColorSelected: (Color) -> Unit = {}
 ) {
@@ -109,7 +109,7 @@ fun ColorMapSelector(
 }
 
 @Composable
-fun ColorSquare(
+private fun ColorSquare(
     index: Int,
     modifier: Modifier = Modifier,
     boxModifier: Modifier = Modifier

@@ -93,7 +93,7 @@ fun HabitCard(
 }
 
 @Composable
-fun EmojiBox(color: Color, emoji: String) {
+private fun EmojiBox(color: Color, emoji: String) {
     Box(
         modifier = Modifier
             .size(dimensionResource(R.dimen.emoji_size) + dimensionResource(R.dimen.padding_medium))
@@ -109,7 +109,7 @@ fun EmojiBox(color: Color, emoji: String) {
 }
 
 @Composable
-fun IconButtonBox(color: Color, onChangeRepeated: () -> Unit, icon: Any) {
+private fun IconButtonBox(color: Color, onChangeRepeated: () -> Unit, icon: Any) {
     Box(
         modifier = Modifier
             .size(dimensionResource(R.dimen.emoji_size))

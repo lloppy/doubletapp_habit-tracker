@@ -4,14 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -25,6 +22,7 @@ import androidx.compose.ui.text.font.FontFamily
 import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.shared.components.FeatureCard
 
 object InfoDestination : NavigationDestination {
     override val route = "info_destination"
@@ -144,31 +142,6 @@ private fun BulletPoint(text: String) {
     ) {
         Text("• ", style = MaterialTheme.typography.bodyMedium)
         Text(text, style = MaterialTheme.typography.bodyMedium)
-    }
-}
-
-@Composable
-fun FeatureCard(
-    title: String,
-    content: @Composable () -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = dimensionResource(R.dimen.section_padding)),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
-    ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.section_padding)))
-            content()
-        }
     }
 }
 

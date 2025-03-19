@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.habittracker.model.HabitType
-import com.example.habittracker.ui.screens.info.FeatureCard
 import kotlin.enums.EnumEntries
 
 @Composable
