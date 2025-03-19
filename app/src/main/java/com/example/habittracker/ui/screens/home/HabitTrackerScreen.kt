@@ -54,7 +54,6 @@ object HomeDestination : NavigationDestination {
 fun HabitTrackerScreen(
     onClickAddItem: () -> Unit,
     onClickHabit: (Int) -> Unit,
-    onClickEdit: (Int) -> Unit,
     onClickOpenDrawer: () -> Unit,
     modifier: Modifier,
     viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -111,12 +110,6 @@ fun HabitTrackerScreen(
                             onClickHabit.invoke(it)
                         }
                     },
-                    onClickDelete = {
-                        coroutineScope.launch {
-                            viewModel.deleteItemById(it)
-                        }
-                    },
-                    onClickEdit = onClickEdit,
                     modifier = modifier,
                     contentPadding = paddingValue
                 )
@@ -131,8 +124,6 @@ fun HabitContent(
     onIncreaseRepeated: (Int) -> Unit,
     onDecreaseRepeated: (Int) -> Unit,
     onClickHabit: (Int) -> Unit,
-    onClickDelete: (Int) -> Unit,
-    onClickEdit: (Int) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {

@@ -44,7 +44,7 @@ fun DrawerContent(
     Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
     drawerItems.forEachIndexed { index, item ->
         NavigationDrawerItem(
-            label = { Text(text = item.title) },
+            label = { Text(text = stringResource(item.title)) },
             selected = index == selectedItemIndex,
             onClick = {
                 onDrawerClick(item)
@@ -54,7 +54,7 @@ fun DrawerContent(
             icon = {
                 Icon(
                     imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                    contentDescription = item.title
+                    contentDescription = stringResource(item.title)
                 )
             },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)

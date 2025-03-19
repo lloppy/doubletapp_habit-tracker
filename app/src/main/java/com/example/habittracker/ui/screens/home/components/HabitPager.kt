@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.habittracker.ui.navigation.PagerItem
 
 enum class HabitPageType {
@@ -43,13 +44,13 @@ fun HabitPager(
         TabRow(selectedTabIndex = selectedTabIndex) {
             pagerItems.forEachIndexed { index, item ->
                 Tab(
-                    text = { Text(text = item.title) },
+                    text = { Text(text = stringResource(item.title)) },
                     selected = index == selectedTabIndex,
                     onClick = { selectedTabIndex = index },
                     icon = {
                         Icon(
                             imageVector = if (index == selectedTabIndex) item.selectedIcon else item.unselectedIcon,
-                            contentDescription = item.title
+                            contentDescription = stringResource(item.title)
                         )
                     }
                 )

@@ -37,5 +37,10 @@
     <string name="info_destination">О приложении</string>
     <string name="menu_button">меню</string>
     <string name="switch_theme">Поменять тему</string>
+    <string name="habits">Habits</string>
+    <string name="info">Info</string>
+    <string name="all">All</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
 
 </resources>

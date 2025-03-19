@@ -58,9 +58,6 @@ fun HabitNavigation(
                     onClickHabit = {
                         navController.navigate("${EditHabitDestination.route}/$it")
                     },
-                    onClickEdit = {
-                        navController.navigate("${EditHabitDestination.route}/$it")
-                    },
                     onClickOpenDrawer = {
                         scope.launch { drawerState.open() }
                     },
