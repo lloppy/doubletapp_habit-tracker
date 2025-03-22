@@ -44,6 +44,11 @@ class HabitEntryViewModel(
             repository.insert(habit = entryUiState.currentHabit.toHabit())
         }
     }
+
+    companion object {
+        val priorityMap = HabitPriority.entries.associateBy { it.priorityName }
+        val typeMap = HabitType.entries.associateBy { it.typeName }
+    }
 }
 
 data class HabitEntity(
@@ -58,31 +63,43 @@ data class HabitEntity(
     val color: Color = Color.Yellow
 )
 
-fun HabitEntity.toHabit(): Habit = Habit(
+fun HabitEntity.toHabit(
+    defaultPriority: HabitPriority = HabitPriority.MEDIUM,
+    defaultType: HabitType = HabitType.PRODUCTIVITY
+): Habit = Habit(
     id = id,
     name = name,
     description = description,
 
-    priority = HabitPriority.entries.firstOrNull { it.priorityName == priority }
-        ?: HabitPriority.MEDIUM,
-    type = HabitType.entries.firstOrNull { it.typeName == type }
-        ?: HabitType.PRODUCTIVITY,
+    priority = HabitEntryViewModel.priorityMap[priority] ?: defaultPriority,
+    type = HabitEntryViewModel.typeMap[type] ?: defaultType,
 
     frequency = frequency,
-    repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
-    quantity = quantity.toIntOrNull() ?: 0,
+    repeatedTimes = repeatedTimes.toIntOrNull() ?: run {
+        println("Warning: Invalid repeatedTimes '$repeatedTimes', using default 1")
+        1
+    },
+    quantity = quantity.toIntOrNull() ?: run {
+        println("Warning: Invalid quantity '$quantity', using default 0")
+        0
+    },
 
     color = color
 )
 
+fun HabitPriority.toEntityString() = this.priorityName
+fun String.toHabitPriority() = HabitEntryViewModel.priorityMap[this] ?: HabitPriority.MEDIUM
+
+fun HabitType.toEntityString() = this.typeName
+fun String.toHabitType() = HabitEntryViewModel.typeMap[this] ?: HabitType.PRODUCTIVITY
 
 fun Habit.toUiState(): HabitEntity = HabitEntity(
     id = id,
     name = name,
     description = description,
 
-    priority = priority.priorityName,
-    type = type.typeName,
+    priority = priority.toEntityString(),
+    type = type.toEntityString(),
 
     frequency = frequency,
     repeatedTimes = repeatedTimes.toString(),

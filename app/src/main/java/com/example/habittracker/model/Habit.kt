@@ -103,3 +103,9 @@ class Converters {
         }
     }
 }
+
+fun HabitPriority.toEntityString() = this.priorityName
+fun String.toHabitPriority() = HabitEntryViewModel.priorityMap[this] ?: HabitPriority.MEDIUM
+
+fun HabitType.toEntityString() = this.typeName
+fun String.toHabitType() = HabitEntryViewModel.typeMap[this] ?: HabitType.PRODUCTIVITY

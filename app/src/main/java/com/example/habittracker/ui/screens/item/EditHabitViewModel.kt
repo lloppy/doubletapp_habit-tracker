@@ -52,7 +52,6 @@ class EditHabitViewModel(
     private fun canParseInt(repeatedTimes: String): Boolean =
         repeatedTimes.toIntOrNull() != null
 
-
     suspend fun updateItem() {
         if (validateInput()) {
             repository.update(newHabit = entryUiState.currentHabit.toHabit())
