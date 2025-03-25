@@ -20,7 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
-import com.example.habittracker.ui.screens.item.HabitEntity
+import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.theme.Spacing
 
 @Composable
 fun ChooseColorButton(
@@ -30,7 +31,7 @@ fun ChooseColorButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(dimensionResource(R.dimen.button_size)),
+        modifier = modifier.height(Spacing.button),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary,
@@ -48,7 +49,7 @@ fun ChooseColorButton(
                     .clip(CircleShape)
                     .background(habitEntity.color)
             )
-            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_medium)))
+            Spacer(modifier = Modifier.width(Spacing.medium))
             Text(stringResource(R.string.current_color))
         }
     }

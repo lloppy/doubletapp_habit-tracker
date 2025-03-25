@@ -16,13 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.shared.components.FeatureCard
+import com.example.habittracker.ui.shared.form.FeatureCard
+import com.example.habittracker.ui.theme.Spacing
 
 object InfoDestination : NavigationDestination {
     override val route = "info_destination"
@@ -52,7 +52,7 @@ fun InfoScreen(
             modifier = Modifier
                 .verticalScroll(scrollState)
                 .padding(paddingValue)
-                .padding(dimensionResource(R.dimen.padding_medium))
+                .padding(Spacing.medium)
         ) {
             SectionTitle("О приложении")
             InfoText("Трекер привычек с современным интерфейсом на Jetpack Compose. Основные функции:")
@@ -61,7 +61,7 @@ fun InfoScreen(
             BulletPoint("Настройка параметров")
             BulletPoint("Отслеживаие прогресса")
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
+            Spacer(modifier = Modifier.height(Spacing.large))
 
             SectionTitle("Технические особенности")
             InfoText("Архитектура приложения включает:")
@@ -119,7 +119,7 @@ private fun SectionTitle(text: String) {
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(
-            vertical = dimensionResource(R.dimen.section_padding)
+            vertical = Spacing.section
         )
     )
 }
@@ -129,7 +129,7 @@ private fun InfoText(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodyMedium,
-        modifier = Modifier.padding(bottom = dimensionResource(R.dimen.section_padding))
+        modifier = Modifier.padding(bottom = Spacing.section)
     )
 }
 
@@ -138,12 +138,11 @@ private fun BulletPoint(text: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(
-            start = dimensionResource(R.dimen.padding_medium),
-            bottom = dimensionResource(R.dimen.padding_small)
+            start = Spacing.medium,
+            bottom = Spacing.small
         )
     ) {
-        Text("• ", style = MaterialTheme.typography.bodyMedium)
-        Text(text, style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.bullet_item, text))
     }
 }
 
@@ -158,8 +157,8 @@ private fun CodeSnippet(code: String) {
         modifier = Modifier
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(dimensionResource(R.dimen.padding_small))
+                shape = RoundedCornerShape(Spacing.small)
             )
-            .padding(dimensionResource(R.dimen.section_padding))
+            .padding(Spacing.section)
     )
 }

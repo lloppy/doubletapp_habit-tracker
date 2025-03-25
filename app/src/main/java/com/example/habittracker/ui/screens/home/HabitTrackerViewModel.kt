@@ -3,7 +3,7 @@ package com.example.habittracker.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.habittracker.data.HabitsRepository
-import com.example.habittracker.model.Habit
+import com.example.habittracker.model.HabitType
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -13,8 +13,15 @@ class HabitTrackerViewModel(
     private val repository: HabitsRepository
 ) : ViewModel() {
     val uiState: StateFlow<HabitTrackerState> =
-        repository.getAllHabits().map {
-            HabitTrackerState.Success(it)
+        repository.getAllHabits().map { allHabits ->
+            val positiveHabits = allHabits.filter { it.type == HabitType.POSITIVE }
+            val negativeHabits = allHabits.filter { it.type == HabitType.NEGATIVE }
+
+            HabitTrackerState.Success(
+                habits = allHabits,
+                positiveHabits = positiveHabits,
+                negativeHabits = negativeHabits,
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING),
@@ -22,15 +29,15 @@ class HabitTrackerViewModel(
         )
 
     suspend fun increaseRepeated(habitId: Int) {
-        repository.increaseQuantity(id = habitId)
+        repository.increaseHabitQuantity(id = habitId)
     }
 
     suspend fun decreaseRepeated(habitId: Int) {
-        repository.decreaseQuantity(id = habitId)
+        repository.decreaseHabitQuantity(id = habitId)
     }
 
-    suspend fun deleteItemById(habitId: Int) {
-        repository.deleteById(id = habitId)
+    suspend fun delete(habitId: Int) {
+        repository.deleteByHabitId(id = habitId)
     }
 
 
@@ -38,10 +45,3 @@ class HabitTrackerViewModel(
         const val DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING = 3_000L
     }
 }
-
-sealed interface HabitTrackerState {
-    data class Success(val habits: List<Habit> = listOf()) : HabitTrackerState
-    object Loading : HabitTrackerState
-}
-//TODO()вынести в отдельный файл стейты
-//TODO()   плюс два списка  без стейта текущего номера экрана

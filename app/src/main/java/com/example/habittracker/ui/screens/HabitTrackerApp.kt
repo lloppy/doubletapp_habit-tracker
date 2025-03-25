@@ -19,6 +19,7 @@ import com.example.habittracker.LocalTheme
 import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.HabitNavigation
 import com.example.habittracker.ui.screens.home.HomeDestination
+import com.example.habittracker.ui.shared.drawer.HabitDrawer
 import com.example.habittracker.ui.theme.AppTheme
 import com.example.habittracker.ui.theme.LocalThemeChange
 
@@ -26,9 +27,14 @@ import com.example.habittracker.ui.theme.LocalThemeChange
 fun HabitTrackerApp(
     navController: NavHostController = rememberNavController()
 ) {
-    HabitNavigation(
+    HabitDrawer(
         navController = navController
-    )
+    ) { onClickOpenDrawer ->
+        HabitNavigation(
+            navController = navController,
+            onClickOpenDrawer = onClickOpenDrawer
+        )
+    }
 }
 
 @Composable
@@ -39,7 +45,6 @@ fun HabitAppBar(
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickOpenDrawer: () -> Unit = { },
     navigateUp: () -> Unit = { }
-
 ) {
     val isDark = LocalTheme.current.isDark
     val onChangeTheme = LocalThemeChange.current

@@ -5,48 +5,48 @@ import kotlinx.coroutines.flow.Flow
 
 interface HabitsRepository {
 
-    suspend fun insert(habit: Habit)
+    suspend fun insertHabit(habit: Habit)
 
-    suspend fun update(newHabit: Habit)
+    suspend fun updateHabit(habit: Habit)
 
-    suspend fun delete(habit: Habit)
+    suspend fun deleteHabit(habit: Habit)
 
-    suspend fun deleteById(id: Int)
+    suspend fun deleteByHabitId(id: Int)
 
-    suspend fun increaseQuantity(id: Int)
+    suspend fun increaseHabitQuantity(id: Int)
 
-    suspend fun decreaseQuantity(id: Int)
+    suspend fun decreaseHabitQuantity(id: Int)
 
     fun getAllHabits(): Flow<List<Habit>>
 
-    fun getHabit(id: Int): Flow<Habit?>
+    fun getHabitById(id: Int): Flow<Habit?>
 
 }
 
 
 class OfflineHabitsRepository(private val habitDao: HabitDao) : HabitsRepository {
 
-    override suspend fun insert(habit: Habit) =
+    override suspend fun insertHabit(habit: Habit) =
         habitDao.insert(habit)
 
-    override suspend fun update(newHabit: Habit) =
-        habitDao.update(newHabit)
+    override suspend fun updateHabit(habit: Habit) =
+        habitDao.update(habit)
 
-    override suspend fun increaseQuantity(id: Int) =
+    override suspend fun increaseHabitQuantity(id: Int) =
         habitDao.increaseQuantity(id)
 
-    override suspend fun decreaseQuantity(id: Int) =
+    override suspend fun decreaseHabitQuantity(id: Int) =
         habitDao.decreaseQuantity(id)
 
-    override suspend fun delete(habit: Habit) =
+    override suspend fun deleteHabit(habit: Habit) =
         habitDao.delete(habit)
 
-    override suspend fun deleteById(id: Int) =
+    override suspend fun deleteByHabitId(id: Int) =
         habitDao.deleteById(id)
 
     override fun getAllHabits(): Flow<List<Habit>> =
-        habitDao.getAllHabits()
+        habitDao.getAll()
 
-    override fun getHabit(id: Int): Flow<Habit?> =
-        habitDao.getHabit(id)
+    override fun getHabitById(id: Int): Flow<Habit?> =
+        habitDao.getById(id)
 }

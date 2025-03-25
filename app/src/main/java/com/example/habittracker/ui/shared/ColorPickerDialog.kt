@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.shared
+package com.example.habittracker.ui.shared
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
 import com.example.habittracker.model.toHsv
 import com.example.habittracker.model.toRgb
-import com.example.habittracker.ui.screens.item.HabitEntity
+import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.theme.Spacing
 
 
 @Composable
@@ -44,7 +45,9 @@ fun ColorPickerDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(stringResource(R.string.select_color)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+            ) {
                 ColorMapSelector(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -77,7 +80,7 @@ private fun ColorMapSelector(
 
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(dimensionResource(R.dimen.corner_round)))
+            .clip(RoundedCornerShape(Spacing.corner))
             .horizontalScroll(scrollState)
     ) {
         colors.forEachIndexed { index, color ->
@@ -100,7 +103,7 @@ private fun ColorMapSelector(
                     },
                 boxModifier = Modifier
                     .size(60.dp)
-                    .clip(RoundedCornerShape(dimensionResource(R.dimen.corner_round)))
+                    .clip(RoundedCornerShape(Spacing.corner))
                     .background(colors[previousIndex])
                     .clickable { onColorSelected(colors[previousIndex]) }
             )
@@ -123,7 +126,7 @@ private fun ColorSquare(
                 modifier = boxModifier.border(
                     width = 2.dp,
                     color = Color.Black,
-                    shape = RoundedCornerShape(dimensionResource(R.dimen.corner_round))
+                    shape = RoundedCornerShape(Spacing.corner)
                 )
             )
         }

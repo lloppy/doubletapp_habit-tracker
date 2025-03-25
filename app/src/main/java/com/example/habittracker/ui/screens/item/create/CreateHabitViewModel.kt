@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.item
+package com.example.habittracker.ui.screens.item.create
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,21 +10,18 @@ import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
+import com.example.habittracker.ui.screens.item.HabitItemState
 
-data class HabitEntryState(
-    val currentHabit: HabitEntity = HabitEntity(),
-    val isEntryValid: Boolean = false,
-)
 
-class HabitEntryViewModel(
+class CreateHabitViewModel(
     private val repository: HabitsRepository
 ) : ViewModel() {
 
-    var entryUiState by mutableStateOf(HabitEntryState())
+    var entryUiState by mutableStateOf(HabitItemState())
         private set
 
     fun updateUiState(newHabit: HabitEntity) {
-        entryUiState = HabitEntryState(
+        entryUiState = HabitItemState(
             currentHabit = newHabit,
             isEntryValid = validateInput(newHabit)
         )
@@ -45,7 +42,7 @@ class HabitEntryViewModel(
 
     suspend fun saveItem() {
         if (validateInput()) {
-            repository.insert(habit = entryUiState.currentHabit.toHabit())
+            repository.insertHabit(habit = entryUiState.currentHabit.toHabit())
         }
     }
 }
@@ -68,10 +65,8 @@ fun HabitEntity.toHabit(): Habit = Habit(
     name = name,
     description = description,
 
-    priority = HabitPriority.entries.firstOrNull { it.priorityName == priority }
-        ?: HabitPriority.MEDIUM,
-    category = HabitCategory.entries.firstOrNull { it.categoryName == category }
-        ?: HabitCategory.PRODUCTIVITY,
+    priority = HabitPriority.entries.firstOrNull { it.priorityName == priority } ?: HabitPriority.MEDIUM,
+    category = HabitCategory.entries.firstOrNull { it.categoryName == category } ?: HabitCategory.PRODUCTIVITY,
     type = HabitType.entries.firstOrNull { it.impactName == type } ?: HabitType.POSITIVE,
 
     frequency = frequency,

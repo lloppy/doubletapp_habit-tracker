@@ -2,7 +2,10 @@
 
 buildscript {
     extra.apply {
-        set("room_version", "2.6.1") // https://mvnrepository.com/artifact/androidx.room/room-runtime
+        set(
+            "room_version",
+            "2.6.1"
+        ) // https://mvnrepository.com/artifact/androidx.room/room-runtime
     }
 }
 

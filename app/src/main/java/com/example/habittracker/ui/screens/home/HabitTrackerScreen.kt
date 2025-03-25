@@ -3,7 +3,6 @@ package com.example.habittracker.ui.screens.home
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,13 +34,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
-import com.example.habittracker.ui.navigation.pagerItems
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.home.components.HabitPageType
-import com.example.habittracker.ui.screens.home.components.HabitPager
+import com.example.habittracker.ui.screens.home.components.HabitCard
+import com.example.habittracker.ui.shared.pager.HabitPager
+import com.example.habittracker.ui.shared.pager.PageType
+import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
@@ -76,7 +75,7 @@ fun HabitTrackerScreen(
             FloatingActionButton(
                 onClick = onClickAddItem,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+                modifier = Modifier.padding(Spacing.large)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -93,26 +92,38 @@ fun HabitTrackerScreen(
             }
 
             is HabitTrackerState.Success -> {
-                HabitContent(
-                    habits = state.habits,
-                    onIncreaseRepeated = {
-                        coroutineScope.launch {
-                            viewModel.increaseRepeated(it)
-                        }
-                    },
-                    onDecreaseRepeated = {
-                        coroutineScope.launch {
-                            viewModel.decreaseRepeated(it)
-                        }
-                    },
-                    onClickHabit = {
-                        coroutineScope.launch {
-                            onClickHabit.invoke(it)
-                        }
-                    },
-                    modifier = modifier,
-                    contentPadding = paddingValue
-                )
+                HabitPager(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(paddingValue)
+                ) { selectedPageType ->
+
+                    val filteredHabits = when (selectedPageType) {
+                        PageType.ALL -> state.habits
+                        PageType.ONLY_POSITIVE -> state.positiveHabits
+                        PageType.ONLY_NEGATIVE -> state.negativeHabits
+                    }
+
+                    HabitContent(
+                        filteredHabits = filteredHabits,
+                        onIncreaseRepeated = {
+                            coroutineScope.launch {
+                                viewModel.increaseRepeated(it)
+                            }
+                        },
+                        onDecreaseRepeated = {
+                            coroutineScope.launch {
+                                viewModel.decreaseRepeated(it)
+                            }
+                        },
+                        onClickHabit = {
+                            coroutineScope.launch {
+                                onClickHabit.invoke(it)
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
     }
@@ -120,59 +131,45 @@ fun HabitTrackerScreen(
 
 @Composable
 fun HabitContent(
-    habits: List<Habit>,
-    onIncreaseRepeated: (Int) -> Unit,
-    onDecreaseRepeated: (Int) -> Unit,
+    filteredHabits: List<Habit>,
     onClickHabit: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues
+    onIncreaseRepeated: (Int) -> Unit,
+    onDecreaseRepeated: (Int) -> Unit,
 ) {
-    HabitPager(
-        pagerItems = pagerItems,
-        modifier = modifier.padding(contentPadding),
-        content = { pageType ->
-            val filteredHabits = habits.filter {
-                when (pageType) {
-                    HabitPageType.ALL -> true
-                    HabitPageType.ONLY_POSITIVE -> it.type == HabitType.POSITIVE
-                    HabitPageType.ONLY_NEGATIVE -> it.type == HabitType.NEGATIVE
-                }
-            }
-
-            if (filteredHabits.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.no_items),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.fillMaxWidth(),
+    if (filteredHabits.isEmpty()) {
+        Box(modifier = modifier, contentAlignment = Alignment.Center) {
+            Text(
+                text = stringResource(R.string.no_items),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+    } else {
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(dimensionResource(R.dimen.min_habit_card_width)),
+            modifier = modifier,
+            verticalArrangement = Arrangement.Top
+        ) {
+            items(items = filteredHabits, key = { it.name }) { habit ->
+                HabitCard(
+                    habit = habit,
+                    onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
+                    onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.small)
+                        .aspectRatio(4f)
+                        .clickable(onClick = { onClickHabit(habit.id) })
                 )
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Adaptive(dimensionResource(R.dimen.min_habit_card_width)),
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    items(items = filteredHabits, key = { it.name }) { habit ->
-                        HabitCard(
-                            habit = habit,
-                            onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
-                            onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(dimensionResource(R.dimen.padding_small))
-                                .aspectRatio(4f)
-                                .clickable(onClick = { onClickHabit(habit.id) })
-                        )
-                    }
-                }
             }
         }
-    )
+    }
 }
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(modifier = Modifier.size(dimensionResource(R.dimen.loading_circle)))
+        CircularProgressIndicator(modifier = Modifier.size(Spacing.loading))
     }
 }

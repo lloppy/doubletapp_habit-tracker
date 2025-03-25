@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.home
+package com.example.habittracker.ui.screens.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
+import com.example.habittracker.ui.theme.Spacing
 
 @Composable
 fun HabitCard(
@@ -42,15 +43,15 @@ fun HabitCard(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium)),
+                .padding(Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+            horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             EmojiBox(habit.color, habit.category.getEmoji())
 
             Column(
                 modifier = Modifier.weight(1.2f),
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 Text(
                     text = habit.name,
@@ -69,7 +70,7 @@ fun HabitCard(
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 Text(
                     text = "${habit.quantity}/${habit.repeatedTimes}",
@@ -83,7 +84,7 @@ fun HabitCard(
 
             Row(
                 modifier = Modifier,
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+                horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 IconButtonBox(habit.color, onDecreaseRepeated, R.drawable.ic_remove)
                 IconButtonBox(habit.color, onIncreaseRepeated, Icons.Default.Add)
@@ -96,14 +97,14 @@ fun HabitCard(
 private fun EmojiBox(color: Color, emoji: String) {
     Box(
         modifier = Modifier
-            .size(dimensionResource(R.dimen.emoji_size) + dimensionResource(R.dimen.padding_medium))
+            .size(Spacing.emoji + Spacing.medium)
             .clip(CircleShape)
             .background(color),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = emoji,
-            fontSize = dimensionResource(R.dimen.emoji_size).value.sp
+            fontSize = Spacing.emoji.value.sp
         )
     }
 }
@@ -112,7 +113,7 @@ private fun EmojiBox(color: Color, emoji: String) {
 private fun IconButtonBox(color: Color, onChangeRepeated: () -> Unit, icon: Any) {
     Box(
         modifier = Modifier
-            .size(dimensionResource(R.dimen.emoji_size))
+            .size(Spacing.emoji)
             .clip(CircleShape)
             .background(color.copy(alpha = 0.4f)),
         contentAlignment = Alignment.Center
@@ -122,13 +123,13 @@ private fun IconButtonBox(color: Color, onChangeRepeated: () -> Unit, icon: Any)
                 is Int -> Icon(
                     painter = painterResource(icon),
                     contentDescription = null,
-                    modifier = Modifier.size(dimensionResource(R.dimen.emoji_size))
+                    modifier = Modifier.size(Spacing.emoji)
                 )
 
                 is ImageVector -> Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    modifier = Modifier.size(dimensionResource(R.dimen.emoji_size))
+                    modifier = Modifier.size(Spacing.emoji)
                 )
             }
         }

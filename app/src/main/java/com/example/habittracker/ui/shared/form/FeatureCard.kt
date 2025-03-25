@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.shared.components
+package com.example.habittracker.ui.shared.form
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,8 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import com.example.habittracker.R
+import com.example.habittracker.ui.theme.Spacing
 
 @Composable
 fun FeatureCard(
@@ -22,18 +21,18 @@ fun FeatureCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = dimensionResource(R.dimen.section_padding)),
+            .padding(vertical = Spacing.section),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+        Column(modifier = Modifier.padding(Spacing.medium)) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.section_padding)))
+            Spacer(modifier = Modifier.height(Spacing.section))
             content()
         }
     }

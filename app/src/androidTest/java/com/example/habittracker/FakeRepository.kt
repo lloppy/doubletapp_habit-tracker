@@ -48,9 +48,9 @@ class FakeRepository {
                 (delta < 0 && newRepeated >= 0)
             ) {
                 val updatedHabit = updatedHabits[index].copy(
-                        frequency = updatedHabits[index].frequency,
-                        repeatedTimes = updatedHabits[index].repeatedTimes,
-                        quantity = newRepeated
+                    frequency = updatedHabits[index].frequency,
+                    repeatedTimes = updatedHabits[index].repeatedTimes,
+                    quantity = newRepeated
 
                 )
                 updatedHabits[index] = updatedHabit
