@@ -31,10 +31,12 @@ class HabitEntryViewModel(
     }
 
     private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
-        with(uiState) { name.isNotBlank()
+        with(uiState) {
+            name.isNotBlank()
                     && category.isNotBlank()
                     && type.isNotBlank()
-                    && canParseInt(uiState.repeatedTimes) }
+                    && canParseInt(uiState.repeatedTimes)
+        }
 
 
     private fun canParseInt(repeatedTimes: String): Boolean =
@@ -70,8 +72,7 @@ fun HabitEntity.toHabit(): Habit = Habit(
         ?: HabitPriority.MEDIUM,
     category = HabitCategory.entries.firstOrNull { it.categoryName == category }
         ?: HabitCategory.PRODUCTIVITY,
-    type = HabitType.entries.firstOrNull { it.impactName == type }
-        ?: HabitType.POSITIVE,
+    type = HabitType.entries.firstOrNull { it.impactName == type } ?: HabitType.POSITIVE,
 
     frequency = frequency,
     repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,

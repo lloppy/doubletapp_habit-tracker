@@ -43,3 +43,5 @@ sealed interface HabitTrackerState {
     data class Success(val habits: List<Habit> = listOf()) : HabitTrackerState
     object Loading : HabitTrackerState
 }
+//TODO()вынести в отдельный файл стейты
+//TODO()   плюс два списка  без стейта текущего номера экрана

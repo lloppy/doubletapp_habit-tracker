@@ -53,7 +53,9 @@ fun HabitEntryScreen(
         Column(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = dimensionResource(R.dimen.padding_medium))
+                .padding(
+                    horizontal = dimensionResource(R.dimen.padding_medium)
+                )
                 .padding(
                     top = paddingValue.calculateTopPadding().plus(dimensionResource(R.dimen.padding_medium)),
                     bottom = paddingValue.calculateBottomPadding().plus(dimensionResource(R.dimen.padding_medium))

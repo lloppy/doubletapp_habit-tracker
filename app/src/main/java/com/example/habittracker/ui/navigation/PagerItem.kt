@@ -34,3 +34,5 @@ val pagerItems = listOf(
         selectedIcon = Icons.Filled.ThumbDown
     )
 )
+
+//TODO() перенести во вью модель

@@ -118,7 +118,9 @@ private fun SectionTitle(text: String) {
         text = text,
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.section_padding))
+        modifier = Modifier.padding(
+            vertical = dimensionResource(R.dimen.section_padding)
+        )
     )
 }
 

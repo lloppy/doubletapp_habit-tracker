@@ -22,7 +22,7 @@ fun TypeCard(
     label: String,
     modifier: Modifier = Modifier
 ) {
-    FeatureCard(label){
+    FeatureCard(label) {
         Column(modifier.selectableGroup()) {
             options.forEach { option ->
                 Row(
@@ -34,7 +34,10 @@ fun TypeCard(
                     RadioButton(
                         selected = (option.impactName == selectedValue),
                         onClick = { onOptionSelected(option.impactName) },
-                        colors = RadioButtonDefaults.colors(selectedColor = option.getColor(), unselectedColor = option.getColor().copy(alpha = 0.8f))
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = option.getColor(),
+                            unselectedColor = option.getColor().copy(alpha = 0.8f)
+                        )
                     )
                     Text(text = option.impactName, color = option.getColor())
                 }
