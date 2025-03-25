@@ -17,6 +17,7 @@
     <string name="set_repeated_times">Сколько раз в день повторять</string>
     <string name="set_frequency">Частота</string>
     <string name="set_type">Тип привычки%s</string>
+    <string name="set_category">Категория привычки%s</string>
     <string name="set_priority">Назначить приоритет</string>
     <string name="priority">Приоритет</string>
 
@@ -33,5 +34,13 @@
     <string name="delete_habit">Удаление привычки</string>
     <string name="sure_delete">Вы уверены, что хотите удалить эту привычку?</string>
     <string name="confirm">Подтвердить</string>
+    <string name="info_destination">О приложении</string>
+    <string name="menu_button">меню</string>
+    <string name="switch_theme">Поменять тему</string>
+    <string name="habits">Habits</string>
+    <string name="info">Info</string>
+    <string name="all">All</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
 
 </resources>

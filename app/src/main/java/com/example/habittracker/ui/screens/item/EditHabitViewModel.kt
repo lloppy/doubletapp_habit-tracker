@@ -45,7 +45,10 @@ class EditHabitViewModel(
 
     private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
         with(uiState) {
-            name.isNotBlank() && type.isNotBlank() && canParseInt(uiState.repeatedTimes)
+            name.isNotBlank()
+                    && category.isNotBlank()
+                    && type.isNotBlank()
+                    && canParseInt(uiState.repeatedTimes)
         }
 
 

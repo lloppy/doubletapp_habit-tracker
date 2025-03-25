@@ -1,5 +1,7 @@
 package com.example.habittracker.ui.screens.home
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
@@ -7,8 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,9 +35,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
+import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.ui.navigation.pagerItems
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.home.components.HabitPageType
+import com.example.habittracker.ui.screens.home.components.HabitPager
 import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
@@ -47,7 +54,7 @@ object HomeDestination : NavigationDestination {
 fun HabitTrackerScreen(
     onClickAddItem: () -> Unit,
     onClickHabit: (Int) -> Unit,
-    onClickEdit: (Int) -> Unit,
+    onClickOpenDrawer: () -> Unit,
     modifier: Modifier,
     viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -61,7 +68,8 @@ fun HabitTrackerScreen(
             HabitAppBar(
                 title = stringResource(HomeDestination.title),
                 canNavigateBack = false,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                onClickOpenDrawer = onClickOpenDrawer
             )
         },
         floatingActionButton = {
@@ -102,12 +110,6 @@ fun HabitTrackerScreen(
                             onClickHabit.invoke(it)
                         }
                     },
-                    onClickDelete = {
-                        coroutineScope.launch {
-                            viewModel.deleteItemById(it)
-                        }
-                    },
-                    onClickEdit = onClickEdit,
                     modifier = modifier,
                     contentPadding = paddingValue
                 )
@@ -122,40 +124,51 @@ fun HabitContent(
     onIncreaseRepeated: (Int) -> Unit,
     onDecreaseRepeated: (Int) -> Unit,
     onClickHabit: (Int) -> Unit,
-    onClickDelete: (Int) -> Unit,
-    onClickEdit: (Int) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues
 ) {
-    if (habits.isEmpty()) {
-        Text(
-            text = stringResource(R.string.no_items),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(contentPadding),
-        )
-    } else {
-        LazyColumn(modifier = modifier.padding(contentPadding)) {
-            items(items = habits, key = { it.name }) { habit ->
-                SwipeableCard(
-                    habit = habit,
-                    onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
-                    onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
-                    onClickHabit = { onClickHabit(habit.id) },
-                    onClickDelete = { onClickDelete(habit.id) },
-                    onClickEdit = { onClickEdit(habit.id) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(dimensionResource(R.dimen.padding_small))
-                        .aspectRatio(3f)
+    HabitPager(
+        pagerItems = pagerItems,
+        modifier = modifier.padding(contentPadding),
+        content = { pageType ->
+            val filteredHabits = habits.filter {
+                when (pageType) {
+                    HabitPageType.ALL -> true
+                    HabitPageType.ONLY_POSITIVE -> it.type == HabitType.POSITIVE
+                    HabitPageType.ONLY_NEGATIVE -> it.type == HabitType.NEGATIVE
+                }
+            }
+
+            if (filteredHabits.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.no_items),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.fillMaxWidth(),
                 )
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(dimensionResource(R.dimen.min_habit_card_width)),
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    items(items = filteredHabits, key = { it.name }) { habit ->
+                        HabitCard(
+                            habit = habit,
+                            onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
+                            onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(dimensionResource(R.dimen.padding_small))
+                                .aspectRatio(4f)
+                                .clickable(onClick = { onClickHabit(habit.id) })
+                        )
+                    }
+                }
             }
         }
-    }
+    )
 }
-
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {

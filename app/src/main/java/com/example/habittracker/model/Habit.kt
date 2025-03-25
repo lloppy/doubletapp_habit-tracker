@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.example.habittracker.ui.theme.onErrorDark
+import com.example.habittracker.ui.theme.onTertiaryDark
 
 @Entity(tableName = "habits")
 data class Habit(
@@ -16,7 +18,9 @@ data class Habit(
     val description: String = "",
 
     @TypeConverters(Converters::class)
-    val type: HabitType,
+    val type: HabitType = HabitType.POSITIVE,
+    @TypeConverters(Converters::class)
+    val category: HabitCategory,
     @TypeConverters(Converters::class)
     val priority: HabitPriority = HabitPriority.MEDIUM,
 
@@ -30,7 +34,7 @@ data class Habit(
 )
 
 
-enum class HabitType(val typeName: String) {
+enum class HabitCategory(val categoryName: String) {
     SPORT("Спорт"),
     STUDY("Учеба"),
     RELAXATION("Отдых"),
@@ -52,20 +56,30 @@ enum class HabitPriority(val priorityName: String) {
     HIGH("Высокий")
 }
 
+enum class HabitType(val impactName: String) {
+    POSITIVE("Полезная"),
+    NEGATIVE("Вредная");
+
+    fun getColor(): Color = when (this) {
+        POSITIVE -> onTertiaryDark
+        NEGATIVE -> onErrorDark
+    }
+}
+
 @ProvidedTypeConverter
 class Converters {
 
     @TypeConverter
-    fun habitTypeToString(habitType: HabitType): String {
-        return habitType.name
+    fun habitTypeToString(habitCategory: HabitCategory): String {
+        return habitCategory.name
     }
 
     @TypeConverter
-    fun stringToHabitType(typeName: String): HabitType {
+    fun stringToHabitType(typeName: String): HabitCategory {
         return try {
-            HabitType.valueOf(typeName)
+            HabitCategory.valueOf(typeName)
         } catch (e: IllegalArgumentException) {
-            HabitType.PRODUCTIVITY
+            HabitCategory.PRODUCTIVITY
         }
     }
 
@@ -82,6 +96,12 @@ class Converters {
             HabitPriority.MEDIUM
         }
     }
+
+    @TypeConverter
+    fun fromImpact(value: HabitType) = value.name
+
+    @TypeConverter
+    fun toImpact(value: String) = HabitType.valueOf(value)
 
     @TypeConverter
     fun colorToString(color: Color): String {

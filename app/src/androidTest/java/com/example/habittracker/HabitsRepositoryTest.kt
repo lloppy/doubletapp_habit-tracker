@@ -11,7 +11,7 @@ import com.example.habittracker.data.OfflineDatabase
 import com.example.habittracker.model.Converters
 import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitPriority
-import com.example.habittracker.model.HabitType
+import com.example.habittracker.model.HabitCategory
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
@@ -112,7 +112,7 @@ object TestData {
             id = 1,
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
-            type = HabitType.SPORT,
+            category = HabitCategory.SPORT,
             priority = HabitPriority.HIGH,
             frequency = "Ежедневно",
             repeatedTimes = 7,
@@ -123,7 +123,7 @@ object TestData {
             id = 2,
             name = "Чтение перед сном",
             description = "Чтение для расслабления",
-            type = HabitType.RELAXATION,
+            category = HabitCategory.RELAXATION,
             priority = HabitPriority.MEDIUM,
             frequency = "Раз в неделю",
             repeatedTimes = 4,
@@ -134,7 +134,7 @@ object TestData {
             id = 1,
             name = "Просмотр лекций",
             description = "Обучение на платформе Coursera",
-            type = HabitType.STUDY,
+            category = HabitCategory.STUDY,
             priority = HabitPriority.LOW,
             frequency = "Раз в две недели",
             repeatedTimes = 2,
@@ -145,7 +145,7 @@ object TestData {
             id = 2,
             name = "Планирование дня",
             description = "Планирование задач на день",
-            type = HabitType.PRODUCTIVITY,
+            category = HabitCategory.PRODUCTIVITY,
             priority = HabitPriority.MEDIUM,
             frequency = "Ежедневно",
             repeatedTimes = 10,
