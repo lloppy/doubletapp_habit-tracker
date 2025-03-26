@@ -26,7 +26,7 @@ import com.example.habittracker.ui.theme.Spacing
 
 object InfoDestination : NavigationDestination {
     override val route = "info_destination"
-    override val title = R.string.info_destination
+    override val title = R.string.about_app
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,64 +50,46 @@ fun InfoScreen(
 
         Column(
             modifier = Modifier
-                .verticalScroll(scrollState)
                 .padding(paddingValue)
                 .padding(Spacing.medium)
+                .verticalScroll(scrollState)
         ) {
-            SectionTitle("О приложении")
-            InfoText("Трекер привычек с современным интерфейсом на Jetpack Compose. Основные функции:")
+            SectionTitle(text = stringResource(R.string.about_app))
+            InfoText(text = stringResource(R.string.app_description))
 
-            BulletPoint("Управление привычками")
-            BulletPoint("Настройка параметров")
-            BulletPoint("Отслеживаие прогресса")
+            BulletList(
+                items = listOf(
+                    stringResource(R.string.feature_habit_management),
+                    stringResource(R.string.feature_settings),
+                    stringResource(R.string.feature_progress_tracking),
+                )
+            )
+            Spacer(modifier = Modifier.height(Spacing.medium))
 
-            Spacer(modifier = Modifier.height(Spacing.large))
-
-            SectionTitle("Технические особенности")
-            InfoText("Архитектура приложения включает:")
+            SectionTitle(text = stringResource(R.string.technical_features))
+            InfoText(text = stringResource(R.string.architecture_description))
 
             FeatureCard(
-                title = "Навигация",
-                content = {
-                    CodeSnippet(
-                        code = """
-                        ModalNavigationDrawer {
-                            NavHost(startDestination = "home") {
-                                composable("home") { HomeScreen() }
-                                composable("info") { InfoScreen() }
-                            }
-                        }
-                        """
-                    )
-                }
+                title = stringResource(R.string.navigation_title),
+                content = { CodeSnippet(code = stringResource(R.string.navigation_code_snippet)) }
             )
 
             FeatureCard(
-                title = "Состояние интерфейса",
+                title = stringResource(R.string.interface_state_title),
                 content = {
-                    InfoText(
-                        "• Управление через ViewModel и StateFlow\n" +
-                                "• Темная/светлая тема\n" +
-                                "• Поддержка portrait/landscape ориентации\n" +
-                                "• Адаптивные карточки привычек"
+                    BulletList(
+                        items = listOf(
+                            stringResource(R.string.state_management_viewmodel),
+                            stringResource(R.string.state_management_theme),
+                            stringResource(R.string.state_management_orientation),
+                            stringResource(R.string.state_management_cards)
+                        )
                     )
                 }
             )
 
-            SectionTitle("Пример реализации")
-            CodeSnippet(
-                code = """
-                @Composable
-                fun HabitInputForm(habitEntity: HabitEntity) {
-                    OutlinedTextField(
-                        value = habitEntity.name,
-                        onValueChange = { /* Update logic */ },
-                        label = { Text("Название привычки") }
-                    )
-                    // Остальные поля
-                }
-                """
-            )
+            SectionTitle(text = stringResource(R.string.implementation_example))
+            CodeSnippet(code = stringResource(R.string.implementation_code_snippet))
         }
     }
 }
@@ -131,6 +113,18 @@ private fun InfoText(text: String) {
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.padding(bottom = Spacing.section)
     )
+}
+
+@Composable
+private fun BulletList(
+    items: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        items.forEach { item ->
+            BulletPoint(item)
+        }
+    }
 }
 
 @Composable

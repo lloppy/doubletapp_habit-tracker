@@ -34,7 +34,6 @@
     <string name="delete_habit">Удаление привычки</string>
     <string name="sure_delete">Вы уверены, что хотите удалить эту привычку?</string>
     <string name="confirm">Подтвердить</string>
-    <string name="info_destination">О приложении</string>
     <string name="menu_button">меню</string>
     <string name="switch_theme">Поменять тему</string>
     <string name="habits">Habits</string>
@@ -44,5 +43,49 @@
     <string name="negative">Negative</string>
     <string name="required">*</string>
     <string name="bullet_item">• %s</string>
+
+
+    <!-- info screen -->
+    <string name="about_app">О приложении</string>
+    <string name="app_description">Трекер привычек с современным интерфейсом на Jetpack Compose. Основные функции:</string>
+
+    <string name="feature_habit_management">Управление привычками</string>
+    <string name="feature_settings">Настройка параметров</string>
+    <string name="feature_progress_tracking">Отслеживаие прогресса</string>
+
+    <string name="technical_features">Технические особенности</string>
+    <string name="architecture_description">Архитектура приложения включает:</string>
+    <string name="navigation_title">Навигация</string>
+    <string name="navigation_code_snippet">
+    """
+        ModalNavigationDrawer {
+            NavHost(startDestination = "home") {
+                composable("home") { HomeScreen() }
+                composable("info") { InfoScreen() }
+            }
+        }
+    """
+    </string>
+
+    <string name="interface_state_title">Состояние интерфейса</string>
+    <string name="state_management_viewmodel">Управление через ViewModel и StateFlow</string>
+    <string name="state_management_theme">Темная/светлая тема</string>
+    <string name="state_management_orientation">Поддержка portrait/landscape ориентации</string>
+    <string name="state_management_cards">Адаптивные карточки привычек</string>
+
+    <string name="implementation_example">Пример реализации</string>
+    <string name="implementation_code_snippet">
+    """
+        @Composable
+        fun HabitInputForm(habitEntity: HabitEntity) {
+            OutlinedTextField(
+                value = habitEntity.name,
+                onValueChange = { /* Update logic */ },
+                label = { Text("Название привычки") }
+            )
+            // Остальные поля
+        }
+    """
+    </string>
 
 </resources>
