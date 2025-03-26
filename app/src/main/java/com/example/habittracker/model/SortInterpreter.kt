@@ -1,5 +1,12 @@
 package com.example.habittracker.model
 
+import com.example.habittracker.model.SortOption.DATE_NEWEST
+import com.example.habittracker.model.SortOption.DATE_OLDEST
+import com.example.habittracker.model.SortOption.NAME_ASC
+import com.example.habittracker.model.SortOption.NAME_DESC
+import com.example.habittracker.model.SortOption.PRIORITY_HIGH
+import com.example.habittracker.model.SortOption.PRIORITY_LOW
+
 interface FilterExpression {
     fun interpret(habits: List<Habit>): List<Habit>
 }
@@ -33,14 +40,14 @@ class PriorityInterpreter(private val priority: HabitPriority?) : FilterExpressi
 }
 
 class SortInterpreter(private val sortOption: SortOption) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> {
-        return when (sortOption) {
-            SortOption.DATE_NEWEST -> habits.sortedByDescending { it.id }
-            SortOption.DATE_OLDEST -> habits.sortedBy { it.id }
-            SortOption.NAME_ASC -> habits.sortedBy { it.name }
-            SortOption.NAME_DESC -> habits.sortedByDescending { it.name }
-            SortOption.PRIORITY_HIGH -> habits.sortedByDescending { it.priority.ordinal }
-            SortOption.PRIORITY_LOW -> habits.sortedBy { it.priority.ordinal }
+    override fun interpret(habits: List<Habit>): List<Habit> = with(habits) {
+        when (sortOption) {
+            DATE_NEWEST -> sortedByDescending { it.id }
+            DATE_OLDEST -> sortedBy { it.id }
+            NAME_ASC -> sortedBy { it.name }
+            NAME_DESC -> sortedByDescending { it.name }
+            PRIORITY_HIGH -> sortedByDescending { it.priority.ordinal }
+            PRIORITY_LOW -> sortedBy { it.priority.ordinal }
         }
     }
 }
@@ -48,17 +55,15 @@ class SortInterpreter(private val sortOption: SortOption) : FilterExpression {
 class MultiplicationExpression(
     private val interpreters: List<FilterExpression>
 ) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> {
-        return interpreters.fold(habits) { accumulator, interpreter ->
+    override fun interpret(habits: List<Habit>): List<Habit> =
+        interpreters.fold(habits) { accumulator, interpreter ->
             interpreter.interpret(accumulator)
         }
-    }
 }
 
 class AdditionExpression(private val expressions: List<FilterExpression>) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> {
-        return expressions
+    override fun interpret(habits: List<Habit>): List<Habit> =
+        expressions
             .flatMap { it.interpret(habits) }
             .distinct()
-    }
 }

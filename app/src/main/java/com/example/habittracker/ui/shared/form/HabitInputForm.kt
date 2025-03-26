@@ -1,6 +1,5 @@
 package com.example.habittracker.ui.shared.form
 
-import ChooseColorButton
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -20,6 +19,10 @@ import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.create.HabitEntity
 import com.example.habittracker.ui.shared.ColorPickerDialog
+import com.example.habittracker.ui.shared.form.components.CategoryCard
+import com.example.habittracker.ui.shared.form.components.ChooseColorButton
+import com.example.habittracker.ui.shared.form.components.PriorityCard
+import com.example.habittracker.ui.shared.form.components.TypeCard
 
 @Composable
 fun HabitInputForm(
