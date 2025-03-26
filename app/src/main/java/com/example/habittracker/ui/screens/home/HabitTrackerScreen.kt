@@ -131,7 +131,6 @@ fun HabitTrackerScreen(
 
                     if (showBottomSheet) {
                         FilterModalSheet(
-                            showBottomSheet = showBottomSheet,
                             onDismiss = { showBottomSheet = false },
                             onSubmit = { newFilterState ->
                                 viewModel.applyFilter(newFilterState)

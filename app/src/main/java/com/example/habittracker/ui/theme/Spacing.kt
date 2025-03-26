@@ -12,6 +12,7 @@ object Spacing {
     val section: Dp @Composable get() = 8.dp
     val button: Dp @Composable get() = 50.dp
     val corner: Dp @Composable get() = 18.dp
+    val line: Dp @Composable get() = 18.dp
 
     val loading: Dp @Composable get() = 70.dp
     val emoji: Dp @Composable get() = 32.dp

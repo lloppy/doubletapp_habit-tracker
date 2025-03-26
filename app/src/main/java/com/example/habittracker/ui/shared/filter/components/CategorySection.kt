@@ -36,7 +36,7 @@ fun CategorySection(
     var expanded by remember { mutableStateOf(false) }
 
     Column {
-        SectionTitle(text = "Category")
+        SectionTitle(text = stringResource(R.string.category))
         Box(modifier = modifier.fillMaxWidth()) {
             OutlinedButton(
                 onClick = { expanded = true },
