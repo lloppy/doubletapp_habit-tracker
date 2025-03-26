@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.shared.form
+package com.example.habittracker.ui.shared
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import com.example.habittracker.ui.theme.Spacing
 
 @Composable
-fun FeatureCard(
+fun FeatureWithBackgroundCard(
     title: String,
     content: @Composable () -> Unit
 ) {

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.habittracker.model.HabitCategory
+import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import kotlin.enums.EnumEntries
 
 @Composable
@@ -21,7 +22,7 @@ fun CategoryCard(
     label: String,
     modifier: Modifier = Modifier
 ) {
-    FeatureCard(label) {
+    FeatureWithBackgroundCard(label) {
         Column(modifier.selectableGroup()) {
             options.forEach { option ->
                 Row(

@@ -41,7 +41,7 @@ import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.home.components.HabitCard
-import com.example.habittracker.ui.shared.FilterModalSheet
+import com.example.habittracker.ui.shared.filter.FilterModalSheet
 import com.example.habittracker.ui.shared.pager.HabitPager
 import com.example.habittracker.ui.shared.pager.PageType
 import com.example.habittracker.ui.theme.Spacing
@@ -75,7 +75,7 @@ fun HabitTrackerScreen(
                 canNavigateBack = false,
                 scrollBehavior = scrollBehavior,
                 onClickOpenDrawer = onClickOpenDrawer,
-                onClickFilter = { showBottomSheet = true}
+                onClickFilter = { showBottomSheet = true }
             )
         },
         floatingActionButton = {
@@ -105,14 +105,12 @@ fun HabitTrackerScreen(
                         .padding(paddingValue)
                 ) { selectedPageType ->
 
-                    val filteredHabits = when (selectedPageType) {
-                        PageType.ALL -> state.habits
-                        PageType.ONLY_POSITIVE -> state.positiveHabits
-                        PageType.ONLY_NEGATIVE -> state.negativeHabits
-                    }
-
                     HabitContent(
-                        filteredHabits = filteredHabits,
+                        filteredHabits = when (selectedPageType) {
+                            PageType.ALL -> state.habits
+                            PageType.ONLY_POSITIVE -> state.positiveHabits
+                            PageType.ONLY_NEGATIVE -> state.negativeHabits
+                        },
                         onIncreaseRepeated = {
                             coroutineScope.launch {
                                 viewModel.increaseRepeated(it)
@@ -135,7 +133,10 @@ fun HabitTrackerScreen(
                         FilterModalSheet(
                             showBottomSheet = showBottomSheet,
                             onDismiss = { showBottomSheet = false },
-                            onSubmit = {}
+                            onSubmit = { newFilterState ->
+                                viewModel.applyFilter(newFilterState)
+                            },
+                            initialFilterState = state.filterState
                         )
                     }
                 }

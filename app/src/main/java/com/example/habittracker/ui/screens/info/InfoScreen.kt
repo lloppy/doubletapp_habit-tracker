@@ -21,7 +21,8 @@ import androidx.compose.ui.text.font.FontFamily
 import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.shared.form.FeatureCard
+import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
+import com.example.habittracker.ui.shared.SectionTitle
 import com.example.habittracker.ui.theme.Spacing
 
 object InfoDestination : NavigationDestination {
@@ -69,12 +70,12 @@ fun InfoScreen(
             SectionTitle(text = stringResource(R.string.technical_features))
             InfoText(text = stringResource(R.string.architecture_description))
 
-            FeatureCard(
+            FeatureWithBackgroundCard(
                 title = stringResource(R.string.navigation_title),
                 content = { CodeSnippet(code = stringResource(R.string.navigation_code_snippet)) }
             )
 
-            FeatureCard(
+            FeatureWithBackgroundCard(
                 title = stringResource(R.string.interface_state_title),
                 content = {
                     BulletList(
@@ -92,18 +93,6 @@ fun InfoScreen(
             CodeSnippet(code = stringResource(R.string.implementation_code_snippet))
         }
     }
-}
-
-@Composable
-private fun SectionTitle(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(
-            vertical = Spacing.section
-        )
-    )
 }
 
 @Composable

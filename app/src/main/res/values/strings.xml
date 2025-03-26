@@ -87,6 +87,14 @@
         }
     """
     </string>
-    <string name="filter">фильтр</string>
+
+
+    <string name="filter">Фильтр</string>
+    <string name="clear">Очистить</string>
+    <string name="apply_filters">Применить фильтры</string>
+    <string name="clear_filters">Сбросить фильтры</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="search_by_name">Искать по имени</string>
+    <string name="show_all_categories">Отобразить всё</string>
 
 </resources>
