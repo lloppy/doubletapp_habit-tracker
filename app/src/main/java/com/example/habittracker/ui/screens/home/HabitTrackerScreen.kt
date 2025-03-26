@@ -24,7 +24,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -38,6 +41,7 @@ import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.home.components.HabitCard
+import com.example.habittracker.ui.shared.FilterModalSheet
 import com.example.habittracker.ui.shared.pager.HabitPager
 import com.example.habittracker.ui.shared.pager.PageType
 import com.example.habittracker.ui.theme.Spacing
@@ -62,13 +66,16 @@ fun HabitTrackerScreen(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             HabitAppBar(
                 title = stringResource(HomeDestination.title),
                 canNavigateBack = false,
                 scrollBehavior = scrollBehavior,
-                onClickOpenDrawer = onClickOpenDrawer
+                onClickOpenDrawer = onClickOpenDrawer,
+                onClickFilter = { showBottomSheet = true}
             )
         },
         floatingActionButton = {
@@ -123,6 +130,14 @@ fun HabitTrackerScreen(
                         },
                         modifier = Modifier.fillMaxSize()
                     )
+
+                    if (showBottomSheet) {
+                        FilterModalSheet(
+                            showBottomSheet = showBottomSheet,
+                            onDismiss = { showBottomSheet = false },
+                            onSubmit = {}
+                        )
+                    }
                 }
             }
         }

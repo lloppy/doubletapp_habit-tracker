@@ -87,5 +87,6 @@
         }
     """
     </string>
+    <string name="filter">фильтр</string>
 
 </resources>
