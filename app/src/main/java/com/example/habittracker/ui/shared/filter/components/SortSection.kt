@@ -39,7 +39,7 @@ fun SortSection(
                     onClick = { onSortOptionChanged(option) }
                 )
                 Spacer(modifier = Modifier.width(Spacing.small))
-                Text(option.displayName)
+                Text(stringResource(option.displayName))
             }
         }
     }

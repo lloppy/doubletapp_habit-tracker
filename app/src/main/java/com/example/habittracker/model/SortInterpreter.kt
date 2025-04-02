@@ -1,5 +1,7 @@
 package com.example.habittracker.model
 
+import androidx.annotation.StringRes
+import com.example.habittracker.R
 import com.example.habittracker.model.SortOption.DATE_NEWEST
 import com.example.habittracker.model.SortOption.DATE_OLDEST
 import com.example.habittracker.model.SortOption.NAME_ASC
@@ -11,13 +13,13 @@ interface FilterExpression {
     fun interpret(habits: List<Habit>): List<Habit>
 }
 
-enum class SortOption(val displayName: String) {
-    DATE_NEWEST("Сначала новые"),
-    DATE_OLDEST("Сначала старые"),
-    NAME_ASC("По имени (А-Я)"),
-    NAME_DESC("По имени (Я-А)"),
-    PRIORITY_HIGH("По приоритету (сначала высокий)"),
-    PRIORITY_LOW("По приоритету (сначала низкий)")
+enum class SortOption(@StringRes val displayName: Int) {
+    DATE_NEWEST(R.string.date_newest),
+    DATE_OLDEST(R.string.date_oldest),
+    NAME_ASC(R.string.name_asc),
+    NAME_DESC(R.string.name_desc),
+    PRIORITY_HIGH(R.string.priority_high),
+    PRIORITY_LOW(R.string.priority_low)
 }
 
 class SearchInterpreter(private val query: String) : FilterExpression {

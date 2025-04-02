@@ -24,7 +24,10 @@ class HabitTrackerViewModel(
         repository.getAllHabits(),
         _filterState
     ) { habits, filterState ->
-        val filteredHabits = applyFilters(habits, filterState.toExpressions())
+        val filteredHabits = applyFilters(
+            habits,
+            filterState.toExpressions()
+        ) // object для интрепрет , создаются ли лишние экземпляры? 
 
         HabitTrackerState.Success(
             habits = filteredHabits,

@@ -53,7 +53,7 @@ class HabitsRepositoryTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertHabitHabit_shouldAddHabitToRepository() = runBlocking {
+    fun insertHabit_shouldAddHabitToRepository() = runBlocking {
         addSingleHabitToRepository()
 
         val allItems = habitDao.getAll().first()
@@ -72,7 +72,7 @@ class HabitsRepositoryTest {
 
     @Test
     @Throws(Exception::class)
-    fun updateHabit_shouldUpdateHabitHabitInRepository() = runBlocking {
+    fun updateHabit_shouldUpdateHabitInRepository() = runBlocking {
         addTwoHabitsToRepository()
 
         habitDao.update(testHabits[2])
@@ -85,7 +85,7 @@ class HabitsRepositoryTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteHabitHabit_shouldDeletesAllItemsFromDB() = runBlocking {
+    fun deleteHabit_shouldDeletesAllItemsFromDB() = runBlocking {
         addTwoHabitsToRepository()
 
         habitDao.delete(habit1)

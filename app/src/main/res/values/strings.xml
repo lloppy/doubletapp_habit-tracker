@@ -97,5 +97,11 @@
     <string name="search_by_name">Искать по имени</string>
     <string name="show_all_categories">Отобразить всё</string>
     <string name="category">Категория</string>
+    <string name="date_newest">Сначала новые</string>
+    <string name="date_oldest">Сначала старые</string>
+    <string name="name_asc">По имени (А-Я)</string>
+    <string name="name_desc">По имени (Я-А)</string>
+    <string name="priority_high">По приоритету (сначала высокий)</string>
+    <string name="priority_low">По приоритету (сначала низкий)</string>
 
 </resources>

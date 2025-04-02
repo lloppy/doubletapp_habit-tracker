@@ -28,10 +28,8 @@ fun HabitPager(
         pagerState.animateScrollToPage(state.selectedTabIndex)
     }
 
-    LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
-        if (!pagerState.isScrollInProgress) {
-            viewModel.onTabSelected(pagerState.currentPage)
-        }
+    LaunchedEffect(pagerState.targetPage) {
+        viewModel.onTabSelected(pagerState.targetPage)
     }
 
     Column(modifier = modifier) {
