@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.item
+package com.example.habittracker.ui.screens.item.edit
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,14 +21,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.shared.HabitInputForm
+import com.example.habittracker.ui.shared.form.HabitInputForm
+import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
 
 object EditHabitDestination : NavigationDestination {
@@ -91,12 +91,16 @@ fun EditHabitScreen(
         Column(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal =  dimensionResource(R.dimen.padding_medium))
                 .padding(
-                    top = paddingValue.calculateTopPadding().plus(dimensionResource(R.dimen.padding_medium)),
-                    bottom = paddingValue.calculateBottomPadding().plus(dimensionResource(R.dimen.padding_medium))
+                    horizontal = Spacing.medium
+                )
+                .padding(
+                    top = paddingValue.calculateTopPadding()
+                        .plus(Spacing.medium),
+                    bottom = paddingValue.calculateBottomPadding()
+                        .plus(Spacing.medium)
                 ),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
 
             HabitInputForm(
@@ -115,7 +119,7 @@ fun EditHabitScreen(
                 enabled = viewModel.entryUiState.isEntryValid,
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(R.dimen.button_size))
+                    .height(Spacing.button)
             ) {
                 Text(text = stringResource(R.string.save))
             }
@@ -125,7 +129,7 @@ fun EditHabitScreen(
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onErrorContainer),
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(R.dimen.button_size))
+                    .height(Spacing.button)
             ) {
                 Text(text = stringResource(R.string.delete))
             }

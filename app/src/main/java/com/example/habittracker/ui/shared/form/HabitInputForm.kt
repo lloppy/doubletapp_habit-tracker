@@ -1,6 +1,5 @@
-package com.example.habittracker.ui.screens.shared
+package com.example.habittracker.ui.shared.form
 
-import ChooseColorButton
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -18,11 +17,12 @@ import com.example.habittracker.R
 import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
-import com.example.habittracker.ui.screens.item.HabitEntity
-import com.example.habittracker.ui.screens.shared.components.CategoryCard
-import com.example.habittracker.ui.screens.shared.components.PriorityCard
-import com.example.habittracker.ui.screens.shared.components.TypeCard
-
+import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.shared.ColorPickerDialog
+import com.example.habittracker.ui.shared.form.components.CategoryCard
+import com.example.habittracker.ui.shared.form.components.ChooseColorButton
+import com.example.habittracker.ui.shared.form.components.PriorityCard
+import com.example.habittracker.ui.shared.form.components.TypeCard
 
 @Composable
 fun HabitInputForm(
@@ -32,8 +32,6 @@ fun HabitInputForm(
 ) {
     val openDialog = remember { mutableStateOf(false) }
     val selectedColor = remember { mutableStateOf(Color.Unspecified) }
-
-    val required = "*"
 
     if (openDialog.value) {
         ColorPickerDialog(
@@ -49,7 +47,14 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitEntity.name,
-        label = { Text(text = stringResource(R.string.set_name, required)) },
+        label = {
+            Text(
+                text = stringResource(
+                    R.string.set_name,
+                    stringResource(R.string.required)
+                )
+            )
+        },
         onValueChange = { onValueChange(habitEntity.copy(name = it)) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -75,7 +80,10 @@ fun HabitInputForm(
         selectedValue = habitEntity.category,
         onOptionSelected = { onValueChange(habitEntity.copy(category = it)) },
         options = HabitCategory.entries,
-        label = stringResource(R.string.set_category, required),
+        label = stringResource(
+            R.string.set_category,
+            stringResource(R.string.required)
+        ),
     )
 
     ChooseColorButton(
@@ -96,7 +104,10 @@ fun HabitInputForm(
         selectedValue = habitEntity.type,
         onOptionSelected = { onValueChange(habitEntity.copy(type = it)) },
         options = HabitType.entries,
-        label = stringResource(R.string.set_type, required),
+        label = stringResource(
+            R.string.set_type,
+            stringResource(R.string.required)
+        ),
         modifier = modifier.fillMaxWidth()
     )
 

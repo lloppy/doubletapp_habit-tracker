@@ -10,8 +10,9 @@ import com.example.habittracker.data.HabitDao
 import com.example.habittracker.data.OfflineDatabase
 import com.example.habittracker.model.Converters
 import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitCategory
+import com.example.habittracker.model.HabitPriority
+import com.example.habittracker.model.HabitType
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
@@ -46,8 +47,8 @@ class HabitsRepositoryTest {
     }
 
 
-    val habit1 = testHabits[0]
-    val habit2 = testHabits[1]
+    private val habit1 = testHabits[0]
+    private val habit2 = testHabits[1]
 
 
     @Test
@@ -55,7 +56,7 @@ class HabitsRepositoryTest {
     fun insertHabit_shouldAddHabitToRepository() = runBlocking {
         addSingleHabitToRepository()
 
-        val allItems = habitDao.getAllHabits().first()
+        val allItems = habitDao.getAll().first()
         assertEquals(habit1, allItems.first())
     }
 
@@ -64,7 +65,7 @@ class HabitsRepositoryTest {
     fun getAllHabits_shouldReturnAllHabitsFromRepository() = runBlocking {
         addTwoHabitsToRepository()
 
-        val allItems = habitDao.getAllHabits().first()
+        val allItems = habitDao.getAll().first()
         assertEquals(habit1, allItems[0])
         assertEquals(habit2, allItems[1])
     }
@@ -77,7 +78,7 @@ class HabitsRepositoryTest {
         habitDao.update(testHabits[2])
         habitDao.update(testHabits[3])
 
-        val allItems = habitDao.getAllHabits().first()
+        val allItems = habitDao.getAll().first()
         assertEquals(testHabits[2], allItems[0])
         assertEquals(testHabits[3], allItems[1])
     }
@@ -90,7 +91,7 @@ class HabitsRepositoryTest {
         habitDao.delete(habit1)
         habitDao.delete(habit2)
 
-        val allItems = habitDao.getAllHabits().first()
+        val allItems = habitDao.getAll().first()
         assertTrue(allItems.isEmpty())
     }
 
@@ -113,6 +114,7 @@ object TestData {
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
             category = HabitCategory.SPORT,
+            type = HabitType.POSITIVE,
             priority = HabitPriority.HIGH,
             frequency = "Ежедневно",
             repeatedTimes = 7,
@@ -124,6 +126,7 @@ object TestData {
             name = "Чтение перед сном",
             description = "Чтение для расслабления",
             category = HabitCategory.RELAXATION,
+            type = HabitType.POSITIVE,
             priority = HabitPriority.MEDIUM,
             frequency = "Раз в неделю",
             repeatedTimes = 4,
@@ -135,6 +138,7 @@ object TestData {
             name = "Просмотр лекций",
             description = "Обучение на платформе Coursera",
             category = HabitCategory.STUDY,
+            type = HabitType.POSITIVE,
             priority = HabitPriority.LOW,
             frequency = "Раз в две недели",
             repeatedTimes = 2,
@@ -146,6 +150,7 @@ object TestData {
             name = "Планирование дня",
             description = "Планирование задач на день",
             category = HabitCategory.PRODUCTIVITY,
+            type = HabitType.POSITIVE,
             priority = HabitPriority.MEDIUM,
             frequency = "Ежедневно",
             repeatedTimes = 10,

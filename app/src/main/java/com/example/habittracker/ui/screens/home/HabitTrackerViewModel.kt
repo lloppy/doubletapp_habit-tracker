@@ -3,45 +3,74 @@ package com.example.habittracker.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.habittracker.data.HabitsRepository
+import com.example.habittracker.model.FilterExpression
 import com.example.habittracker.model.Habit
+import com.example.habittracker.model.HabitType
+import com.example.habittracker.model.MultiplicationExpression
+import com.example.habittracker.ui.shared.filter.FilterState
+import com.example.habittracker.ui.shared.filter.toExpressions
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 class HabitTrackerViewModel(
     private val repository: HabitsRepository
 ) : ViewModel() {
-    val uiState: StateFlow<HabitTrackerState> =
-        repository.getAllHabits().map {
-            HabitTrackerState.Success(it)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING),
-            initialValue = HabitTrackerState.Loading
+    private val _filterState = MutableStateFlow(FilterState())
+
+    val uiState: StateFlow<HabitTrackerState> = combine(
+        repository.getAllHabits(),
+        _filterState
+    ) { habits, filterState ->
+        val filteredHabits = applyFilters(
+            habits,
+            filterState.toExpressions()
+        ) // object для интрепрет , создаются ли лишние экземпляры? 
+
+        HabitTrackerState.Success(
+            habits = filteredHabits,
+            positiveHabits = filteredHabits.filter { it.type == HabitType.POSITIVE },
+            negativeHabits = filteredHabits.filter { it.type == HabitType.NEGATIVE },
+            filterState = filterState
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING),
+        initialValue = HabitTrackerState.Loading
+    )
+
 
     suspend fun increaseRepeated(habitId: Int) {
-        repository.increaseQuantity(id = habitId)
+        repository.increaseHabitQuantity(id = habitId)
     }
 
     suspend fun decreaseRepeated(habitId: Int) {
-        repository.decreaseQuantity(id = habitId)
+        repository.decreaseHabitQuantity(id = habitId)
     }
 
-    suspend fun deleteItemById(habitId: Int) {
-        repository.deleteById(id = habitId)
+    suspend fun delete(habitId: Int) {
+        repository.deleteByHabitId(id = habitId)
     }
 
+
+    fun applyFilter(newFilterState: FilterState) {
+        _filterState.value = newFilterState
+    }
+
+    private fun applyFilters(
+        habits: List<Habit>,
+        expressions: List<FilterExpression>
+    ): List<Habit> {
+        return if (expressions.isEmpty()) {
+            habits
+        } else {
+            MultiplicationExpression(expressions).interpret(habits)
+        }
+    }
 
     companion object {
         const val DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING = 3_000L
     }
 }
-
-sealed interface HabitTrackerState {
-    data class Success(val habits: List<Habit> = listOf()) : HabitTrackerState
-    object Loading : HabitTrackerState
-}
-//TODO()вынести в отдельный файл стейты
-//TODO()   плюс два списка  без стейта текущего номера экрана

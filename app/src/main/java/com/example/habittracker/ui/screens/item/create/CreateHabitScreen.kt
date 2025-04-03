@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.item
+package com.example.habittracker.ui.screens.item.create
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,27 +15,27 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.shared.HabitInputForm
+import com.example.habittracker.ui.shared.form.HabitInputForm
+import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
 
 object HabitEntryDestination : NavigationDestination {
-    override val route = "entry_habit"
+    override val route = "create_habit"
     override val title = R.string.create_habit
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HabitEntryScreen(
+fun CreateHabitScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HabitEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: CreateHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -54,13 +54,15 @@ fun HabitEntryScreen(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
                 .padding(
-                    horizontal = dimensionResource(R.dimen.padding_medium)
+                    horizontal = Spacing.medium
                 )
                 .padding(
-                    top = paddingValue.calculateTopPadding().plus(dimensionResource(R.dimen.padding_medium)),
-                    bottom = paddingValue.calculateBottomPadding().plus(dimensionResource(R.dimen.padding_medium))
+                    top = paddingValue.calculateTopPadding()
+                        .plus(Spacing.medium),
+                    bottom = paddingValue.calculateBottomPadding()
+                        .plus(Spacing.medium)
                 ),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             HabitInputForm(
                 habitEntity = viewModel.entryUiState.currentHabit,
@@ -78,7 +80,7 @@ fun HabitEntryScreen(
                 enabled = viewModel.entryUiState.isEntryValid,
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(R.dimen.button_size))
+                    .height(Spacing.button)
             ) {
                 Text(text = stringResource(R.string.create))
             }

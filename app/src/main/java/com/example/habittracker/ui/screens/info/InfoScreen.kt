@@ -16,17 +16,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.shared.components.FeatureCard
+import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
+import com.example.habittracker.ui.shared.SectionTitle
+import com.example.habittracker.ui.theme.Spacing
 
 object InfoDestination : NavigationDestination {
     override val route = "info_destination"
-    override val title = R.string.info_destination
+    override val title = R.string.about_app
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,78 +51,48 @@ fun InfoScreen(
 
         Column(
             modifier = Modifier
-                .verticalScroll(scrollState)
                 .padding(paddingValue)
-                .padding(dimensionResource(R.dimen.padding_medium))
+                .padding(Spacing.medium)
+                .verticalScroll(scrollState)
         ) {
-            SectionTitle("О приложении")
-            InfoText("Трекер привычек с современным интерфейсом на Jetpack Compose. Основные функции:")
+            SectionTitle(text = stringResource(R.string.about_app))
+            InfoText(text = stringResource(R.string.app_description))
 
-            BulletPoint("Управление привычками")
-            BulletPoint("Настройка параметров")
-            BulletPoint("Отслеживаие прогресса")
+            BulletList(
+                items = listOf(
+                    stringResource(R.string.feature_habit_management),
+                    stringResource(R.string.feature_settings),
+                    stringResource(R.string.feature_progress_tracking),
+                )
+            )
+            Spacer(modifier = Modifier.height(Spacing.medium))
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
+            SectionTitle(text = stringResource(R.string.technical_features))
+            InfoText(text = stringResource(R.string.architecture_description))
 
-            SectionTitle("Технические особенности")
-            InfoText("Архитектура приложения включает:")
+            FeatureWithBackgroundCard(
+                title = stringResource(R.string.navigation_title),
+                content = { CodeSnippet(code = stringResource(R.string.navigation_code_snippet)) }
+            )
 
-            FeatureCard(
-                title = "Навигация",
+            FeatureWithBackgroundCard(
+                title = stringResource(R.string.interface_state_title),
                 content = {
-                    CodeSnippet(
-                        code = """
-                        ModalNavigationDrawer {
-                            NavHost(startDestination = "home") {
-                                composable("home") { HomeScreen() }
-                                composable("info") { InfoScreen() }
-                            }
-                        }
-                        """
+                    BulletList(
+                        items = listOf(
+                            stringResource(R.string.state_management_viewmodel),
+                            stringResource(R.string.state_management_theme),
+                            stringResource(R.string.state_management_orientation),
+                            stringResource(R.string.state_management_cards)
+                        )
                     )
                 }
             )
 
-            FeatureCard(
-                title = "Состояние интерфейса",
-                content = {
-                    InfoText(
-                        "• Управление через ViewModel и StateFlow\n" +
-                                "• Темная/светлая тема\n" +
-                                "• Поддержка portrait/landscape ориентации\n" +
-                                "• Адаптивные карточки привычек"
-                    )
-                }
-            )
-
-            SectionTitle("Пример реализации")
-            CodeSnippet(
-                code = """
-                @Composable
-                fun HabitInputForm(habitEntity: HabitEntity) {
-                    OutlinedTextField(
-                        value = habitEntity.name,
-                        onValueChange = { /* Update logic */ },
-                        label = { Text("Название привычки") }
-                    )
-                    // Остальные поля
-                }
-                """
-            )
+            SectionTitle(text = stringResource(R.string.implementation_example))
+            CodeSnippet(code = stringResource(R.string.implementation_code_snippet))
         }
     }
-}
-
-@Composable
-private fun SectionTitle(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(
-            vertical = dimensionResource(R.dimen.section_padding)
-        )
-    )
 }
 
 @Composable
@@ -129,8 +100,20 @@ private fun InfoText(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodyMedium,
-        modifier = Modifier.padding(bottom = dimensionResource(R.dimen.section_padding))
+        modifier = Modifier.padding(bottom = Spacing.section)
     )
+}
+
+@Composable
+private fun BulletList(
+    items: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        items.forEach { item ->
+            BulletPoint(item)
+        }
+    }
 }
 
 @Composable
@@ -138,12 +121,11 @@ private fun BulletPoint(text: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(
-            start = dimensionResource(R.dimen.padding_medium),
-            bottom = dimensionResource(R.dimen.padding_small)
+            start = Spacing.medium,
+            bottom = Spacing.small
         )
     ) {
-        Text("• ", style = MaterialTheme.typography.bodyMedium)
-        Text(text, style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.bullet_item, text))
     }
 }
 
@@ -158,8 +140,8 @@ private fun CodeSnippet(code: String) {
         modifier = Modifier
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(dimensionResource(R.dimen.padding_small))
+                shape = RoundedCornerShape(Spacing.small)
             )
-            .padding(dimensionResource(R.dimen.section_padding))
+            .padding(Spacing.section)
     )
 }

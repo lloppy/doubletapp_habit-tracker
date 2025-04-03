@@ -8,10 +8,14 @@ import com.example.habittracker.ui.theme.AppTheme
 
 class ThemeRepository(context: Context) {
 
-    private val sharedPreferences = context.getSharedPreferences(SHAR_PREF_THEME_KEY, Context.MODE_PRIVATE)
+    private val sharedPreferences =
+        context.getSharedPreferences(SHAR_PREF_THEME_KEY, Context.MODE_PRIVATE)
 
     private val _themeState = mutableStateOf(
-        AppTheme.valueOf(sharedPreferences.getString(THEME_KEY, AppTheme.MODE_AUTO.name) ?: AppTheme.MODE_AUTO.name)
+        AppTheme.valueOf(
+            sharedPreferences.getString(THEME_KEY, AppTheme.MODE_AUTO.name)
+                ?: AppTheme.MODE_AUTO.name
+        )
     )
     val themeState: MutableState<AppTheme> = _themeState
 
@@ -20,10 +24,8 @@ class ThemeRepository(context: Context) {
         sharedPreferences.edit().putString(THEME_KEY, theme.name).apply()
     }
 
-    companion object{
+    companion object {
         const val THEME_KEY = "theme"
         const val SHAR_PREF_THEME_KEY = "theme_prefs"
     }
 }
-
-

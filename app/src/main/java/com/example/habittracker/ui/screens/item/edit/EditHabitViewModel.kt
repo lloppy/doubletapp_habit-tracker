@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.item
+package com.example.habittracker.ui.screens.item.edit
 
 
 import androidx.compose.runtime.getValue
@@ -8,6 +8,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.habittracker.data.HabitsRepository
+import com.example.habittracker.ui.screens.item.HabitItemState
+import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.screens.item.create.toHabit
+import com.example.habittracker.ui.screens.item.create.toUiState
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -19,11 +23,11 @@ class EditHabitViewModel(
 ) : ViewModel() {
     private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
-    var entryUiState by mutableStateOf(HabitEntryState())
+    var entryUiState by mutableStateOf(HabitItemState())
         private set
 
     fun updateUiState(newHabit: HabitEntity) {
-        entryUiState = HabitEntryState(
+        entryUiState = HabitItemState(
             currentHabit = newHabit,
             isEntryValid = validateInput(newHabit)
         )
@@ -31,10 +35,10 @@ class EditHabitViewModel(
 
     init {
         viewModelScope.launch {
-            entryUiState = repository.getHabit(checkNotNull(stringId.toIntOrNull()))
+            entryUiState = repository.getHabitById(checkNotNull(stringId.toIntOrNull()))
                 .filterNotNull()
                 .map {
-                    HabitEntryState(
+                    HabitItemState(
                         currentHabit = it.toUiState(),
                         isEntryValid = true
                     )
@@ -58,11 +62,11 @@ class EditHabitViewModel(
 
     suspend fun updateItem() {
         if (validateInput()) {
-            repository.update(newHabit = entryUiState.currentHabit.toHabit())
+            repository.updateHabit(habit = entryUiState.currentHabit.toHabit())
         }
     }
 
     suspend fun deleteItem() {
-        repository.delete(entryUiState.currentHabit.toHabit())
+        repository.deleteHabit(entryUiState.currentHabit.toHabit())
     }
 }
