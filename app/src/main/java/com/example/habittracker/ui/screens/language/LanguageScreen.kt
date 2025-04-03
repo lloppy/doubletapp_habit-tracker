@@ -2,10 +2,8 @@ package com.example.habittracker.ui.screens.language
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -56,17 +54,18 @@ fun LanguageScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(Spacing.medium),
-            contentPadding = paddingValue
+            contentPadding = paddingValue,
+            verticalArrangement = Arrangement.spacedBy(Spacing.section)
         ) {
-            items(state.availableLanguages) { language ->
+            items(items = state.availableLanguages, key = { it.code }) { language ->
                 LanguageItem(
                     languageName = language.displayName,
                     isSelected = language.code == state.currentLanguage,
                     onClick = {
                         viewModel.onLanguageSelected(language.code)
-                    }
+                    },
+                    modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(Spacing.section))
             }
         }
     }
@@ -76,11 +75,12 @@ fun LanguageScreen(
 private fun LanguageItem(
     languageName: String,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) {
                 MaterialTheme.colorScheme.primaryContainer
