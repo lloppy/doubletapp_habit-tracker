@@ -1,5 +1,6 @@
-package com.example.habittracker.data
+package com.example.habittracker.data.repository
 
+import com.example.habittracker.data.HabitDao
 import com.example.habittracker.model.Habit
 import kotlinx.coroutines.flow.Flow
 

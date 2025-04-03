@@ -1,11 +1,14 @@
 package com.example.habittracker.ui.screens.item.create
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.habittracker.data.HabitsRepository
+import com.example.habittracker.R
+import com.example.habittracker.data.repository.ContextRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
@@ -14,7 +17,8 @@ import com.example.habittracker.ui.screens.item.HabitItemState
 
 
 class CreateHabitViewModel(
-    private val repository: HabitsRepository
+    private val habitsRepository: HabitsRepository,
+    private val contextRepository: ContextRepository
 ) : ViewModel() {
 
     var entryUiState by mutableStateOf(HabitItemState())
@@ -23,16 +27,16 @@ class CreateHabitViewModel(
     fun updateUiState(newHabit: HabitEntity) {
         entryUiState = HabitItemState(
             currentHabit = newHabit,
-            isEntryValid = validateInput(newHabit)
+            isEntryValid = validateInput(uiEntry = newHabit)
         )
     }
 
-    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
-        with(uiState) {
+    private fun validateInput(uiEntry: HabitEntity = entryUiState.currentHabit): Boolean =
+        with(uiEntry) {
             name.isNotBlank()
-                    && category.isNotBlank()
-                    && type.isNotBlank()
-                    && canParseInt(uiState.repeatedTimes)
+                    && contextRepository.getString(category).isNotBlank()
+                    && contextRepository.getString(type).isNotBlank()
+                    && canParseInt(uiEntry.repeatedTimes)
         }
 
 
@@ -42,7 +46,9 @@ class CreateHabitViewModel(
 
     suspend fun saveItem() {
         if (validateInput()) {
-            repository.insertHabit(habit = entryUiState.currentHabit.toHabit())
+            habitsRepository.insertHabit(
+                habit = entryUiState.currentHabit.toHabit()
+            )
         }
     }
 }
@@ -51,9 +57,9 @@ data class HabitEntity(
     val id: Int = 0,
     val name: String = "",
     val description: String = "",
-    val type: String = "",
-    val category: String = "",
-    val priority: String = "",
+    @StringRes val type: Int = R.string.positive,
+    @StringRes val category: Int = R.string.productivity,
+    @StringRes val priority: Int = R.string.medium,
     val frequency: String = "",
     val repeatedTimes: String = "",
     val quantity: String = "",
@@ -65,8 +71,10 @@ fun HabitEntity.toHabit(): Habit = Habit(
     name = name,
     description = description,
 
-    priority = HabitPriority.entries.firstOrNull { it.priorityName == priority } ?: HabitPriority.MEDIUM,
-    category = HabitCategory.entries.firstOrNull { it.categoryName == category } ?: HabitCategory.PRODUCTIVITY,
+    priority = HabitPriority.entries.firstOrNull { it.priorityName == priority }
+        ?: HabitPriority.MEDIUM,
+    category = HabitCategory.entries.firstOrNull { it.categoryName == category }
+        ?: HabitCategory.PRODUCTIVITY,
     type = HabitType.entries.firstOrNull { it.impactName == type } ?: HabitType.POSITIVE,
 
     frequency = frequency,

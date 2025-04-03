@@ -2,7 +2,7 @@ package com.example.habittracker.ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.ThemeRepository
+import com.example.habittracker.data.repository.ThemeRepository
 import com.example.habittracker.ui.theme.AppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

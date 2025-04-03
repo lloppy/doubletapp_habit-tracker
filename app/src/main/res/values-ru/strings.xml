@@ -1,7 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Habit Tracker</string>
-    <string name="back_button" translatable="false">back</string>
-    <string name="item_entry_title" translatable="false">add item</string>
+    <string name="app_name">Трекер привычек</string>
 
     <string name="item_edit_title">Редактировать</string>
     <string name="create_habit">Создать новую привычку</string>
@@ -36,10 +35,6 @@
     <string name="confirm">Подтвердить</string>
     <string name="menu_button">меню</string>
     <string name="switch_theme">Поменять тему</string>
-
-    <string name="required" translatable="false">*</string>
-    <string name="bullet_item" translatable="false">• %s</string>
-
 
     <!-- info screen -->
     <string name="about_app">О приложении</string>

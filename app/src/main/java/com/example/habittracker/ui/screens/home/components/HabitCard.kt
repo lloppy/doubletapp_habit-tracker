@@ -53,8 +53,14 @@ fun HabitCard(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 Text(
-                    text = habit.name,
+                    text = if (habit.frequency.isBlank()) {
+                        habit.name
+                    } else {
+                        "${habit.name} ${habit.frequency.lowercase()}"
+                    },
                     style = MaterialTheme.typography.titleLarge,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                     lineHeight = Spacing.line.value.sp
                 )
                 if (habit.description.isNotBlank()) {

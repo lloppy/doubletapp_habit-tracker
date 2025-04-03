@@ -14,15 +14,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.habittracker.model.HabitPriority
 import kotlin.enums.EnumEntries
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PriorityCard(
-    selectedValue: String,
-    onOptionSelected: (String) -> Unit,
+    selectedValue: Int,
+    onOptionSelected: (Int) -> Unit,
     options: EnumEntries<HabitPriority>,
     label: String,
     modifier: Modifier = Modifier
@@ -36,7 +36,7 @@ fun PriorityCard(
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = selectedValue,
+            value = stringResource(selectedValue),
             onValueChange = {},
             label = { Text(text = label) },
             trailingIcon = {
@@ -51,7 +51,9 @@ fun PriorityCard(
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(text = option.priorityName) },
+                    text = {
+                        Text(text = stringResource(option.priorityName))
+                    },
                     onClick = {
                         expanded = false
                         onOptionSelected(option.priorityName)

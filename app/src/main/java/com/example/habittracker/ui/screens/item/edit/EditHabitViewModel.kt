@@ -7,7 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.HabitsRepository
+import com.example.habittracker.data.repository.ContextRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.create.HabitEntity
 import com.example.habittracker.ui.screens.item.create.toHabit
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 
 class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: HabitsRepository
+    private val habitsRepository: HabitsRepository,
+    private val contextRepository: ContextRepository
 ) : ViewModel() {
     private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
@@ -29,13 +31,13 @@ class EditHabitViewModel(
     fun updateUiState(newHabit: HabitEntity) {
         entryUiState = HabitItemState(
             currentHabit = newHabit,
-            isEntryValid = validateInput(newHabit)
+            isEntryValid = validateInput(uiEntry = newHabit)
         )
     }
 
     init {
         viewModelScope.launch {
-            entryUiState = repository.getHabitById(checkNotNull(stringId.toIntOrNull()))
+            entryUiState = habitsRepository.getHabitById(id = checkNotNull(stringId.toIntOrNull()))
                 .filterNotNull()
                 .map {
                     HabitItemState(
@@ -47,12 +49,12 @@ class EditHabitViewModel(
         }
     }
 
-    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
-        with(uiState) {
+    private fun validateInput(uiEntry: HabitEntity = entryUiState.currentHabit): Boolean =
+        with(uiEntry) {
             name.isNotBlank()
-                    && category.isNotBlank()
-                    && type.isNotBlank()
-                    && canParseInt(uiState.repeatedTimes)
+                    && contextRepository.getString(category).isNotBlank()
+                    && contextRepository.getString(type).isNotBlank()
+                    && canParseInt(uiEntry.repeatedTimes)
         }
 
 
@@ -62,11 +64,13 @@ class EditHabitViewModel(
 
     suspend fun updateItem() {
         if (validateInput()) {
-            repository.updateHabit(habit = entryUiState.currentHabit.toHabit())
+            habitsRepository.updateHabit(
+                habit = entryUiState.currentHabit.toHabit()
+            )
         }
     }
 
     suspend fun deleteItem() {
-        repository.deleteHabit(entryUiState.currentHabit.toHabit())
+        habitsRepository.deleteHabit(entryUiState.currentHabit.toHabit())
     }
 }

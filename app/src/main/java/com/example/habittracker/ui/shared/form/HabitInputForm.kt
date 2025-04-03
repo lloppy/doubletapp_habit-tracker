@@ -55,7 +55,25 @@ fun HabitInputForm(
                 )
             )
         },
-        onValueChange = { onValueChange(habitEntity.copy(name = it)) },
+        onValueChange = {
+            onValueChange(habitEntity.copy(name = it))
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences
+        ),
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth()
+    )
+
+    OutlinedTextField(
+        value = habitEntity.frequency,
+        label = {
+            Text(text = stringResource(R.string.set_frequency))
+        },
+        onValueChange = {
+            onValueChange(habitEntity.copy(frequency = it))
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
@@ -66,8 +84,12 @@ fun HabitInputForm(
 
     OutlinedTextField(
         value = habitEntity.description,
-        label = { Text(text = stringResource(R.string.set_description)) },
-        onValueChange = { onValueChange(habitEntity.copy(description = it)) },
+        label = {
+            Text(text = stringResource(R.string.set_description))
+        },
+        onValueChange = {
+            onValueChange(habitEntity.copy(description = it))
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
@@ -78,7 +100,9 @@ fun HabitInputForm(
 
     CategoryCard(
         selectedValue = habitEntity.category,
-        onOptionSelected = { onValueChange(habitEntity.copy(category = it)) },
+        onOptionSelected = {
+            onValueChange(habitEntity.copy(category = it))
+        },
         options = HabitCategory.entries,
         label = stringResource(
             R.string.set_category,
@@ -96,13 +120,17 @@ fun HabitInputForm(
         selectedValue = habitEntity.priority,
         options = HabitPriority.entries,
         label = stringResource(R.string.set_priority),
-        onOptionSelected = { onValueChange(habitEntity.copy(priority = it)) },
+        onOptionSelected = {
+            onValueChange(habitEntity.copy(priority = it))
+        },
         modifier = modifier.fillMaxWidth()
     )
 
     TypeCard(
         selectedValue = habitEntity.type,
-        onOptionSelected = { onValueChange(habitEntity.copy(type = it)) },
+        onOptionSelected = {
+            onValueChange(habitEntity.copy(type = it))
+        },
         options = HabitType.entries,
         label = stringResource(
             R.string.set_type,
@@ -112,21 +140,13 @@ fun HabitInputForm(
     )
 
     OutlinedTextField(
-        value = habitEntity.frequency,
-        label = { Text(text = stringResource(R.string.set_frequency)) },
-        onValueChange = { onValueChange(habitEntity.copy(frequency = it)) },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
-            capitalization = KeyboardCapitalization.Sentences
-        ),
-        singleLine = true,
-        modifier = Modifier.fillMaxWidth()
-    )
-
-    OutlinedTextField(
         value = habitEntity.repeatedTimes,
-        placeholder = { Text(text = stringResource(R.string.set_repeated_times)) },
-        onValueChange = { onValueChange(habitEntity.copy(repeatedTimes = it)) },
+        placeholder = {
+            Text(text = stringResource(R.string.set_repeated_times))
+        },
+        onValueChange = {
+            onValueChange(habitEntity.copy(repeatedTimes = it))
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Number,
