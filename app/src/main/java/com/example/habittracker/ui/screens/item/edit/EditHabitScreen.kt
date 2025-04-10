@@ -18,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +30,7 @@ import com.example.habittracker.R
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.shared.form.HabitInputForm
 import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
@@ -46,6 +49,8 @@ fun EditHabitScreen(
     modifier: Modifier = Modifier,
     viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val entryState by viewModel.entryUiState.observeAsState(HabitItemState())
+
     val coroutineScope = rememberCoroutineScope()
 
     val openDialog = remember { mutableStateOf(false) }
@@ -106,7 +111,7 @@ fun EditHabitScreen(
         ) {
 
             HabitInputForm(
-                habitEntity = viewModel.entryUiState.currentHabit,
+                habitEntity = entryState.currentHabit,
                 onAction = viewModel::handleAction,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -118,7 +123,7 @@ fun EditHabitScreen(
                         navigateBack()
                     }
                 },
-                enabled = viewModel.entryUiState.isEntryValid,
+                enabled = entryState.isEntryValid,
                 modifier = modifier
                     .fillMaxWidth()
                     .height(Spacing.button)
