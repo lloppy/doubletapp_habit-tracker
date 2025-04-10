@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.ContextRepository
 import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.create.HabitEntity
@@ -20,8 +19,7 @@ import kotlinx.coroutines.launch
 
 class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
-    private val habitsRepository: HabitsRepository,
-    private val contextRepository: ContextRepository
+    private val habitsRepository: HabitsRepository
 ) : ViewModel() {
     private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
@@ -51,10 +49,7 @@ class EditHabitViewModel(
 
     private fun validateInput(uiEntry: HabitEntity = entryUiState.currentHabit): Boolean =
         with(uiEntry) {
-            name.isNotBlank()
-                    && contextRepository.getString(category).isNotBlank()
-                    && contextRepository.getString(type).isNotBlank()
-                    && canParseInt(uiEntry.repeatedTimes)
+            name.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
         }
 
 

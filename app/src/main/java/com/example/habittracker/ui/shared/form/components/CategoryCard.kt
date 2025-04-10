@@ -17,8 +17,8 @@ import kotlin.enums.EnumEntries
 
 @Composable
 fun CategoryCard(
-    selectedValue: Int,
-    onOptionSelected: (Int) -> Unit = {},
+    selectedValue: HabitCategory,
+    onOptionSelected: (HabitCategory) -> Unit = {},
     options: EnumEntries<HabitCategory>,
     label: String,
     modifier: Modifier = Modifier
