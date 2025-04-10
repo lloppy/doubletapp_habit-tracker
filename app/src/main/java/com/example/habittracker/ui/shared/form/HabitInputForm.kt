@@ -17,17 +17,17 @@ import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.screens.item.edit.UpdateAction
 import com.example.habittracker.ui.shared.ColorPickerDialog
 import com.example.habittracker.ui.shared.form.components.CategoryCard
 import com.example.habittracker.ui.shared.form.components.ChooseColorButton
 import com.example.habittracker.ui.shared.form.components.PriorityCard
 import com.example.habittracker.ui.shared.form.components.TypeCard
 
-//                     передавать ивет=нт - конкертное действие, потому что
 @Composable
 fun HabitInputForm(
     habitEntity: HabitEntity,
-    onValueChange: (HabitEntity) -> Unit = {},
+    onAction: (UpdateAction) -> Unit,
     modifier: Modifier
 ) {
     val openDialog = remember { mutableStateOf(false) }
@@ -38,7 +38,7 @@ fun HabitInputForm(
             onDismissRequest = { openDialog.value = false },
             onColorSelected = {
                 selectedColor.value = it
-                onValueChange(habitEntity.copy(color = it))
+                onAction(UpdateAction.Color(it))
                 openDialog.value = false
             },
             habitEntity = habitEntity
@@ -56,7 +56,7 @@ fun HabitInputForm(
             )
         },
         onValueChange = {
-            onValueChange(habitEntity.copy(name = it))
+            onAction(UpdateAction.Name(it))
         },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -72,7 +72,7 @@ fun HabitInputForm(
             Text(text = stringResource(R.string.set_frequency))
         },
         onValueChange = {
-            onValueChange(habitEntity.copy(frequency = it))
+            onAction(UpdateAction.Frequency(it))
         },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -88,7 +88,7 @@ fun HabitInputForm(
             Text(text = stringResource(R.string.set_description))
         },
         onValueChange = {
-            onValueChange(habitEntity.copy(description = it))
+            onAction(UpdateAction.Description(it))
         },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
@@ -101,7 +101,7 @@ fun HabitInputForm(
     CategoryCard(
         selectedValue = habitEntity.category,
         onOptionSelected = {
-            onValueChange(habitEntity.copy(category = it))
+            onAction(UpdateAction.Category(it))
         },
         options = HabitCategory.entries,
         label = stringResource(
@@ -122,7 +122,7 @@ fun HabitInputForm(
         options = HabitPriority.entries,
         label = stringResource(R.string.set_priority),
         onOptionSelected = {
-            onValueChange(habitEntity.copy(priority = it))
+            onAction(UpdateAction.Priority(it))
         },
         modifier = modifier
     )
@@ -130,7 +130,7 @@ fun HabitInputForm(
     TypeCard(
         selectedValue = habitEntity.type,
         onOptionSelected = {
-            onValueChange(habitEntity.copy(type = it))
+            onAction(UpdateAction.Type(it))
         },
         options = HabitType.entries,
         label = stringResource(
@@ -146,7 +146,7 @@ fun HabitInputForm(
             Text(text = stringResource(R.string.set_repeated_times))
         },
         onValueChange = {
-            onValueChange(habitEntity.copy(repeatedTimes = it))
+            onAction(UpdateAction.RepeatedTimes(it))
         },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,

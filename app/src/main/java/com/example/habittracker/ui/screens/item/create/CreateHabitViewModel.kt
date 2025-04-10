@@ -11,6 +11,7 @@ import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.HabitItemState
+import com.example.habittracker.ui.screens.item.edit.UpdateAction
 
 
 class CreateHabitViewModel(
@@ -19,13 +20,6 @@ class CreateHabitViewModel(
 
     var entryUiState by mutableStateOf(HabitItemState())
         private set
-
-    fun updateUiState(newHabit: HabitEntity) {
-        entryUiState = HabitItemState(
-            currentHabit = newHabit,
-            isEntryValid = validateInput(uiEntry = newHabit)
-        )
-    }
 
     private fun validateInput(uiEntry: HabitEntity = entryUiState.currentHabit): Boolean =
         with(uiEntry) {
@@ -44,6 +38,60 @@ class CreateHabitViewModel(
             habitsRepository.insertHabit(
                 habit = entryUiState.currentHabit.toHabit()
             )
+        }
+    }
+
+    fun handleAction(action: UpdateAction) {
+        entryUiState = when (action) {
+            is UpdateAction.Name -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(name = action.name),
+                    isEntryValid = validateInput(entryUiState.currentHabit.copy(name = action.name))
+                )
+            }
+
+            is UpdateAction.Frequency -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(frequency = action.frequency)
+                )
+            }
+
+            is UpdateAction.Description -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(description = action.description)
+                )
+            }
+
+            is UpdateAction.Category -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(category = action.category)
+                )
+            }
+
+            is UpdateAction.Color -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(color = action.color)
+                )
+            }
+
+            is UpdateAction.Priority -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(priority = action.priority)
+                )
+            }
+
+            is UpdateAction.Type -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(type = action.type)
+                )
+            }
+
+            is UpdateAction.RepeatedTimes -> {
+                entryUiState.copy(
+                    currentHabit = entryUiState.currentHabit.copy(repeatedTimes = action.times),
+                    isEntryValid = validateInput(entryUiState.currentHabit.copy(repeatedTimes = action.times))
+                )
+            }
         }
     }
 }

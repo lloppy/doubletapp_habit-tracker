@@ -68,7 +68,7 @@ fun CreateHabitScreen(
         ) {
             HabitInputForm(
                 habitEntity = viewModel.entryUiState.currentHabit,
-                onValueChange = viewModel::updateUiState,
+                onAction = viewModel::handleAction,
                 modifier = Modifier.fillMaxWidth()
             )
 
