@@ -42,55 +42,29 @@ class CreateHabitViewModel(
     }
 
     fun handleAction(action: UpdateAction) {
-        entryUiState = when (action) {
-            is UpdateAction.Name -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(name = action.name),
-                    isEntryValid = validateInput(entryUiState.currentHabit.copy(name = action.name))
-                )
-            }
+        entryUiState = with(entryUiState) {
+            when (action) {
+                is UpdateAction.Name -> {
+                    val updatedHabit = currentHabit.copy(name = action.name)
+                    copy(currentHabit = updatedHabit, isEntryValid = validateInput(updatedHabit))
+                }
 
-            is UpdateAction.Frequency -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(frequency = action.frequency)
-                )
-            }
+                is UpdateAction.Frequency -> copy(currentHabit = currentHabit.copy(frequency = action.frequency))
 
-            is UpdateAction.Description -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(description = action.description)
-                )
-            }
+                is UpdateAction.Description -> copy(currentHabit = currentHabit.copy(description = action.description))
 
-            is UpdateAction.Category -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(category = action.category)
-                )
-            }
+                is UpdateAction.Category -> copy(currentHabit = currentHabit.copy(category = action.category))
 
-            is UpdateAction.Color -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(color = action.color)
-                )
-            }
+                is UpdateAction.Color -> copy(currentHabit = currentHabit.copy(color = action.color))
 
-            is UpdateAction.Priority -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(priority = action.priority)
-                )
-            }
+                is UpdateAction.Priority -> copy(currentHabit = currentHabit.copy(priority = action.priority))
 
-            is UpdateAction.Type -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(type = action.type)
-                )
-            }
+                is UpdateAction.Type -> copy(currentHabit = currentHabit.copy(type = action.type))
 
-            is UpdateAction.RepeatedTimes -> {
-                entryUiState.copy(
-                    currentHabit = entryUiState.currentHabit.copy(repeatedTimes = action.times),
-                    isEntryValid = validateInput(entryUiState.currentHabit.copy(repeatedTimes = action.times))
-                )
+                is UpdateAction.RepeatedTimes -> {
+                    val updatedHabit = currentHabit.copy(repeatedTimes = action.times)
+                    copy(currentHabit = updatedHabit, isEntryValid = validateInput(updatedHabit))
+                }
             }
         }
     }
