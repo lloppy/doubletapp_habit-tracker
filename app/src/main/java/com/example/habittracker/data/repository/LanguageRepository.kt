@@ -41,7 +41,7 @@ class LanguageRepositoryImpl(private val context: Context) : LanguageRepository 
                 LocaleList.forLanguageTags(languageCode)
         } else {
             // AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
-            // need to apply theme AppCompat but i uce material compose
+            // need to apply theme AppCompat but i use material compose
             throw UnsupportedOperationException("Language change requires API 33+ (Tiramisu)")
         }
     }

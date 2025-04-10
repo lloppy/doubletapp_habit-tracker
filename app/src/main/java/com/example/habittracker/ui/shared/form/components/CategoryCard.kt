@@ -23,21 +23,24 @@ fun CategoryCard(
     label: String,
     modifier: Modifier = Modifier
 ) {
-    FeatureWithBackgroundCard(title = label) {
-        Column(modifier = modifier.selectableGroup()) {
+    FeatureWithBackgroundCard(
+        title = label,
+        modifier = Modifier.selectableGroup()
+    ) {
+        Column {
             options.forEach { option ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable(
-                            onClick = { onOptionSelected(option.categoryName) }
+                            onClick = { onOptionSelected(option) }
                         ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = option.categoryName == selectedValue,
+                        selected = option == selectedValue,
                         onClick = {
-                            onOptionSelected(option.categoryName)
+                            onOptionSelected(option)
                         }
                     )
                     Text(text = stringResource(option.categoryName))

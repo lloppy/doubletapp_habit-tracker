@@ -18,8 +18,8 @@ import kotlin.enums.EnumEntries
 
 @Composable
 fun TypeCard(
-    selectedValue: Int,
-    onOptionSelected: (Int) -> Unit,
+    selectedValue: HabitType,
+    onOptionSelected: (HabitType) -> Unit,
     options: EnumEntries<HabitType>,
     label: String,
     modifier: Modifier = Modifier
@@ -31,14 +31,14 @@ fun TypeCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable(
-                            onClick = { onOptionSelected(option.impactName) }
+                            onClick = { onOptionSelected(option) }
                         ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = option.impactName == selectedValue,
+                        selected = option == selectedValue,
                         onClick = {
-                            onOptionSelected(option.impactName)
+                            onOptionSelected(option)
                         },
                         colors = RadioButtonDefaults.colors(
                             selectedColor = option.getColor(),

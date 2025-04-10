@@ -29,16 +29,14 @@ object AppViewModelProvider {
 
         initializer {
             CreateHabitViewModel(
-                habitsRepository = habitApplication().container.habitsRepository,
-                contextRepository = habitApplication().container.contextRepository
+                habitsRepository = habitApplication().container.habitsRepository
             )
         }
 
         initializer {
             EditHabitViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
-                habitsRepository = habitApplication().container.habitsRepository,
-                contextRepository = habitApplication().container.contextRepository
+                habitsRepository = habitApplication().container.habitsRepository
             )
         }
 

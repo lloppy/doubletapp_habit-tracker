@@ -1,6 +1,5 @@
 package com.example.habittracker.ui.shared.form
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -24,6 +23,7 @@ import com.example.habittracker.ui.shared.form.components.ChooseColorButton
 import com.example.habittracker.ui.shared.form.components.PriorityCard
 import com.example.habittracker.ui.shared.form.components.TypeCard
 
+//                     передавать ивет=нт - конкертное действие, потому что
 @Composable
 fun HabitInputForm(
     habitEntity: HabitEntity,
@@ -63,7 +63,7 @@ fun HabitInputForm(
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     OutlinedTextField(
@@ -79,7 +79,7 @@ fun HabitInputForm(
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     OutlinedTextField(
@@ -95,7 +95,7 @@ fun HabitInputForm(
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     CategoryCard(
@@ -108,12 +108,13 @@ fun HabitInputForm(
             R.string.set_category,
             stringResource(R.string.required)
         ),
+        modifier = modifier
     )
 
     ChooseColorButton(
         habitEntity = habitEntity,
         onClick = { openDialog.value = true },
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     PriorityCard(
@@ -123,7 +124,7 @@ fun HabitInputForm(
         onOptionSelected = {
             onValueChange(habitEntity.copy(priority = it))
         },
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     TypeCard(
@@ -136,7 +137,7 @@ fun HabitInputForm(
             R.string.set_type,
             stringResource(R.string.required)
         ),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     OutlinedTextField(
@@ -153,6 +154,6 @@ fun HabitInputForm(
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 }

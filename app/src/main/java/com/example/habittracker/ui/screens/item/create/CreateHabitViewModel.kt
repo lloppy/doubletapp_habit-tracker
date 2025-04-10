@@ -34,7 +34,9 @@ class CreateHabitViewModel(
 
 
     private fun canParseInt(repeatedTimes: String): Boolean =
-        with(repeatedTimes) { toIntOrNull() != null || isBlank() }
+        with(repeatedTimes) {
+            toIntOrNull() != null || isBlank()
+        }
 
 
     suspend fun saveItem() {

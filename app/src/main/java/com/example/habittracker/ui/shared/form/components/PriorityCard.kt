@@ -21,8 +21,8 @@ import kotlin.enums.EnumEntries
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PriorityCard(
-    selectedValue: Int,
-    onOptionSelected: (Int) -> Unit,
+    selectedValue: HabitPriority,
+    onOptionSelected: (HabitPriority) -> Unit,
     options: EnumEntries<HabitPriority>,
     label: String,
     modifier: Modifier = Modifier
@@ -36,7 +36,7 @@ fun PriorityCard(
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = stringResource(selectedValue),
+            value = stringResource(selectedValue.priorityName),
             onValueChange = {},
             label = { Text(text = label) },
             trailingIcon = {
@@ -56,7 +56,7 @@ fun PriorityCard(
                     },
                     onClick = {
                         expanded = false
-                        onOptionSelected(option.priorityName)
+                        onOptionSelected(option)
                     }
                 )
             }
