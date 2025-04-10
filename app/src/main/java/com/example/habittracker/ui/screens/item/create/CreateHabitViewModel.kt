@@ -11,7 +11,7 @@ import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.HabitItemState
-import com.example.habittracker.ui.screens.item.edit.UpdateAction
+import com.example.habittracker.ui.screens.item.UpdateAction
 
 
 class CreateHabitViewModel(

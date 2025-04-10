@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.screens.item.edit
+package com.example.habittracker.ui.screens.item
 
 import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority

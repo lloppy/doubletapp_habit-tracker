@@ -17,7 +17,7 @@ import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.create.HabitEntity
-import com.example.habittracker.ui.screens.item.edit.UpdateAction
+import com.example.habittracker.ui.screens.item.UpdateAction
 import com.example.habittracker.ui.shared.ColorPickerDialog
 import com.example.habittracker.ui.shared.form.components.CategoryCard
 import com.example.habittracker.ui.shared.form.components.ChooseColorButton
