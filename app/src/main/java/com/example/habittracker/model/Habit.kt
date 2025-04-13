@@ -1,5 +1,6 @@
 package com.example.habittracker.model
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,58 +8,50 @@ import androidx.room.PrimaryKey
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.example.habittracker.R
 import com.example.habittracker.ui.theme.onErrorDark
 import com.example.habittracker.ui.theme.onTertiaryDark
 
 @Entity(tableName = "habits")
+@TypeConverters(Converters::class)
 data class Habit(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String = "",
     val description: String = "",
-
-    @TypeConverters(Converters::class)
     val type: HabitType = HabitType.POSITIVE,
-    @TypeConverters(Converters::class)
-    val category: HabitCategory,
-    @TypeConverters(Converters::class)
+    val category: HabitCategory = HabitCategory.PRODUCTIVITY,
     val priority: HabitPriority = HabitPriority.MEDIUM,
-
     val frequency: String = "",
-    @ColumnInfo("repeated_times")
-    val repeatedTimes: Int = 1,
+    @ColumnInfo("repeated_times") val repeatedTimes: Int = 1,
     val quantity: Int = 0,
-
-    @TypeConverters(Converters::class)
     val color: Color = Color.LightGray
 )
 
-
-enum class HabitCategory(val categoryName: String) {
-    SPORT("Спорт"),
-    STUDY("Учеба"),
-    RELAXATION("Отдых"),
-    PRODUCTIVITY("Продуктивность"),
-    HEALTH("Здоровье");
+enum class HabitCategory(@StringRes val categoryName: Int) {
+    PRODUCTIVITY(R.string.productivity),
+    SPORT(R.string.sport),
+    STUDY(R.string.study),
+    RELAXATION(R.string.relaxation),
+    HEALTH(R.string.health);
 
     fun getEmoji(): String = when (this) {
+        PRODUCTIVITY -> "\uD83D\uDD0B"
         SPORT -> "\uD83C\uDFC6"
         STUDY -> "\uD83E\uDDE0"
         RELAXATION -> "\uD83E\uDDD8"
-        PRODUCTIVITY -> "\uD83D\uDD0B"
         HEALTH -> "\uD83C\uDF3F"
     }
 }
 
-enum class HabitPriority(val priorityName: String) {
-    LOW("Низкий"),
-    MEDIUM("Сердний"),
-    HIGH("Высокий")
+enum class HabitPriority(@StringRes val priorityName: Int) {
+    LOW(R.string.low),
+    MEDIUM(R.string.medium),
+    HIGH(R.string.high)
 }
 
-enum class HabitType(val impactName: String) {
-    POSITIVE("Полезная"),
-    NEGATIVE("Вредная");
+enum class HabitType(@StringRes val impactName: Int) {
+    POSITIVE(R.string.positive),
+    NEGATIVE(R.string.negative);
 
     fun getColor(): Color = when (this) {
         POSITIVE -> onTertiaryDark
@@ -68,7 +61,6 @@ enum class HabitType(val impactName: String) {
 
 @ProvidedTypeConverter
 class Converters {
-
     @TypeConverter
     fun habitTypeToString(habitCategory: HabitCategory): String {
         return habitCategory.name

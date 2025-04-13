@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Трекер привычек</string>
+
+    <string name="item_edit_title">Редактировать</string>
+    <string name="create_habit">Создать новую привычку</string>
+
+    <string name="save">Сохранить</string>
+    <string name="detail">Детали привычки</string>
+    <string name="create">Готово</string>
+
+    <string name="no_items">Привычки еще не созданы</string>
+
+    <string name="set_name">Название%s</string>
+    <string name="set_description">Описание</string>
+    <string name="set_repeated_times">Сколько раз в день повторять</string>
+    <string name="set_frequency">Частота</string>
+    <string name="set_type">Тип привычки%s</string>
+    <string name="set_category">Категория привычки%s</string>
+    <string name="set_priority">Назначить приоритет</string>
+    <string name="priority">Приоритет</string>
+
+    <string name="current_color">Текущий цвет</string>
+    <string name="change_color">Изменить цвет</string>
+    <string name="times">раз</string>
+    <string name="select_color">Выберите цвет привычки</string>
+    <string name="ok">Ок</string>
+
+    <string name="cancel">Отмена</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+
+    <string name="delete_habit">Удаление привычки</string>
+    <string name="sure_delete">Вы уверены, что хотите удалить эту привычку?</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="menu_button">меню</string>
+    <string name="switch_theme">Поменять тему</string>
+
+    <!-- info screen -->
+    <string name="about_app">О приложении</string>
+    <string name="app_description">Трекер привычек с современным интерфейсом на Jetpack Compose. Основные функции:</string>
+
+    <string name="feature_habit_management">Управление привычками</string>
+    <string name="feature_settings">Настройка параметров</string>
+    <string name="feature_progress_tracking">Отслеживаие прогресса</string>
+
+    <string name="technical_features">Технические особенности</string>
+    <string name="architecture_description">Архитектура приложения включает:</string>
+    <string name="navigation_title">Навигация</string>
+    <string name="navigation_code_snippet">
+    """
+        ModalNavigationDrawer {
+            NavHost(startDestination = "home") {
+                composable("home") { HomeScreen() }
+                composable("info") { InfoScreen() }
+            }
+        }
+    """
+    </string>
+
+    <string name="interface_state_title">Состояние интерфейса</string>
+    <string name="state_management_viewmodel">Управление через ViewModel и StateFlow</string>
+    <string name="state_management_theme">Темная/светлая тема</string>
+    <string name="state_management_orientation">Поддержка portrait/landscape ориентации</string>
+    <string name="state_management_cards">Адаптивные карточки привычек</string>
+
+    <string name="implementation_example">Пример реализации</string>
+    <string name="implementation_code_snippet">
+    """
+        @Composable
+        fun HabitInputForm(habitEntity: HabitEntity) {
+            OutlinedTextField(
+                value = habitEntity.name,
+                onValueChange = { /* Update logic */ },
+                label = { Text("Название привычки") }
+            )
+            // Остальные поля
+        }
+    """
+    </string>
+
+    <string name="filter">Фильтр</string>
+    <string name="clear">Очистить</string>
+    <string name="apply_filters">Применить фильтры</string>
+    <string name="clear_filters">Сбросить фильтры</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="search_by_name">Искать по имени</string>
+    <string name="show_all_categories">Отобразить всё</string>
+    <string name="category">Категория</string>
+    <string name="date_newest">Сначала новые</string>
+    <string name="date_oldest">Сначала старые</string>
+    <string name="name_asc">По имени (А-Я)</string>
+    <string name="name_desc">По имени (Я-А)</string>
+    <string name="priority_high">По приоритету (сначала высокий)</string>
+    <string name="priority_low">По приоритету (сначала низкий)</string>
+
+    <!-- Habit Categories -->
+    <string name="sport">Спорт</string>
+    <string name="study">Учеба</string>
+    <string name="relaxation">Отдых</string>
+    <string name="productivity">Продуктивность</string>
+    <string name="health">Здоровье</string>
+
+    <!-- Habit Priorities -->
+    <string name="low">Низкий</string>
+    <string name="medium">Средний</string>
+    <string name="high">Высокий</string>
+
+    <!-- Habit Types -->
+    <string name="positive">Полезная</string>
+    <string name="negative">Вредная</string>
+
+    <string name="positives">Полезные</string>
+    <string name="negatives">Вредные</string>
+    <string name="all">Все привычки</string>
+
+    <!-- Drawer items -->
+    <string name="habits">Привычки</string>
+    <string name="info">Информация</string>
+    <string name="language">Язык</string>
+    <string name="language_settings">Настройки языка</string>
+
+</resources>

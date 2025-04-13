@@ -1,14 +1,13 @@
 package com.example.habittracker.ui.screens.item.edit
 
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.HabitsRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.ui.screens.item.HabitItemState
+import com.example.habittracker.ui.screens.item.UpdateAction
 import com.example.habittracker.ui.screens.item.create.HabitEntity
 import com.example.habittracker.ui.screens.item.create.toHabit
 import com.example.habittracker.ui.screens.item.create.toUiState
@@ -19,23 +18,16 @@ import kotlinx.coroutines.launch
 
 class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: HabitsRepository
+    private val habitsRepository: HabitsRepository
 ) : ViewModel() {
     private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
-    var entryUiState by mutableStateOf(HabitItemState())
+    var entryUiState = MutableLiveData<HabitItemState>()
         private set
-
-    fun updateUiState(newHabit: HabitEntity) {
-        entryUiState = HabitItemState(
-            currentHabit = newHabit,
-            isEntryValid = validateInput(newHabit)
-        )
-    }
 
     init {
         viewModelScope.launch {
-            entryUiState = repository.getHabitById(checkNotNull(stringId.toIntOrNull()))
+            habitsRepository.getHabitById(id = checkNotNull(stringId.toIntOrNull()))
                 .filterNotNull()
                 .map {
                     HabitItemState(
@@ -44,16 +36,17 @@ class EditHabitViewModel(
                     )
                 }
                 .first()
+                .let { state ->
+                    entryUiState.postValue(state)
+                }
         }
     }
 
-    private fun validateInput(uiState: HabitEntity = entryUiState.currentHabit): Boolean =
-        with(uiState) {
-            name.isNotBlank()
-                    && category.isNotBlank()
-                    && type.isNotBlank()
-                    && canParseInt(uiState.repeatedTimes)
-        }
+    private fun validateInput(
+        uiEntry: HabitEntity = entryUiState.value?.currentHabit ?: HabitEntity()
+    ): Boolean = with(uiEntry) {
+        name.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
+    }
 
 
     private fun canParseInt(repeatedTimes: String): Boolean =
@@ -62,11 +55,76 @@ class EditHabitViewModel(
 
     suspend fun updateItem() {
         if (validateInput()) {
-            repository.updateHabit(habit = entryUiState.currentHabit.toHabit())
+            entryUiState.value?.let { state ->
+                habitsRepository.updateHabit(
+                    habit = state.currentHabit.toHabit()
+                )
+            }
         }
     }
 
     suspend fun deleteItem() {
-        repository.deleteHabit(entryUiState.currentHabit.toHabit())
+        entryUiState.value?.let { state ->
+            habitsRepository.deleteHabit(state.currentHabit.toHabit())
+        }
+    }
+
+    fun handleAction(action: UpdateAction) {
+        entryUiState.value?.let { currentState ->
+            val newState = when (action) {
+                is UpdateAction.Name -> {
+                    val updatedHabit = currentState.currentHabit.copy(name = action.name)
+                    currentState.copy(
+                        currentHabit = updatedHabit,
+                        isEntryValid = validateInput(updatedHabit)
+                    )
+                }
+
+                is UpdateAction.Frequency -> {
+                    currentState.copy(
+                        currentHabit = currentState.currentHabit.copy(frequency = action.frequency)
+                    )
+                }
+
+                is UpdateAction.Description -> {
+                    currentState.copy(
+                        currentHabit = currentState.currentHabit.copy(description = action.description)
+                    )
+                }
+
+                is UpdateAction.Category -> {
+                    currentState.copy(
+                        currentHabit = currentState.currentHabit.copy(category = action.category)
+                    )
+                }
+
+                is UpdateAction.Color -> {
+                    currentState.copy(
+                        currentHabit = currentState.currentHabit.copy(color = action.color)
+                    )
+                }
+
+                is UpdateAction.Priority -> {
+                    currentState.copy(
+                        currentHabit = currentState.currentHabit.copy(priority = action.priority)
+                    )
+                }
+
+                is UpdateAction.Type -> {
+                    currentState.copy(
+                        currentHabit = currentState.currentHabit.copy(type = action.type)
+                    )
+                }
+
+                is UpdateAction.RepeatedTimes -> {
+                    val updatedHabit = currentState.currentHabit.copy(repeatedTimes = action.times)
+                    currentState.copy(
+                        currentHabit = updatedHabit,
+                        isEntryValid = validateInput(updatedHabit)
+                    )
+                }
+            }
+            entryUiState.postValue(newState)
+        }
     }
 }

@@ -99,7 +99,7 @@ fun DrawerContent(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = modifier) {
-            Image(painterResource(R.drawable.ic_launcher_foreground), contentDescription = null)
+            Image(painterResource(R.mipmap.ic_app_icon_foreground), contentDescription = null)
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineMedium

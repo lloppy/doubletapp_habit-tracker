@@ -9,7 +9,7 @@ import com.example.habittracker.model.Converters
 import com.example.habittracker.model.Habit
 
 
-@Database(entities = [Habit::class], version = 4, exportSchema = false)
+@Database(entities = [Habit::class], version = 5, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OfflineDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao
@@ -27,7 +27,6 @@ abstract class OfflineDatabase : RoomDatabase() {
                 )
                     .addTypeConverter(Converters())
                     .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
                     .build()
                     .also {
                         INSTANCE = it

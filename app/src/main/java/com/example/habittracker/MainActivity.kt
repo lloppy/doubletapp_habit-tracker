@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+// посмотерть
 data class DarkTheme(val isDark: Boolean = false)
 
 val LocalTheme = compositionLocalOf { DarkTheme() }

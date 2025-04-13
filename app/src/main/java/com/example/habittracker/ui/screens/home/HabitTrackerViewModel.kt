@@ -2,7 +2,7 @@ package com.example.habittracker.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.HabitsRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.model.FilterExpression
 import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitType
@@ -27,7 +27,7 @@ class HabitTrackerViewModel(
         val filteredHabits = applyFilters(
             habits,
             filterState.toExpressions()
-        ) // object для интрепрет , создаются ли лишние экземпляры? 
+        )
 
         HabitTrackerState.Success(
             habits = filteredHabits,

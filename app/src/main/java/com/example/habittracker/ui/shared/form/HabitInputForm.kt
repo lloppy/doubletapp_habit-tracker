@@ -1,6 +1,5 @@
 package com.example.habittracker.ui.shared.form
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -18,6 +17,7 @@ import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.model.HabitPriority
 import com.example.habittracker.model.HabitType
 import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.screens.item.UpdateAction
 import com.example.habittracker.ui.shared.ColorPickerDialog
 import com.example.habittracker.ui.shared.form.components.CategoryCard
 import com.example.habittracker.ui.shared.form.components.ChooseColorButton
@@ -27,7 +27,7 @@ import com.example.habittracker.ui.shared.form.components.TypeCard
 @Composable
 fun HabitInputForm(
     habitEntity: HabitEntity,
-    onValueChange: (HabitEntity) -> Unit = {},
+    onAction: (UpdateAction) -> Unit,
     modifier: Modifier
 ) {
     val openDialog = remember { mutableStateOf(false) }
@@ -38,7 +38,7 @@ fun HabitInputForm(
             onDismissRequest = { openDialog.value = false },
             onColorSelected = {
                 selectedColor.value = it
-                onValueChange(habitEntity.copy(color = it))
+                onAction(UpdateAction.Color(it))
                 openDialog.value = false
             },
             habitEntity = habitEntity
@@ -55,84 +55,105 @@ fun HabitInputForm(
                 )
             )
         },
-        onValueChange = { onValueChange(habitEntity.copy(name = it)) },
+        onValueChange = {
+            onAction(UpdateAction.Name(it))
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
+    )
+
+    OutlinedTextField(
+        value = habitEntity.frequency,
+        label = {
+            Text(text = stringResource(R.string.set_frequency))
+        },
+        onValueChange = {
+            onAction(UpdateAction.Frequency(it))
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences
+        ),
+        singleLine = true,
+        modifier = modifier
     )
 
     OutlinedTextField(
         value = habitEntity.description,
-        label = { Text(text = stringResource(R.string.set_description)) },
-        onValueChange = { onValueChange(habitEntity.copy(description = it)) },
+        label = {
+            Text(text = stringResource(R.string.set_description))
+        },
+        onValueChange = {
+            onAction(UpdateAction.Description(it))
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     CategoryCard(
         selectedValue = habitEntity.category,
-        onOptionSelected = { onValueChange(habitEntity.copy(category = it)) },
+        onOptionSelected = {
+            onAction(UpdateAction.Category(it))
+        },
         options = HabitCategory.entries,
         label = stringResource(
             R.string.set_category,
             stringResource(R.string.required)
         ),
+        modifier = modifier
     )
 
     ChooseColorButton(
         habitEntity = habitEntity,
         onClick = { openDialog.value = true },
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     PriorityCard(
         selectedValue = habitEntity.priority,
         options = HabitPriority.entries,
         label = stringResource(R.string.set_priority),
-        onOptionSelected = { onValueChange(habitEntity.copy(priority = it)) },
-        modifier = modifier.fillMaxWidth()
+        onOptionSelected = {
+            onAction(UpdateAction.Priority(it))
+        },
+        modifier = modifier
     )
 
     TypeCard(
         selectedValue = habitEntity.type,
-        onOptionSelected = { onValueChange(habitEntity.copy(type = it)) },
+        onOptionSelected = {
+            onAction(UpdateAction.Type(it))
+        },
         options = HabitType.entries,
         label = stringResource(
             R.string.set_type,
             stringResource(R.string.required)
         ),
-        modifier = modifier.fillMaxWidth()
-    )
-
-    OutlinedTextField(
-        value = habitEntity.frequency,
-        label = { Text(text = stringResource(R.string.set_frequency)) },
-        onValueChange = { onValueChange(habitEntity.copy(frequency = it)) },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
-            capitalization = KeyboardCapitalization.Sentences
-        ),
-        singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 
     OutlinedTextField(
         value = habitEntity.repeatedTimes,
-        placeholder = { Text(text = stringResource(R.string.set_repeated_times)) },
-        onValueChange = { onValueChange(habitEntity.copy(repeatedTimes = it)) },
+        placeholder = {
+            Text(text = stringResource(R.string.set_repeated_times))
+        },
+        onValueChange = {
+            onAction(UpdateAction.RepeatedTimes(it))
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Number,
             capitalization = KeyboardCapitalization.Sentences
         ),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     )
 }
