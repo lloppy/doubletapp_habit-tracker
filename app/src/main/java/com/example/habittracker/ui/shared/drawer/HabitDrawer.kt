@@ -1,6 +1,5 @@
 package com.example.habittracker.ui.shared.drawer
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,10 +23,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.example.habittracker.LocalTheme
 import com.example.habittracker.R
 import com.example.habittracker.model.DrawerItem
@@ -39,7 +46,7 @@ fun HabitDrawer(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: DrawerViewModel = viewModel(),
-    content: @Composable (onClickOpenDrawer: () -> Unit) -> Unit
+    content: @Composable (onClickOpenDrawer: () -> Unit) -> Unit,
 ) {
     val state = viewModel.state
     val drawerState = rememberDrawerState(initialValue = state.openState)
@@ -92,14 +99,29 @@ fun DrawerContent(
     onDrawerClick: (DrawerItem) -> Unit,
     onChangeThemeClick: () -> Unit,
     isDark: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = modifier) {
-            Image(painterResource(R.mipmap.ic_app_icon_foreground), contentDescription = null)
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data("https://i.pinimg.com/736x/fd/e0/8a/fde08aeda674c9c3bbb374b879954217.jpg")
+                    .crossfade(true)
+                    .build(),
+                contentDescription = stringResource(R.string.cute_kitty),
+                error = painterResource(id = R.drawable.error_outline),
+                placeholder = painterResource(id = R.drawable.baseline_downloading),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(Spacing.image)
+                    .clip(CircleShape)
+            )
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineMedium

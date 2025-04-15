@@ -15,5 +15,6 @@ object Spacing {
     val line: Dp @Composable get() = 18.dp
 
     val loading: Dp @Composable get() = 70.dp
+    val image: Dp @Composable get() = 128.dp
     val emoji: Dp @Composable get() = 32.dp
 }

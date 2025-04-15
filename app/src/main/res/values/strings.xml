@@ -124,5 +124,6 @@
     <string name="info">Информация</string>
     <string name="language">Язык</string>
     <string name="language_settings">Настройки языка</string>
+    <string name="cute_kitty">милый котик из пинтереста</string>
 
 </resources>
