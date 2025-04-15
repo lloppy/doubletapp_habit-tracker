@@ -16,6 +16,7 @@ import com.example.habittracker.ui.theme.onTertiaryDark
 @TypeConverters(Converters::class)
 data class Habit(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val uid: String = "",
     val name: String = "",
     val description: String = "",
     val type: HabitType = HabitType.POSITIVE,

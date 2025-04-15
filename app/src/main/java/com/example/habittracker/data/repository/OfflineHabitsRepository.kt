@@ -24,7 +24,6 @@ interface HabitsRepository {
 
 }
 
-
 class OfflineHabitsRepository(private val habitDao: HabitDao) : HabitsRepository {
 
     override suspend fun insertHabit(habit: Habit) =

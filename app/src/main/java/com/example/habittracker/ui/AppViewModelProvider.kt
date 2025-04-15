@@ -23,20 +23,20 @@ object AppViewModelProvider {
 
         initializer {
             HabitTrackerViewModel(
-                repository = habitApplication().container.habitsRepository
+                repository = habitApplication().container.offlineHabitsRepository
             )
         }
 
         initializer {
             CreateHabitViewModel(
-                habitsRepository = habitApplication().container.habitsRepository
+                habitsRepository = habitApplication().container.offlineHabitsRepository
             )
         }
 
         initializer {
             EditHabitViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
-                habitsRepository = habitApplication().container.habitsRepository
+                habitsRepository = habitApplication().container.offlineHabitsRepository
             )
         }
 
