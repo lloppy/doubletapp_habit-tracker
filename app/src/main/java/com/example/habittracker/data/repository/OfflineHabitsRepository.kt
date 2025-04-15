@@ -22,6 +22,8 @@ interface HabitsRepository {
 
     fun getHabitById(id: Int): Flow<Habit?>
 
+    suspend fun markHabitDone(habitUid: String, date: Int)
+
 }
 
 class OfflineHabitsRepository(private val habitDao: HabitDao) : HabitsRepository {
@@ -49,4 +51,8 @@ class OfflineHabitsRepository(private val habitDao: HabitDao) : HabitsRepository
 
     override fun getHabitById(id: Int): Flow<Habit?> =
         habitDao.getById(id)
+
+    override suspend fun markHabitDone(habitUid: String, date: Int) {
+        TODO("Not yet implemented")
+    }
 }
