@@ -84,11 +84,36 @@ class SharedHabitsRepository(
         }
     }
 
+    override suspend fun increaseHabitQuantity(id: Int): ApiResult<Unit> {
+        return try {
+            local.increaseHabitQuantity(id)
+            val habit = local.getHabitAtOnce(id)
+
+            if (habit.quantity == habit.repeatedTimes) {
+                when (val result = executeWithRetry {
+                    remote.markDoneHabit(
+                        HabitDoneResponse(
+                            date = (System.currentTimeMillis() % Integer.MAX_VALUE).toInt(),
+                            habitUid = habit.uid
+                        )
+                    )
+                }) {
+                    is ApiResult.Success -> ApiResult.Success(Unit)
+                    is ApiResult.Error -> throw Exception(result.message)
+                }
+            } else {
+                ApiResult.Success(Unit)
+            }
+        } catch (e: Exception) {
+            ApiResult.Error(-1, e.message ?: "Failed to increase habit quantity")
+        }
+    }
+
     override suspend fun deleteByHabitId(id: Int) = local.deleteByHabitId(id)
     override suspend fun deleteAllHabits() = local.deleteAllHabits()
-    override suspend fun increaseHabitQuantity(id: Int) = local.increaseHabitQuantity(id)
     override suspend fun decreaseHabitQuantity(id: Int) = local.decreaseHabitQuantity(id)
     override suspend fun getAllHabitsOnce(): List<Habit> = local.getAllHabitsOnce()
+    override suspend fun getHabitAtOnce(id: Int): Habit = local.getHabitAtOnce(id)
     override fun getAllHabits(): Flow<List<Habit>> = local.getAllHabits()
     override fun getHabitById(id: Int): Flow<Habit?> = local.getHabitById(id)
 
@@ -104,7 +129,7 @@ class SharedHabitsRepository(
 
 
     private suspend fun <T> executeWithRetry(
-        block: suspend () -> ApiResult<T>
+        block: suspend () -> ApiResult<T>,
     ): ApiResult<T> {
         var retryCount = 0
         var lastError: Exception? = null

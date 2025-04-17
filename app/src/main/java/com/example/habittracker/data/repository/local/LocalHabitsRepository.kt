@@ -2,6 +2,7 @@ package com.example.habittracker.data.repository.local
 
 import com.example.habittracker.data.api.local.HabitDao
 import com.example.habittracker.model.domain.Habit
+import com.example.habittracker.model.model.ApiResult
 import kotlinx.coroutines.flow.Flow
 
 class LocalHabitsRepository(private val habitDao: HabitDao) : LocalRepository {
@@ -14,8 +15,12 @@ class LocalHabitsRepository(private val habitDao: HabitDao) : LocalRepository {
         habitDao.update(habit)
     }
 
-    override suspend fun increaseHabitQuantity(id: Int) =
+    override suspend fun increaseHabitQuantity(id: Int): ApiResult<Unit> = try {
         habitDao.increaseQuantity(id)
+        ApiResult.Success(Unit)
+    } catch (e: Exception) {
+        ApiResult.Error(-1, e.message ?: "Failed to increase habit quantity")
+    }
 
     override suspend fun decreaseHabitQuantity(id: Int) =
         habitDao.decreaseQuantity(id)
@@ -36,6 +41,8 @@ class LocalHabitsRepository(private val habitDao: HabitDao) : LocalRepository {
 
     override fun getHabitById(id: Int): Flow<Habit?> =
         habitDao.getById(id)
+
+    override suspend fun getHabitAtOnce(id: Int): Habit = habitDao.getOnce(id)
 
     override suspend fun getAllHabitsOnce(): List<Habit> = habitDao.getAllOnce()
 
