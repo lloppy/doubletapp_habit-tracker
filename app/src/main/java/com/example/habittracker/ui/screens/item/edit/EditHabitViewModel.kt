@@ -1,11 +1,10 @@
 package com.example.habittracker.ui.screens.item.edit
 
-
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.local.HabitsRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.model.ui.HabitEntity
 import com.example.habittracker.model.ui.toHabit
 import com.example.habittracker.model.ui.toUiState
@@ -18,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class EditHabitViewModel(
     savedStateHandle: SavedStateHandle,
-    private val habitsRepository: HabitsRepository
+    private val habitsRepository: HabitsRepository,
 ) : ViewModel() {
     private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
@@ -43,7 +42,7 @@ class EditHabitViewModel(
     }
 
     private fun validateInput(
-        uiEntry: HabitEntity = entryUiState.value?.currentHabit ?: HabitEntity()
+        uiEntry: HabitEntity = entryUiState.value?.currentHabit ?: HabitEntity(),
     ): Boolean = with(uiEntry) {
         name.isNotBlank() && description.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
     }

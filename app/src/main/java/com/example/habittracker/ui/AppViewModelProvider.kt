@@ -24,7 +24,7 @@ object AppViewModelProvider {
 
         initializer {
             HabitTrackerViewModel(
-                repository = habitApplication().container.habitsRepository
+                habitsRepository = habitApplication().container.habitsRepository
             )
         }
 

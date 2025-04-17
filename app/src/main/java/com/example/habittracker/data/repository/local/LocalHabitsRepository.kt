@@ -4,7 +4,7 @@ import com.example.habittracker.data.api.local.HabitDao
 import com.example.habittracker.model.domain.Habit
 import kotlinx.coroutines.flow.Flow
 
-class OfflineHabitsRepository(private val habitDao: HabitDao) : HabitsRepository {
+class LocalHabitsRepository(private val habitDao: HabitDao) : LocalRepository {
 
     override suspend fun insertHabit(habit: Habit) = runCatching {
         habitDao.insert(habit)
@@ -38,13 +38,5 @@ class OfflineHabitsRepository(private val habitDao: HabitDao) : HabitsRepository
         habitDao.getById(id)
 
     override suspend fun getAllHabitsOnce(): List<Habit> = habitDao.getAllOnce()
-
-    override suspend fun syncFromRemoteToLocal(): Result<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun syncFromLocalToRemote(): Result<Unit> {
-        TODO("Not yet implemented")
-    }
 
 }

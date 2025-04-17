@@ -2,7 +2,7 @@ package com.example.habittracker.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.local.HabitsRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.model.FilterExpression
 import com.example.habittracker.model.MultiplicationExpression
 import com.example.habittracker.model.domain.Habit
@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 class HabitTrackerViewModel(
-    private val repository: HabitsRepository
+    private val habitsRepository: HabitsRepository
 ) : ViewModel() {
     private val _filterState = MutableStateFlow(FilterState())
 
     val uiState: StateFlow<HabitTrackerState> = combine(
-        repository.getAllHabits(),
+        habitsRepository.getAllHabits(),
         _filterState
     ) { habits, filterState ->
         val filteredHabits = applyFilters(
@@ -43,15 +43,15 @@ class HabitTrackerViewModel(
 
 
     suspend fun increaseRepeated(habitId: Int) {
-        repository.increaseHabitQuantity(id = habitId)
+        habitsRepository.increaseHabitQuantity(id = habitId)
     }
 
     suspend fun decreaseRepeated(habitId: Int) {
-        repository.decreaseHabitQuantity(id = habitId)
+        habitsRepository.decreaseHabitQuantity(id = habitId)
     }
 
     suspend fun delete(habitId: Int) {
-        repository.deleteByHabitId(id = habitId)
+        habitsRepository.deleteByHabitId(id = habitId)
     }
 
 

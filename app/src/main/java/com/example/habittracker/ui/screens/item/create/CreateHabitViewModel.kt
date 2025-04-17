@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.habittracker.data.repository.local.HabitsRepository
+import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.model.ui.HabitEntity
 import com.example.habittracker.model.ui.toHabit
 import com.example.habittracker.ui.screens.item.HabitItemState

@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.habittracker.TestData.testHabits
-import com.example.habittracker.data.api.local.HabitDao
 import com.example.habittracker.data.OfflineDatabase
+import com.example.habittracker.data.api.local.HabitDao
 import com.example.habittracker.model.domain.Converters
 import com.example.habittracker.model.domain.Habit
 import com.example.habittracker.model.domain.HabitCategory
@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class HabitsRepositoryTest {
+class LocalRepositoryTest {
 
     private lateinit var habitDao: HabitDao
     private lateinit var habitDatabase: OfflineDatabase

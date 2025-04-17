@@ -3,7 +3,7 @@ package com.example.habittracker.data.repository.local
 import com.example.habittracker.model.domain.Habit
 import kotlinx.coroutines.flow.Flow
 
-interface HabitsRepository {
+interface LocalRepository {
 
     suspend fun insertHabit(habit: Habit): Result<Unit>
 
@@ -25,7 +25,4 @@ interface HabitsRepository {
 
     fun getHabitById(id: Int): Flow<Habit?>
 
-    suspend fun syncFromRemoteToLocal(): Result<Unit>
-
-    suspend fun syncFromLocalToRemote(): Result<Unit>
 }
