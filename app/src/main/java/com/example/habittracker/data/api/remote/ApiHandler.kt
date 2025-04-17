@@ -16,8 +16,7 @@ object ApiHandler {
             response.isSuccessful ->
                 ApiResult.Error(response.code(), "Empty response")
 
-            else ->
-                ApiResult.Error(response.code(), parseError(response.code()))
+            else -> ApiResult.Error(response.code(), parseError(response.code()))
         }
     } catch (e: IOException) {
         ApiResult.Error(-1, "No internet")
@@ -28,7 +27,7 @@ object ApiHandler {
     private fun parseError(code: Int): String = when (code) {
         400 -> "Bad request"
         401 -> "Unauthorized"
-        500 -> "Server error"
+        500 -> "Internal Server error"
         else -> "Error $code"
     }
 }
