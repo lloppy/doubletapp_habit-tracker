@@ -18,6 +18,8 @@ import com.example.habittracker.ui.screens.item.edit.EditHabitDestination
 import com.example.habittracker.ui.screens.item.edit.EditHabitScreen
 import com.example.habittracker.ui.screens.language.LanguageDestination
 import com.example.habittracker.ui.screens.language.LanguageScreen
+import com.example.habittracker.ui.screens.sync.SyncDestination
+import com.example.habittracker.ui.screens.sync.SyncScreen
 
 @Composable
 fun HabitNavigation(
@@ -69,6 +71,13 @@ fun HabitNavigation(
 
         composable(route = LanguageDestination.route) {
             LanguageScreen(
+                onClickOpenDrawer = onClickOpenDrawer,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        composable(route = SyncDestination.route) {
+            SyncScreen(
                 onClickOpenDrawer = onClickOpenDrawer,
                 modifier = Modifier.fillMaxWidth()
             )

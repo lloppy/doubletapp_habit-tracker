@@ -1,4 +1,4 @@
-package com.example.habittracker.data
+package com.example.habittracker.data.api.local
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.habittracker.model.Habit
+import com.example.habittracker.model.domain.Habit
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,6 +24,9 @@ interface HabitDao {
     @Query("DELETE FROM habits WHERE id = :id")
     suspend fun deleteById(id: Int)
 
+    @Query("DELETE FROM habits")
+    suspend fun deleteAll()
+
     @Query("UPDATE habits SET quantity = quantity + 1 WHERE id = :id AND quantity < repeated_times")
     suspend fun increaseQuantity(id: Int)
 
@@ -35,5 +38,8 @@ interface HabitDao {
 
     @Query("SELECT * FROM habits WHERE id = :id")
     fun getById(id: Int): Flow<Habit>
+
+    @Query("SELECT * FROM habits")
+    suspend fun getAllOnce(): List<Habit>
 
 }

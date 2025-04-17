@@ -8,6 +8,9 @@ import com.example.habittracker.model.SortOption.NAME_ASC
 import com.example.habittracker.model.SortOption.NAME_DESC
 import com.example.habittracker.model.SortOption.PRIORITY_HIGH
 import com.example.habittracker.model.SortOption.PRIORITY_LOW
+import com.example.habittracker.model.domain.Habit
+import com.example.habittracker.model.domain.HabitCategory
+import com.example.habittracker.model.domain.HabitPriority
 
 interface FilterExpression {
     fun interpret(habits: List<Habit>): List<Habit>

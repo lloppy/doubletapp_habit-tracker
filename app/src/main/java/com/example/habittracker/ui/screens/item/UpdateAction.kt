@@ -1,8 +1,8 @@
 package com.example.habittracker.ui.screens.item
 
-import com.example.habittracker.model.HabitCategory
-import com.example.habittracker.model.HabitPriority
-import com.example.habittracker.model.HabitType
+import com.example.habittracker.model.domain.HabitCategory
+import com.example.habittracker.model.domain.HabitPriority
+import com.example.habittracker.model.domain.HabitType
 
 sealed interface UpdateAction {
     data class Name(val name: String) : UpdateAction

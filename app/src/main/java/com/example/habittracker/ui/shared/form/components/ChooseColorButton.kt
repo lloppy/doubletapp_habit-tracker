@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
-import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.model.ui.HabitEntity
 import com.example.habittracker.ui.theme.Spacing
 
 @Composable

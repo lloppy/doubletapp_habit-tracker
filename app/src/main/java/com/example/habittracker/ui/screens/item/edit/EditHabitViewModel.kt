@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.HabitsRepository
+import com.example.habittracker.data.repository.local.HabitsRepository
+import com.example.habittracker.model.ui.HabitEntity
+import com.example.habittracker.model.ui.toHabit
+import com.example.habittracker.model.ui.toUiState
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.UpdateAction
-import com.example.habittracker.ui.screens.item.create.HabitEntity
-import com.example.habittracker.ui.screens.item.create.toHabit
-import com.example.habittracker.ui.screens.item.create.toUiState
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -45,7 +45,7 @@ class EditHabitViewModel(
     private fun validateInput(
         uiEntry: HabitEntity = entryUiState.value?.currentHabit ?: HabitEntity()
     ): Boolean = with(uiEntry) {
-        name.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
+        name.isNotBlank() && description.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
     }
 
 

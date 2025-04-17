@@ -41,7 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.Habit
+import com.example.habittracker.model.domain.Habit
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
@@ -173,7 +173,7 @@ fun HabitContent(
             modifier = modifier,
             verticalArrangement = Arrangement.Top
         ) {
-            items(items = filteredHabits, key = { it.name }) { habit ->
+            items(items = filteredHabits, key = { it.id }) { habit ->
                 HabitCard(
                     habit = habit,
                     onIncreaseRepeated = { onIncreaseRepeated(habit.id) },

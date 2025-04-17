@@ -2,8 +2,8 @@ package com.example.habittracker.ui.shared.filter
 
 import com.example.habittracker.model.CategoryInterpreter
 import com.example.habittracker.model.FilterExpression
-import com.example.habittracker.model.HabitCategory
-import com.example.habittracker.model.HabitPriority
+import com.example.habittracker.model.domain.HabitCategory
+import com.example.habittracker.model.domain.HabitPriority
 import com.example.habittracker.model.PriorityInterpreter
 import com.example.habittracker.model.SearchInterpreter
 import com.example.habittracker.model.SortInterpreter

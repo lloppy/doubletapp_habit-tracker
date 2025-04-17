@@ -1,6 +1,6 @@
 package com.example.habittracker
 
-import com.example.habittracker.model.Habit
+import com.example.habittracker.model.domain.Habit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

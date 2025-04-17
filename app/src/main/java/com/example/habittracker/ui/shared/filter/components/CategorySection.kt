@@ -23,9 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.habittracker.R
-import com.example.habittracker.model.HabitCategory
+import com.example.habittracker.model.domain.HabitCategory
 import com.example.habittracker.ui.shared.SectionTitle
-
 
 @Composable
 fun CategorySection(

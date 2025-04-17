@@ -13,10 +13,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.habittracker.R
-import com.example.habittracker.model.HabitCategory
-import com.example.habittracker.model.HabitPriority
-import com.example.habittracker.model.HabitType
-import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.model.domain.HabitCategory
+import com.example.habittracker.model.domain.HabitPriority
+import com.example.habittracker.model.domain.HabitType
+import com.example.habittracker.model.ui.HabitEntity
 import com.example.habittracker.ui.screens.item.UpdateAction
 import com.example.habittracker.ui.shared.ColorPickerDialog
 import com.example.habittracker.ui.shared.form.components.CategoryCard
@@ -28,7 +28,7 @@ import com.example.habittracker.ui.shared.form.components.TypeCard
 fun HabitInputForm(
     habitEntity: HabitEntity,
     onAction: (UpdateAction) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val openDialog = remember { mutableStateOf(false) }
     val selectedColor = remember { mutableStateOf(Color.Unspecified) }
@@ -48,12 +48,7 @@ fun HabitInputForm(
     OutlinedTextField(
         value = habitEntity.name,
         label = {
-            Text(
-                text = stringResource(
-                    R.string.set_name,
-                    stringResource(R.string.required)
-                )
-            )
+            Text(text = stringResource(R.string.set_name) + stringResource(R.string.required))
         },
         onValueChange = {
             onAction(UpdateAction.Name(it))
@@ -85,7 +80,7 @@ fun HabitInputForm(
     OutlinedTextField(
         value = habitEntity.description,
         label = {
-            Text(text = stringResource(R.string.set_description))
+            Text(text = stringResource(R.string.set_description) + stringResource(R.string.required))
         },
         onValueChange = {
             onAction(UpdateAction.Description(it))
@@ -143,7 +138,7 @@ fun HabitInputForm(
     OutlinedTextField(
         value = habitEntity.repeatedTimes,
         placeholder = {
-            Text(text = stringResource(R.string.set_repeated_times))
+            Text(text = stringResource(R.string.set_repeated_times) + stringResource(R.string.required))
         },
         onValueChange = {
             onAction(UpdateAction.RepeatedTimes(it))

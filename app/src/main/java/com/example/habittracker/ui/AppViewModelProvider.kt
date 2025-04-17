@@ -11,6 +11,7 @@ import com.example.habittracker.ui.screens.home.HabitTrackerViewModel
 import com.example.habittracker.ui.screens.item.create.CreateHabitViewModel
 import com.example.habittracker.ui.screens.item.edit.EditHabitViewModel
 import com.example.habittracker.ui.screens.language.LanguageScreenViewModel
+import com.example.habittracker.ui.screens.sync.SyncScreenViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -23,26 +24,32 @@ object AppViewModelProvider {
 
         initializer {
             HabitTrackerViewModel(
-                repository = habitApplication().container.offlineHabitsRepository
+                repository = habitApplication().container.habitsRepository
             )
         }
 
         initializer {
             CreateHabitViewModel(
-                habitsRepository = habitApplication().container.offlineHabitsRepository
+                habitsRepository = habitApplication().container.habitsRepository
             )
         }
 
         initializer {
             EditHabitViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
-                habitsRepository = habitApplication().container.offlineHabitsRepository
+                habitsRepository = habitApplication().container.habitsRepository
             )
         }
 
         initializer {
             LanguageScreenViewModel(
                 languageRepository = habitApplication().container.languageRepository
+            )
+        }
+
+        initializer {
+            SyncScreenViewModel(
+                habitsRepository = habitApplication().container.habitsRepository
             )
         }
     }

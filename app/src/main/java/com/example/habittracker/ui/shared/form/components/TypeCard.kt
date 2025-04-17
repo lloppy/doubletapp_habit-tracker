@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.habittracker.model.HabitType
+import com.example.habittracker.model.domain.HabitType
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import kotlin.enums.EnumEntries
 

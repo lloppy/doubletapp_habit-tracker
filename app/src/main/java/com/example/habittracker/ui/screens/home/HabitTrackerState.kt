@@ -1,6 +1,6 @@
 package com.example.habittracker.ui.screens.home
 
-import com.example.habittracker.model.Habit
+import com.example.habittracker.model.domain.Habit
 import com.example.habittracker.ui.shared.filter.FilterState
 
 sealed interface HabitTrackerState {

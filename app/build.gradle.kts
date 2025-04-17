@@ -94,5 +94,6 @@ dependencies {
 
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
 }

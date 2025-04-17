@@ -3,19 +3,15 @@ package com.example.habittracker.ui.screens.item.create
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.habittracker.data.repository.HabitsRepository
-import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitCategory
-import com.example.habittracker.model.HabitPriority
-import com.example.habittracker.model.HabitType
+import com.example.habittracker.data.repository.local.HabitsRepository
+import com.example.habittracker.model.ui.HabitEntity
+import com.example.habittracker.model.ui.toHabit
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.UpdateAction
 
-
 class CreateHabitViewModel(
-    private val habitsRepository: HabitsRepository
+    private val habitsRepository: HabitsRepository,
 ) : ViewModel() {
 
     var entryUiState by mutableStateOf(HabitItemState())
@@ -23,7 +19,7 @@ class CreateHabitViewModel(
 
     private fun validateInput(uiEntry: HabitEntity = entryUiState.currentHabit): Boolean =
         with(uiEntry) {
-            name.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
+            name.isNotBlank() && description.isNotBlank() && canParseInt(uiEntry.repeatedTimes)
         }
 
 
@@ -95,43 +91,3 @@ class CreateHabitViewModel(
         }
     }
 }
-
-data class HabitEntity(
-    val id: Int = 0,
-    val name: String = "",
-    val description: String = "",
-    val type: HabitType = HabitType.POSITIVE,
-    val category: HabitCategory = HabitCategory.PRODUCTIVITY,
-    val priority: HabitPriority = HabitPriority.MEDIUM,
-    val frequency: String = "",
-    val repeatedTimes: String = "",
-    val quantity: String = "",
-    val color: Color = Color.Yellow
-)
-
-fun HabitEntity.toHabit(): Habit = Habit(
-    id = id,
-    name = name,
-    description = description,
-    priority = priority,
-    category = category,
-    type = type,
-    frequency = frequency,
-    repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
-    quantity = quantity.toIntOrNull() ?: 0,
-    color = color
-)
-
-
-fun Habit.toUiState(): HabitEntity = HabitEntity(
-    id = id,
-    name = name,
-    description = description,
-    priority = priority,
-    category = category,
-    type = type,
-    frequency = frequency,
-    repeatedTimes = repeatedTimes.toString(),
-    quantity = quantity.toString(),
-    color = color
-)

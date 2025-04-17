@@ -2,11 +2,11 @@ package com.example.habittracker.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.HabitsRepository
+import com.example.habittracker.data.repository.local.HabitsRepository
 import com.example.habittracker.model.FilterExpression
-import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitType
 import com.example.habittracker.model.MultiplicationExpression
+import com.example.habittracker.model.domain.Habit
+import com.example.habittracker.model.domain.HabitType
 import com.example.habittracker.ui.shared.filter.FilterState
 import com.example.habittracker.ui.shared.filter.toExpressions
 import kotlinx.coroutines.flow.MutableStateFlow

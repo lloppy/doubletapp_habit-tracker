@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.habittracker.model.HabitCategory
+import com.example.habittracker.model.domain.HabitCategory
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import kotlin.enums.EnumEntries
 

@@ -17,7 +17,6 @@ import com.example.habittracker.model.SortOption
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import com.example.habittracker.ui.theme.Spacing
 
-
 @Composable
 fun SortSection(
     sortOption: SortOption,
