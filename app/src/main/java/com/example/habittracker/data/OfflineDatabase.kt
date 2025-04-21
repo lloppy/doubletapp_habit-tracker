@@ -5,12 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.habittracker.data.api.local.HabitDao
-import com.example.habittracker.model.domain.Converters
-import com.example.habittracker.model.domain.Habit
+import com.example.data.local.dao.HabitDao
 
-@Database(entities = [Habit::class], version = 10, exportSchema = false)
-@TypeConverters(Converters::class)
+@Database(entities = [com.example.model.domain.Habit::class], version = 10, exportSchema = false)
+@TypeConverters(com.example.model.domain.Converters::class)
 abstract class OfflineDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao
 
@@ -25,7 +23,7 @@ abstract class OfflineDatabase : RoomDatabase() {
                     klass = OfflineDatabase::class.java,
                     name = "habit_database"
                 )
-                    .addTypeConverter(Converters())
+                    .addTypeConverter(com.example.model.domain.Converters())
                     .fallbackToDestructiveMigration()
                     .build()
                     .also {

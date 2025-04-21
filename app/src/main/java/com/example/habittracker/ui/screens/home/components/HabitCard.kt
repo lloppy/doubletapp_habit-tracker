@@ -28,12 +28,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.example.habittracker.R
-import com.example.habittracker.model.domain.Habit
+import com.example.model.domain.Habit
 import com.example.habittracker.ui.theme.Spacing
 
 @Composable
 fun HabitCard(
-    habit: Habit,
+    habit: com.example.model.domain.Habit,
     onIncreaseRepeated: () -> Unit,
     onDecreaseRepeated: () -> Unit,
     modifier: Modifier

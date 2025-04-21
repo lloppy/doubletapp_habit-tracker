@@ -41,7 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.domain.Habit
+import com.example.model.domain.Habit
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
@@ -153,7 +153,7 @@ fun HabitTrackerScreen(
 
 @Composable
 fun HabitContent(
-    filteredHabits: List<Habit>,
+    filteredHabits: List<com.example.model.domain.Habit>,
     onClickHabit: (Int) -> Unit,
     modifier: Modifier = Modifier,
     onIncreaseRepeated: (Int) -> Unit,

@@ -1,6 +1,6 @@
 package com.example.habittracker
 
-import com.example.habittracker.model.domain.Habit
+import com.example.model.domain.Habit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -8,22 +8,22 @@ import kotlinx.coroutines.flow.flow
 
 class FakeRepository {
 
-    private val emptyHabits = emptyList<Habit>()
+    private val emptyHabits = emptyList<com.example.model.domain.Habit>()
 
-    private val _habits = MutableStateFlow<List<Habit>>(emptyHabits)
-    val habits: StateFlow<List<Habit>> = _habits
+    private val _habits = MutableStateFlow<List<com.example.model.domain.Habit>>(emptyHabits)
+    val habits: StateFlow<List<com.example.model.domain.Habit>> = _habits
 
-    fun addHabit(habit: Habit) {
+    fun addHabit(habit: com.example.model.domain.Habit) {
         _habits.value += habit
     }
 
-    fun getSingleHabit(habitId: Int): Flow<Habit> =
+    fun getSingleHabit(habitId: Int): Flow<com.example.model.domain.Habit> =
         flow {
             val habit = checkNotNull(habits.value.find { it.id == habitId })
             emit(habit)
         }
 
-    fun updateItem(habit: Habit) {
+    fun updateItem(habit: com.example.model.domain.Habit) {
         val updatedHabits = _habits.value.toMutableList()
         val index = updatedHabits.indexOfFirst { it.id == habit.id }
         if (index != -1) {

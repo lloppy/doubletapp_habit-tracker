@@ -1,16 +1,16 @@
 package com.example.habittracker.data
 
 import android.content.Context
-import com.example.habittracker.data.api.remote.HabitsApiService
-import com.example.habittracker.data.repository.HabitsRepository
+import com.example.data.local.HabitsLocalRepository
+import com.example.data.remote.api.HabitsApiService
+import com.example.data.repository.HabitsRepository
 import com.example.habittracker.data.repository.LanguageRepository
-import com.example.habittracker.data.repository.LanguageRepositoryImpl
-import com.example.habittracker.data.repository.SharedHabitsRepository
+import com.example.data.repository.LanguageRepositoryImpl
+import com.example.data.repository.HabitsRepositoryImpl
 import com.example.habittracker.data.repository.ThemeRepository
-import com.example.habittracker.data.repository.ThemeRepositoryImpl
-import com.example.habittracker.data.repository.local.HabitsLocalRepository
-import com.example.habittracker.data.repository.remote.HabitsRemoteRepository
-import com.example.habittracker.data.util.LanguageRepositoryProxy
+import com.example.data.repository.ThemeRepositoryImpl
+import com.example.data.remote.datasource.HabitsRemoteDataSource
+import com.example.data.util.LanguageRepositoryProxy
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -53,11 +53,11 @@ class AppDataContainer(private val context: Context) : AppContainer {
     }
 
     override val habitsRepository: HabitsRepository by lazy {
-        SharedHabitsRepository(
+        HabitsRepositoryImpl(
             local = HabitsLocalRepository(
                 habitDao = OfflineDatabase.getDatabase(context).habitDao()
             ),
-            remote = HabitsRemoteRepository(retrofitService = retrofitService)
+            remote = HabitsRemoteDataSource(retrofitService = retrofitService)
         )
     }
 

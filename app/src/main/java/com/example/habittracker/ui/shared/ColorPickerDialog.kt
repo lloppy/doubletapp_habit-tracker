@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
 import com.example.habittracker.model.toHsv
 import com.example.habittracker.model.toRgb
-import com.example.habittracker.model.ui.HabitEntity
+import com.example.habittracker.model.HabitEntity
 import com.example.habittracker.ui.theme.Spacing
 
 @Composable

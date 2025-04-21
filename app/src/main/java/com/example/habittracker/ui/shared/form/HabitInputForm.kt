@@ -13,10 +13,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.habittracker.R
-import com.example.habittracker.model.domain.HabitCategory
-import com.example.habittracker.model.domain.HabitPriority
-import com.example.habittracker.model.domain.HabitType
-import com.example.habittracker.model.ui.HabitEntity
+import com.example.habittracker.model.HabitEntity
 import com.example.habittracker.ui.screens.item.UpdateAction
 import com.example.habittracker.ui.shared.ColorPickerDialog
 import com.example.habittracker.ui.shared.form.components.CategoryCard
@@ -98,7 +95,7 @@ fun HabitInputForm(
         onOptionSelected = {
             onAction(UpdateAction.Category(it))
         },
-        options = HabitCategory.entries,
+        options = com.example.model.domain.HabitCategory.entries,
         label = stringResource(
             R.string.set_category,
             stringResource(R.string.required)
@@ -114,7 +111,7 @@ fun HabitInputForm(
 
     PriorityCard(
         selectedValue = habitEntity.priority,
-        options = HabitPriority.entries,
+        options = com.example.model.domain.HabitPriority.entries,
         label = stringResource(R.string.set_priority),
         onOptionSelected = {
             onAction(UpdateAction.Priority(it))
@@ -127,7 +124,7 @@ fun HabitInputForm(
         onOptionSelected = {
             onAction(UpdateAction.Type(it))
         },
-        options = HabitType.entries,
+        options = com.example.model.domain.HabitType.entries,
         label = stringResource(
             R.string.set_type,
             stringResource(R.string.required)

@@ -8,12 +8,12 @@ import com.example.habittracker.model.SortOption.NAME_ASC
 import com.example.habittracker.model.SortOption.NAME_DESC
 import com.example.habittracker.model.SortOption.PRIORITY_HIGH
 import com.example.habittracker.model.SortOption.PRIORITY_LOW
-import com.example.habittracker.model.domain.Habit
-import com.example.habittracker.model.domain.HabitCategory
-import com.example.habittracker.model.domain.HabitPriority
+import com.example.model.domain.Habit
+import com.example.model.domain.HabitCategory
+import com.example.model.domain.HabitPriority
 
 interface FilterExpression {
-    fun interpret(habits: List<Habit>): List<Habit>
+    fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit>
 }
 
 enum class SortOption(@StringRes val displayName: Int) {
@@ -26,26 +26,26 @@ enum class SortOption(@StringRes val displayName: Int) {
 }
 
 class SearchInterpreter(private val query: String) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> {
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> {
         return if (query.isBlank()) habits
         else habits.filter { it.name.contains(query, ignoreCase = true) }
     }
 }
 
-class CategoryInterpreter(private val category: HabitCategory?) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> {
+class CategoryInterpreter(private val category: com.example.model.domain.HabitCategory?) : FilterExpression {
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> {
         return category?.let { c -> habits.filter { it.category == c } } ?: habits
     }
 }
 
-class PriorityInterpreter(private val priority: HabitPriority?) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> {
+class PriorityInterpreter(private val priority: com.example.model.domain.HabitPriority?) : FilterExpression {
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> {
         return priority?.let { p -> habits.filter { it.priority == p } } ?: habits
     }
 }
 
 class SortInterpreter(private val sortOption: SortOption) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> = with(habits) {
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> = with(habits) {
         when (sortOption) {
             DATE_NEWEST -> sortedByDescending { it.id }
             DATE_OLDEST -> sortedBy { it.id }
@@ -60,14 +60,14 @@ class SortInterpreter(private val sortOption: SortOption) : FilterExpression {
 class MultiplicationExpression(
     private val interpreters: List<FilterExpression>
 ) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> =
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> =
         interpreters.fold(habits) { accumulator, interpreter ->
             interpreter.interpret(accumulator)
         }
 }
 
 class AdditionExpression(private val expressions: List<FilterExpression>) : FilterExpression {
-    override fun interpret(habits: List<Habit>): List<Habit> =
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> =
         expressions
             .flatMap { it.interpret(habits) }
             .distinct()

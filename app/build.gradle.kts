@@ -2,9 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("plugin.serialization") version "2.1.10"
     id("kotlin-kapt")
-    id("com.google.devtools.ksp") version "2.1.10-1.0.31"
 }
 
 android {
@@ -44,14 +42,12 @@ android {
     androidResources {
         generateLocaleConfig = true
     }
-
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.generateKotlin", "true")
-    }
 }
 
 dependencies {
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -76,29 +72,20 @@ dependencies {
     // navigation
     implementation(libs.androidx.navigation.compose)
 
-    //Room
-    implementation(libs.androidx.room.runtime)
-    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
-    implementation(libs.androidx.room.ktx)
-
     // icons
     implementation(libs.material.icons.extended)
 
     // livedata
     implementation(libs.androidx.runtime.livedata)
 
-    // retrofit2 for swagger
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-    implementation(libs.okhttp)
-    implementation(libs.retrofit)
+
 
     // image loading
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.logging.interceptor)
 
-    //
+    // dagger
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 

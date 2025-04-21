@@ -7,12 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.habittracker.TestData.testHabits
 import com.example.habittracker.data.OfflineDatabase
-import com.example.habittracker.data.api.local.HabitDao
-import com.example.habittracker.model.domain.Converters
-import com.example.habittracker.model.domain.Habit
-import com.example.habittracker.model.domain.HabitCategory
-import com.example.habittracker.model.domain.HabitPriority
-import com.example.habittracker.model.domain.HabitType
+import com.example.data.local.dao.HabitDao
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
@@ -34,7 +29,7 @@ class LocalRepositoryTest {
         val context: Context = ApplicationProvider.getApplicationContext()
 
         habitDatabase = Room.inMemoryDatabaseBuilder(context, OfflineDatabase::class.java)
-            .addTypeConverter(Converters())
+            .addTypeConverter(com.example.model.domain.Converters())
             .allowMainThreadQueries()
             .build()
         habitDao = habitDatabase.habitDao()
@@ -53,7 +48,7 @@ class LocalRepositoryTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertHabit_shouldAddHabitToRepository() = runBlocking {
+    fun saveHabit_shouldAddHabitToRepository() = runBlocking {
         addSingleHabitToRepository()
 
         val allItems = habitDao.getAll().first()
@@ -109,49 +104,49 @@ class LocalRepositoryTest {
 object TestData {
 
     val testHabits = listOf(
-        Habit(
+        com.example.model.domain.Habit(
             id = 1,
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
-            category = HabitCategory.SPORT,
-            type = HabitType.POSITIVE,
-            priority = HabitPriority.HIGH,
+            category = com.example.model.domain.HabitCategory.SPORT,
+            type = com.example.model.domain.HabitType.POSITIVE,
+            priority = com.example.model.domain.HabitPriority.HIGH,
             frequency = "Ежедневно",
             repeatedTimes = 7,
             quantity = 3,
             color = Color.Red
         ),
-        Habit(
+        com.example.model.domain.Habit(
             id = 2,
             name = "Чтение перед сном",
             description = "Чтение для расслабления",
-            category = HabitCategory.RELAXATION,
-            type = HabitType.POSITIVE,
-            priority = HabitPriority.MEDIUM,
+            category = com.example.model.domain.HabitCategory.RELAXATION,
+            type = com.example.model.domain.HabitType.POSITIVE,
+            priority = com.example.model.domain.HabitPriority.MEDIUM,
             frequency = "Раз в неделю",
             repeatedTimes = 4,
             quantity = 1,
             color = Color.Blue
         ),
-        Habit(
+        com.example.model.domain.Habit(
             id = 1,
             name = "Просмотр лекций",
             description = "Обучение на платформе Coursera",
-            category = HabitCategory.STUDY,
-            type = HabitType.POSITIVE,
-            priority = HabitPriority.LOW,
+            category = com.example.model.domain.HabitCategory.STUDY,
+            type = com.example.model.domain.HabitType.POSITIVE,
+            priority = com.example.model.domain.HabitPriority.LOW,
             frequency = "Раз в две недели",
             repeatedTimes = 2,
             quantity = 0,
             color = Color.Green
         ),
-        Habit(
+        com.example.model.domain.Habit(
             id = 2,
             name = "Планирование дня",
             description = "Планирование задач на день",
-            category = HabitCategory.PRODUCTIVITY,
-            type = HabitType.POSITIVE,
-            priority = HabitPriority.MEDIUM,
+            category = com.example.model.domain.HabitCategory.PRODUCTIVITY,
+            type = com.example.model.domain.HabitType.POSITIVE,
+            priority = com.example.model.domain.HabitPriority.MEDIUM,
             frequency = "Ежедневно",
             repeatedTimes = 10,
             quantity = 5,

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.HabitsRepository
+import com.example.data.repository.HabitsRepository
 import kotlinx.coroutines.launch
 
 class SyncScreenViewModel(

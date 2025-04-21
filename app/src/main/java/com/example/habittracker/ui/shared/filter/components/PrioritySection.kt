@@ -18,14 +18,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
-import com.example.habittracker.model.domain.HabitPriority
+import com.example.model.domain.HabitPriority
 import com.example.habittracker.ui.shared.SectionTitle
 import com.example.habittracker.ui.theme.Spacing
 
 @Composable
 fun PrioritySection(
-    selectedPriority: HabitPriority?,
-    onPrioritySelected: (HabitPriority?) -> Unit,
+    selectedPriority: com.example.model.domain.HabitPriority?,
+    onPrioritySelected: (com.example.model.domain.HabitPriority?) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column {
@@ -34,7 +34,7 @@ fun PrioritySection(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
-            HabitPriority.entries.forEach { priority ->
+            com.example.model.domain.HabitPriority.entries.forEach { priority ->
                 FilterCard(
                     selected = selectedPriority == priority,
                     priorityName = stringResource(priority.priorityName),

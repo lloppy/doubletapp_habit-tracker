@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.HabitsRepository
-import com.example.habittracker.model.ui.HabitEntity
-import com.example.habittracker.model.ui.toHabit
-import com.example.habittracker.model.ui.toUiState
+import com.example.data.repository.HabitsRepository
+import com.example.habittracker.model.HabitEntity
+import com.example.habittracker.model.toHabit
+import com.example.habittracker.model.toUiState
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.UpdateAction
 import kotlinx.coroutines.flow.filterNotNull

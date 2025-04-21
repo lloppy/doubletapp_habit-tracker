@@ -15,15 +15,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.habittracker.model.domain.HabitPriority
+import com.example.model.domain.HabitPriority
 import kotlin.enums.EnumEntries
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PriorityCard(
-    selectedValue: HabitPriority,
-    onOptionSelected: (HabitPriority) -> Unit,
-    options: EnumEntries<HabitPriority>,
+    selectedValue: com.example.model.domain.HabitPriority,
+    onOptionSelected: (com.example.model.domain.HabitPriority) -> Unit,
+    options: EnumEntries<com.example.model.domain.HabitPriority>,
     label: String,
     modifier: Modifier = Modifier
 ) {
