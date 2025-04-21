@@ -16,16 +16,7 @@ class HabitsLocalDataSource @Inject constructor(
 
     override suspend fun insertHabit(habit: Habit): EmptyResult<DataError.Local> {
         return try {
-            dao.insert(habitEntity = habit)
-            Result.Success(Unit)
-        } catch (e: SQLiteFullException) {
-            Result.Error(DataError.Local.DISK_FULL)
-        }
-    }
-
-    override suspend fun updateHabit(habit: Habit): EmptyResult<DataError.Local> {
-        return try {
-            dao.update(habit)
+            dao.insert(habit = habit)
             Result.Success(Unit)
         } catch (e: SQLiteFullException) {
             Result.Error(DataError.Local.DISK_FULL)

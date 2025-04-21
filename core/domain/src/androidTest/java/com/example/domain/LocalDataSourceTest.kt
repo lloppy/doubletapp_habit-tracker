@@ -1,11 +1,11 @@
-package com.example.habittracker
+package com.example.domain
 
 import android.content.Context
 import androidx.compose.ui.graphics.Color
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.habittracker.TestData.testHabits
+import com.example.domain.TestData.testHabits
 import com.example.data.local.OfflineDatabase
 import com.example.data.local.dao.HabitDao
 import junit.framework.TestCase.assertEquals

@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.model.domain.Habit
 import com.example.model.domain.HabitPriority
 import com.example.model.domain.HabitType
+import com.example.model.model.HabitFetchResponse
 import com.example.model.model.HabitUpdateRequest
 
 fun Habit.fromDomain(): HabitUpdateRequest {
@@ -31,7 +32,7 @@ fun Habit.fromDomain(): HabitUpdateRequest {
     )
 }
 
-fun HabitUpdateRequest.toDomain(): Habit {
+fun HabitFetchResponse.toDomain(): Habit {
     return Habit(
         uid = this.uid,
         name = this.title,

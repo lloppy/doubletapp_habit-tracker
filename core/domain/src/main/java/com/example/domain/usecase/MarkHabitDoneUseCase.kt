@@ -1,24 +1,23 @@
 package com.example.domain.usecase
 
-import com.example.domain.repository.LocalDataSource
 import com.example.domain.repository.RemoteDataSource
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
 import com.example.domain.util.onError
 import com.example.model.domain.Habit
+import com.example.model.model.HabitDoneResponse
 
-class InsertHabitUseCase(
-    private val localDataSource: LocalDataSource,
+class MarkHabitDoneUseCase(
     private val remoteDataSource: RemoteDataSource,
 ) {
     suspend fun execute(habit: Habit): EmptyResult<DataError> {
-        localDataSource.insertHabit(habit)
-            .onError { error ->
-                return Result.Error(error)
-            }
+        val response = HabitDoneResponse(
+            date = (System.currentTimeMillis() / 1000).toInt(),
+            habitUid = habit.uid
+        )
 
-        remoteDataSource.updateHabit(habit)
+        remoteDataSource.markDoneHabit(response)
             .onError { error ->
                 return Result.Error(error)
             }

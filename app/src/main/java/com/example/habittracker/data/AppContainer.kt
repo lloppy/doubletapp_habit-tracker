@@ -6,7 +6,6 @@ import com.example.data.remote.api.HabitsApiService
 import com.example.data.repository.HabitsRepository
 import com.example.habittracker.data.repository.LanguageRepository
 import com.example.data.repository.LanguageRepositoryImpl
-import com.example.data.repository.HabitsRepositoryImpl
 import com.example.habittracker.data.repository.ThemeRepository
 import com.example.data.repository.ThemeRepositoryImpl
 import com.example.data.remote.datasource.HabitsRemoteDataSource

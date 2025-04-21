@@ -5,8 +5,8 @@ import android.content.Context
 import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.habittracker.model.Language
-
+import com.example.domain.repository.LanguageRepository
+import com.example.model.Language
 
 class LanguageRepositoryImpl(private val context: Context) : LanguageRepository {
 

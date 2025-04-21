@@ -5,22 +5,21 @@ import com.example.domain.repository.RemoteDataSource
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
+import com.example.domain.util.map
 import com.example.domain.util.onError
-import com.example.model.domain.Habit
 
-class InsertHabitUseCase(
+class SyncFromRemoteToLocalUseCase(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
 ) {
-    suspend fun execute(habit: Habit): EmptyResult<DataError> {
-        localDataSource.insertHabit(habit)
+    suspend fun execute(): EmptyResult<DataError> {
+        remoteDataSource.getHabits()
             .onError { error ->
                 return Result.Error(error)
             }
-
-        remoteDataSource.updateHabit(habit)
-            .onError { error ->
-                return Result.Error(error)
+            .map { habits ->
+                localDataSource.deleteAllHabits()
+                habits.forEach { localDataSource.insertHabit(it) }
             }
 
         return Result.Success(Unit)

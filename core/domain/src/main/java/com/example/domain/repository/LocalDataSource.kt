@@ -9,8 +9,6 @@ interface LocalDataSource {
 
     suspend fun insertHabit(habit: Habit): EmptyResult<DataError.Local>
 
-    suspend fun updateHabit(habit: Habit): EmptyResult<DataError.Local>
-
     suspend fun deleteHabit(habit: Habit)
 
     suspend fun deleteHabitById(id: Int)

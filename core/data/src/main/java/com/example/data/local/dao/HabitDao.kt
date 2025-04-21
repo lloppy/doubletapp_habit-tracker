@@ -12,14 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface HabitDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(habitEntity: Habit)
-
-    @Update
-    suspend fun update(habitEntity: Habit)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(habit: Habit)
 
     @Delete
-    suspend fun delete(habitEntity: Habit)
+    suspend fun delete(habit: Habit)
 
     @Query("DELETE FROM habits WHERE id = :id")
     suspend fun deleteById(id: Int)

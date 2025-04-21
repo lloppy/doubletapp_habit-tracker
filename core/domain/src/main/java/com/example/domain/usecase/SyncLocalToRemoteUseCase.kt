@@ -6,21 +6,19 @@ import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
 import com.example.domain.util.onError
-import com.example.model.domain.Habit
+import kotlinx.coroutines.flow.first
 
-class InsertHabitUseCase(
+class SyncLocalToRemoteUseCase(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
 ) {
-    suspend fun execute(habit: Habit): EmptyResult<DataError> {
-        localDataSource.insertHabit(habit)
-            .onError { error ->
-                return Result.Error(error)
-            }
-
-        remoteDataSource.updateHabit(habit)
-            .onError { error ->
-                return Result.Error(error)
+    suspend fun execute(): EmptyResult<DataError> {
+        localDataSource
+            .getAllHabits()
+            .first()
+            .forEach { habit ->
+                remoteDataSource.updateHabit(habit)
+                    .onError { return Result.Error(it) }
             }
 
         return Result.Success(Unit)
