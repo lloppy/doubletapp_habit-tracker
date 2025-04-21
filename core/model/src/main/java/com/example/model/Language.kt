@@ -1,4 +1,4 @@
-package com.example.habittracker.model
+package com.example.model
 
 data class Language(
     val code: String,

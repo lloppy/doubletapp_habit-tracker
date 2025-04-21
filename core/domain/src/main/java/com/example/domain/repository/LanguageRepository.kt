@@ -1,6 +1,7 @@
 package com.example.domain.repository
 
-import org.intellij.lang.annotations.Language
+import com.example.model.Language
+
 
 interface LanguageRepository {
     fun getCurrentLanguage(): String

@@ -1,5 +1,6 @@
 package com.example.model.domain
 
+import android.graphics.Color
 import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity

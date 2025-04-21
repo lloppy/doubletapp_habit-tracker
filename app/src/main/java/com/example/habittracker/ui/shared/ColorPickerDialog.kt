@@ -29,8 +29,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
-import com.example.habittracker.model.toHsv
-import com.example.habittracker.model.toRgb
+import com.example.model.toHsv
+import com.example.model.toRgb
 import com.example.habittracker.model.HabitEntity
 import com.example.habittracker.ui.theme.Spacing
 

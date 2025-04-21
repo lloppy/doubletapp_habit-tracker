@@ -8,9 +8,6 @@ import com.example.habittracker.model.SortOption.NAME_ASC
 import com.example.habittracker.model.SortOption.NAME_DESC
 import com.example.habittracker.model.SortOption.PRIORITY_HIGH
 import com.example.habittracker.model.SortOption.PRIORITY_LOW
-import com.example.model.domain.Habit
-import com.example.model.domain.HabitCategory
-import com.example.model.domain.HabitPriority
 
 interface FilterExpression {
     fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit>
@@ -45,16 +42,17 @@ class PriorityInterpreter(private val priority: com.example.model.domain.HabitPr
 }
 
 class SortInterpreter(private val sortOption: SortOption) : FilterExpression {
-    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> = with(habits) {
-        when (sortOption) {
-            DATE_NEWEST -> sortedByDescending { it.id }
-            DATE_OLDEST -> sortedBy { it.id }
-            NAME_ASC -> sortedBy { it.name }
-            NAME_DESC -> sortedByDescending { it.name }
-            PRIORITY_HIGH -> sortedByDescending { it.priority.ordinal }
-            PRIORITY_LOW -> sortedBy { it.priority.ordinal }
+    override fun interpret(habits: List<com.example.model.domain.Habit>): List<com.example.model.domain.Habit> =
+        with(habits) {
+            when (sortOption) {
+                DATE_NEWEST -> sortedByDescending { it.id }
+                DATE_OLDEST -> sortedBy { it.id }
+                NAME_ASC -> sortedBy { it.name }
+                NAME_DESC -> sortedByDescending { it.name }
+                PRIORITY_HIGH -> sortedByDescending { it.priority.ordinal }
+                PRIORITY_LOW -> sortedBy { it.priority.ordinal }
+            }
         }
-    }
 }
 
 class MultiplicationExpression(

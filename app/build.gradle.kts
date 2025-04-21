@@ -79,7 +79,6 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
 
 
-
     // image loading
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)

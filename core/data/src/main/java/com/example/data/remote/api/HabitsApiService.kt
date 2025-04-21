@@ -11,6 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface HabitsApiService {
+
     @GET("habit")
     suspend fun getHabits(): List<HabitFetchResponse>
 
@@ -22,4 +23,5 @@ interface HabitsApiService {
 
     @POST("habit_done")
     suspend fun markDoneHabit(@Body habitDone: HabitDoneResponse)
+
 }

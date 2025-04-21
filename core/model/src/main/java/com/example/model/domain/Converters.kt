@@ -4,7 +4,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 
-
 @ProvidedTypeConverter
 class Converters {
     @TypeConverter

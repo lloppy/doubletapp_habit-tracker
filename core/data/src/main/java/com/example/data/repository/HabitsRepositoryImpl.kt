@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import android.util.Log
-import com.example.data.local.HabitsLocalRepository
+import com.example.data.local.datasource.HabitsLocalDataSource
 import com.example.data.remote.datasource.HabitsRemoteDataSource
 import com.example.model.domain.Habit
 import com.example.model.model.ApiResult
@@ -14,28 +14,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
 class HabitsRepositoryImpl(
-    private val local: HabitsLocalRepository,
-    private val remote: HabitsRemoteDataSource,
+
 ) {
-
-    suspend fun insertHabit(habit: Habit): Result<Unit> = runCatching {
-        when (val result = executeWithRetry {
-            remote.updateHabit(HabitUpdateRequest.fromDomain(habit))
-        }) {
-            is ApiResult.Success -> {
-                local.saveHabit(habit.copy(uid = result.data.uid))
-            }
-
-            is ApiResult.Error -> throw Exception(result.message)
-        }
-    }
-
     suspend fun syncFromRemoteToLocal(): Result<Unit> = runCatching {
-        when (val result = executeWithRetry { remote.getHabits() }) {
+        when (val result = executeWithRetry { remoteDataSource.getHabits() }) {
             is ApiResult.Success -> {
-                local.deleteAllHabits()
+                localDataSource.deleteAllHabits()
                 result.data.forEach { response ->
-                    local.saveHabit(HabitFetchResponse.toDomain(response))
+                    localDataSource.saveHabit(HabitFetchResponse.toDomain(response))
                 }
             }
 
@@ -44,11 +30,11 @@ class HabitsRepositoryImpl(
     }
 
     suspend fun syncFromLocalToRemote(): Result<Unit> = runCatching {
-        local.getAllHabits().first().forEach { habit ->
+        localDataSource.getAllHabits().first().forEach { habit ->
             when (val result = executeWithRetry {
                 Log.e("SharedHabitsRepository", "date " + habit.date.toString())
 
-                remote.updateHabit(HabitUpdateRequest.fromDomain(habit))
+                remoteDataSource.updateHabit(HabitUpdateRequest.fromDomain(habit))
             }) {
                 is ApiResult.Success -> Unit
                 is ApiResult.Error -> throw Exception("Failed to sync habit ${habit.id}: ${result.message}")
@@ -58,10 +44,10 @@ class HabitsRepositoryImpl(
 
     suspend fun deleteHabit(habit: Habit): Result<Unit> = runCatching {
         when (val result = executeWithRetry {
-            remote.deleteHabit(HabitUid(habit.uid))
+            remoteDataSource.deleteHabit(HabitUid(habit.uid))
         }) {
             is ApiResult.Success -> {
-                local.deleteHabit(habit)
+                localDataSource.deleteHabit(habit)
             }
 
             is ApiResult.Error -> throw Exception(result.message)
@@ -70,12 +56,12 @@ class HabitsRepositoryImpl(
 
     suspend fun increaseHabitQuantity(id: Int): ApiResult<Unit> {
         return try {
-            local.increaseHabitQuantity(id)
-            val habit = local.getHabitAtOnce(id)
+            localDataSource.increaseHabitQuantity(id)
+            val habit = localDataSource.getHabitAtOnce(id)
 
             if (habit.quantity == habit.repeatedTimes) {
                 when (val result = executeWithRetry {
-                    remote.markDoneHabit(
+                    remoteDataSource.markDoneHabit(
                         HabitDoneResponse(
                             date = (System.currentTimeMillis() / 1000).toInt(),
                             habitUid = habit.uid
@@ -93,22 +79,22 @@ class HabitsRepositoryImpl(
         }
     }
 
-    suspend fun deleteByHabitId(id: Int) = local.deleteByHabitId(id)
-    suspend fun deleteAllHabits() = local.deleteAllHabits()
-    suspend fun decreaseHabitQuantity(id: Int) = local.decreaseHabitQuantity(id)
-    suspend fun getHabitAtOnce(id: Int): Habit = local.getHabitAtOnce(id)
-    fun getAllHabits(): Flow<List<Habit>> = local.getAllHabits()
-    fun getHabitById(id: Int): Flow<Habit?> = local.getHabitById(id)
+    suspend fun deleteByHabitId(id: Int) = localDataSource.deleteByHabitId(id)
+    suspend fun deleteAllHabits() = localDataSource.deleteAllHabits()
+    suspend fun decreaseHabitQuantity(id: Int) = localDataSource.decreaseHabitQuantity(id)
+    suspend fun getHabitAtOnce(id: Int): Habit = localDataSource.getHabitAtOnce(id)
+    fun getAllHabits(): Flow<List<Habit>> = localDataSource.getAllHabits()
+    fun getHabitById(id: Int): Flow<Habit?> = localDataSource.getHabitById(id)
 
-    suspend fun getHabits(): ApiResult<List<HabitFetchResponse>> = remote.getHabits()
+    suspend fun getHabits(): ApiResult<List<HabitFetchResponse>> = remoteDataSource.getHabits()
     suspend fun updateHabit(habit: HabitUpdateRequest): ApiResult<HabitUid> =
-        remote.updateHabit(habit)
+        remoteDataSource.updateHabit(habit)
 
     suspend fun deleteHabit(habitUid: HabitUid): ApiResult<Unit> =
-        remote.deleteHabit(habitUid)
+        remoteDataSource.deleteHabit(habitUid)
 
     suspend fun markDoneHabit(habitDone: HabitDoneResponse): ApiResult<Unit> =
-        remote.markDoneHabit(habitDone)
+        remoteDataSource.markDoneHabit(habitDone)
 
 
     private suspend fun <T> executeWithRetry(

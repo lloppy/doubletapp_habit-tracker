@@ -1,7 +1,7 @@
 package com.example.habittracker.data
 
 import android.content.Context
-import com.example.data.local.HabitsLocalRepository
+import com.example.data.local.OfflineDatabase
 import com.example.data.remote.api.HabitsApiService
 import com.example.data.repository.HabitsRepository
 import com.example.habittracker.data.repository.LanguageRepository
@@ -54,10 +54,10 @@ class AppDataContainer(private val context: Context) : AppContainer {
 
     override val habitsRepository: HabitsRepository by lazy {
         HabitsRepositoryImpl(
-            local = HabitsLocalRepository(
+            localRepository = HabitsLocalRepository(
                 habitDao = OfflineDatabase.getDatabase(context).habitDao()
             ),
-            remote = HabitsRemoteDataSource(retrofitService = retrofitService)
+            remoteDataSource = HabitsRemoteDataSource(retrofitService = retrofitService)
         )
     }
 

@@ -1,10 +1,10 @@
 package com.example.data.util
 
-import com.example.habittracker.data.repository.LanguageRepository
-import com.example.habittracker.model.Language
+import com.example.domain.repository.LanguageRepository
+import com.example.model.Language
 
 class LanguageRepositoryProxy(
-    private val languageRepository: LanguageRepository
+    private val languageRepository: LanguageRepository,
 ) : Logger("LanguageRepositoryProxy"), LanguageRepository {
 
     override fun getCurrentLanguage(): String {
@@ -24,4 +24,5 @@ class LanguageRepositoryProxy(
             logInfo("Available languages: ${it.joinToString()}")
         }
     }
+
 }

@@ -1,35 +1,55 @@
 package com.example.data.local.datasource
 
+import android.database.sqlite.SQLiteFullException
 import com.example.data.local.dao.HabitDao
+import com.example.domain.repository.LocalDataSource
+import com.example.domain.util.DataError
+import com.example.domain.util.EmptyResult
+import com.example.domain.util.Result
 import com.example.model.domain.Habit
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class HabitsLocalDataSource @Inject constructor(
-    private val habitDao: HabitDao
-) {
-    suspend fun insertHabit(habit: Habit) {
-        habitDao.insert(habit)
+    private val dao: HabitDao
+) : LocalDataSource {
+
+    override suspend fun insertHabit(habit: Habit): EmptyResult<DataError.Local> {
+        return try {
+            dao.insert(habitEntity = habit)
+            Result.Success(Unit)
+        } catch (e: SQLiteFullException) {
+            Result.Error(DataError.Local.DISK_FULL)
+        }
     }
 
-    suspend fun updateHabit(habit: Habit) {
-        habitDao.update(habit)
+    override suspend fun updateHabit(habit: Habit): EmptyResult<DataError.Local> {
+        return try {
+            dao.update(habit)
+            Result.Success(Unit)
+        } catch (e: SQLiteFullException) {
+            Result.Error(DataError.Local.DISK_FULL)
+        }
     }
 
-    suspend fun deleteHabit(habit: Habit) {
-        habitDao.delete(habit)
+    override suspend fun deleteHabit(habit: Habit) {
+        dao.delete(habit)
     }
 
-    suspend fun deleteAllHabits() {
-        habitDao.deleteAll()
+    override suspend fun deleteHabitById(id: Int) {
+        dao.deleteById(id)
     }
 
-    fun getHabitById(id: Int): Flow<Habit?> {
-        return habitDao.getById(id)
+    override suspend fun deleteAllHabits() {
+        dao.deleteAll()
     }
 
-    fun getAllHabits(): Flow<List<Habit>> {
-        return habitDao.getAll()
+    override fun getHabitById(id: Int): Flow<Habit?> {
+        return dao.getById(id)
+    }
+
+    override fun getAllHabits(): Flow<List<Habit>> {
+        return dao.getAll()
     }
 
 }

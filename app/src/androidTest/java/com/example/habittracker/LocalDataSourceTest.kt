@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.habittracker.TestData.testHabits
-import com.example.habittracker.data.OfflineDatabase
+import com.example.data.local.OfflineDatabase
 import com.example.data.local.dao.HabitDao
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class LocalRepositoryTest {
+class LocalDataSourceTest {
 
     private lateinit var habitDao: HabitDao
     private lateinit var habitDatabase: OfflineDatabase

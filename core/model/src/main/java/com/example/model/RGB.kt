@@ -1,5 +1,9 @@
-package com.example.habittracker.model
+package com.example.model
 
+import android.graphics.Color.blue
+import android.graphics.Color.green
+import android.graphics.Color.red
+import android.graphics.Color.rgb
 import androidx.compose.ui.graphics.Color
 
 data class RGB(val red: Int, val green: Int, val blue: Int) {
@@ -46,14 +50,6 @@ fun Color.toColorInt(): Int {
     val red = (this.red * 255).toInt()
     val green = (this.green * 255).toInt()
     val blue = (this.blue * 255).toInt()
-    return android.graphics.Color.rgb(red, green, blue)
+    return rgb(red, green, blue)
 }
 
-fun Int.toColor(): Color {
-    return Color(
-        red = android.graphics.Color.red(this) / 255f,
-        green = android.graphics.Color.green(this) / 255f,
-        blue = android.graphics.Color.blue(this) / 255f,
-        alpha = 1f
-    )
-}
