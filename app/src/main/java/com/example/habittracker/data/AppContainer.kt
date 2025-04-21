@@ -1,7 +1,6 @@
 package com.example.habittracker.data
 
 import android.content.Context
-import android.util.Log
 import com.example.habittracker.data.api.remote.HabitsApiService
 import com.example.habittracker.data.repository.HabitsRepository
 import com.example.habittracker.data.repository.LanguageRepository
@@ -9,8 +8,8 @@ import com.example.habittracker.data.repository.LanguageRepositoryImpl
 import com.example.habittracker.data.repository.SharedHabitsRepository
 import com.example.habittracker.data.repository.ThemeRepository
 import com.example.habittracker.data.repository.ThemeRepositoryImpl
-import com.example.habittracker.data.repository.local.LocalHabitsRepository
-import com.example.habittracker.data.repository.remote.RemoteHabitsRepository
+import com.example.habittracker.data.repository.local.HabitsLocalRepository
+import com.example.habittracker.data.repository.remote.HabitsRemoteRepository
 import com.example.habittracker.data.util.LanguageRepositoryProxy
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -36,7 +35,6 @@ class AppDataContainer(private val context: Context) : AppContainer {
                 .addHeader("Accept", "application/json")
                 .addHeader("Content-Type", "application/json")
                 .build()
-            Log.d("API", "Requesting: ${request.url}")
             chain.proceed(request)
         }
         .build()
@@ -56,10 +54,10 @@ class AppDataContainer(private val context: Context) : AppContainer {
 
     override val habitsRepository: HabitsRepository by lazy {
         SharedHabitsRepository(
-            local = LocalHabitsRepository(
+            local = HabitsLocalRepository(
                 habitDao = OfflineDatabase.getDatabase(context).habitDao()
             ),
-            remote = RemoteHabitsRepository(retrofitService = retrofitService)
+            remote = HabitsRemoteRepository(retrofitService = retrofitService)
         )
     }
 

@@ -20,5 +20,5 @@ data class Habit(
     @ColumnInfo("repeated_times") val repeatedTimes: Int = 1,
     val quantity: Int = 1,
     val color: Color = Color.LightGray,
-    val date: Int = (System.currentTimeMillis() % Integer.MAX_VALUE).toInt(),
+    val date: Int = (System.currentTimeMillis() / 1000).toInt()
 )

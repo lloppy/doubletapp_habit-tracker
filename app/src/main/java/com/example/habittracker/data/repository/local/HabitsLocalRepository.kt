@@ -5,14 +5,10 @@ import com.example.habittracker.model.domain.Habit
 import com.example.habittracker.model.model.ApiResult
 import kotlinx.coroutines.flow.Flow
 
-class LocalHabitsRepository(private val habitDao: HabitDao) : LocalRepository {
+class HabitsLocalRepository(private val habitDao: HabitDao) : LocalRepository {
 
     override suspend fun insertHabit(habit: Habit) = runCatching {
         habitDao.insert(habit)
-    }
-
-    override suspend fun updateHabit(habit: Habit) = runCatching {
-        habitDao.update(habit)
     }
 
     override suspend fun increaseHabitQuantity(id: Int): ApiResult<Unit> = try {
@@ -44,6 +40,5 @@ class LocalHabitsRepository(private val habitDao: HabitDao) : LocalRepository {
 
     override suspend fun getHabitAtOnce(id: Int): Habit = habitDao.getOnce(id)
 
-    override suspend fun getAllHabitsOnce(): List<Habit> = habitDao.getAllOnce()
 
 }

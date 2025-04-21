@@ -15,13 +15,13 @@ data class HabitUpdateRequest(
     val color: Int? = null,
     val count: Int = 0,
     val date: Int = 0,
-    val description: String = "",
-    val frequency: Int = 0,
+    val description: String,
+    @SerialName("done_dates") val doneDates: List<Int> = listOf(0),
+    val frequency: Int,
     val priority: Int,
-    val title: String = "",
+    val title: String,
     val type: Int,
-    val uid: String = "",
-    @SerialName("done_dates") val doneDates: List<Int> = emptyList()
+    val uid: String = ""
 ) {
     companion object {
         fun fromDomain(habit: Habit): HabitUpdateRequest {

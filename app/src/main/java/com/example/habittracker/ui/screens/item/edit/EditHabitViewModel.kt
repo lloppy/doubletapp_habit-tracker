@@ -55,7 +55,7 @@ class EditHabitViewModel(
     suspend fun updateItem() {
         if (validateInput()) {
             entryUiState.value?.let { state ->
-                habitsRepository.updateHabit(
+                habitsRepository.insertHabit(
                     habit = state.currentHabit.toHabit()
                 )
             }

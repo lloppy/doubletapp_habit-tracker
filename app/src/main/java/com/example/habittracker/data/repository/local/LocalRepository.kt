@@ -8,8 +8,6 @@ interface LocalRepository {
 
     suspend fun insertHabit(habit: Habit): Result<Unit>
 
-    suspend fun updateHabit(habit: Habit): Result<Unit>
-
     suspend fun deleteHabit(habit: Habit): Result<Unit>
 
     suspend fun deleteByHabitId(id: Int)
@@ -20,13 +18,10 @@ interface LocalRepository {
 
     suspend fun decreaseHabitQuantity(id: Int)
 
-    suspend fun getAllHabitsOnce(): List<Habit>
-
     suspend fun getHabitAtOnce(id: Int): Habit
 
     fun getAllHabits(): Flow<List<Habit>>
 
     fun getHabitById(id: Int): Flow<Habit?>
-
 
 }

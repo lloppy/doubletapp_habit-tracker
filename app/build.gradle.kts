@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.1.10"
-
+    id("kotlin-kapt")
     id("com.google.devtools.ksp") version "2.1.10-1.0.31"
 }
 
@@ -87,13 +87,19 @@ dependencies {
     // livedata
     implementation(libs.androidx.runtime.livedata)
 
+    // retrofit2 for swagger
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.okhttp)
     implementation(libs.retrofit)
 
+    // image loading
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation(libs.logging.interceptor)
+
+    //
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 
 }

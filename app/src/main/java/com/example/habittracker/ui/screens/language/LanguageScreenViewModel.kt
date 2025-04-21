@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.habittracker.data.repository.LanguageRepository
 
 class LanguageScreenViewModel(
-    private val languageRepository: LanguageRepository
+    private val languageRepository: LanguageRepository,
 ) : ViewModel() {
     var state by mutableStateOf(LanguageScreenState())
         private set

@@ -8,7 +8,7 @@ import com.example.habittracker.model.model.HabitFetchResponse
 import com.example.habittracker.model.model.HabitUid
 import com.example.habittracker.model.model.HabitUpdateRequest
 
-class RemoteHabitsRepository(
+class HabitsRemoteRepository(
     private val retrofitService: HabitsApiService,
 ) : RemoteRepository {
     override suspend fun getHabits(): ApiResult<List<HabitFetchResponse>> {

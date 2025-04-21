@@ -1,9 +1,9 @@
 package com.example.habittracker.data.repository
 
 import android.util.Log
-import com.example.habittracker.data.repository.local.LocalHabitsRepository
+import com.example.habittracker.data.repository.local.HabitsLocalRepository
 import com.example.habittracker.data.repository.local.LocalRepository
-import com.example.habittracker.data.repository.remote.RemoteHabitsRepository
+import com.example.habittracker.data.repository.remote.HabitsRemoteRepository
 import com.example.habittracker.data.repository.remote.RemoteRepository
 import com.example.habittracker.model.domain.Habit
 import com.example.habittracker.model.model.ApiResult
@@ -13,6 +13,7 @@ import com.example.habittracker.model.model.HabitUid
 import com.example.habittracker.model.model.HabitUpdateRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 
 interface HabitsRepository : LocalRepository, RemoteRepository {
     suspend fun syncFromRemoteToLocal(): Result<Unit>
@@ -20,8 +21,8 @@ interface HabitsRepository : LocalRepository, RemoteRepository {
 }
 
 class SharedHabitsRepository(
-    private val local: LocalHabitsRepository,
-    private val remote: RemoteHabitsRepository,
+    private val local: HabitsLocalRepository,
+    private val remote: HabitsRemoteRepository,
 ) : HabitsRepository {
 
     override suspend fun insertHabit(habit: Habit): Result<Unit> = runCatching {
@@ -30,18 +31,6 @@ class SharedHabitsRepository(
         }) {
             is ApiResult.Success -> {
                 local.insertHabit(habit.copy(uid = result.data.uid))
-            }
-
-            is ApiResult.Error -> throw Exception(result.message)
-        }
-    }
-
-    override suspend fun updateHabit(habit: Habit): Result<Unit> = runCatching {
-        when (val result = executeWithRetry {
-            remote.updateHabit(HabitUpdateRequest.fromDomain(habit))
-        }) {
-            is ApiResult.Success -> {
-                local.updateHabit(habit)
             }
 
             is ApiResult.Error -> throw Exception(result.message)
@@ -62,8 +51,10 @@ class SharedHabitsRepository(
     }
 
     override suspend fun syncFromLocalToRemote(): Result<Unit> = runCatching {
-        local.getAllHabitsOnce().forEach { habit ->
+        local.getAllHabits().first().forEach { habit ->
             when (val result = executeWithRetry {
+                Log.e("SharedHabitsRepository", "date " + habit.date.toString())
+
                 remote.updateHabit(HabitUpdateRequest.fromDomain(habit))
             }) {
                 is ApiResult.Success -> Unit
@@ -93,7 +84,7 @@ class SharedHabitsRepository(
                 when (val result = executeWithRetry {
                     remote.markDoneHabit(
                         HabitDoneResponse(
-                            date = (System.currentTimeMillis() % Integer.MAX_VALUE).toInt(),
+                            date = (System.currentTimeMillis() / 1000).toInt(),
                             habitUid = habit.uid
                         )
                     )
@@ -112,7 +103,6 @@ class SharedHabitsRepository(
     override suspend fun deleteByHabitId(id: Int) = local.deleteByHabitId(id)
     override suspend fun deleteAllHabits() = local.deleteAllHabits()
     override suspend fun decreaseHabitQuantity(id: Int) = local.decreaseHabitQuantity(id)
-    override suspend fun getAllHabitsOnce(): List<Habit> = local.getAllHabitsOnce()
     override suspend fun getHabitAtOnce(id: Int): Habit = local.getHabitAtOnce(id)
     override fun getAllHabits(): Flow<List<Habit>> = local.getAllHabits()
     override fun getHabitById(id: Int): Flow<Habit?> = local.getHabitById(id)
