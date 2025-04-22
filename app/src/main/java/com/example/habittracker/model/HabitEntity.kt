@@ -21,29 +21,40 @@ data class HabitEntity(
 )
 
 fun HabitEntity.toHabit(): Habit = Habit(
-    id = id,
-    uid = uid,
-    name = name,
-    description = description,
-    priority = priority,
-    category = category,
-    type = type,
-    frequency = frequency,
-    repeatedTimes = repeatedTimes.toIntOrNull() ?: 1,
-    quantity = quantity.toIntOrNull() ?: 1,
-    color = color
+    id = this.id,
+    uid = this.uid,
+    name = this.name,
+    description = this.description,
+    priority = this.priority,
+    category = this.category,
+    type = this.type,
+    frequency = this.frequency,
+    repeatedTimes = this.repeatedTimes.toIntOrNull() ?: 1,
+    quantity = this.quantity.toIntOrNull() ?: 1,
+    colorHex = this.color.toHexString()
 )
 
 fun Habit.toUiState(): HabitEntity = HabitEntity(
-    id = id,
-    uid = uid,
-    name = name,
-    description = description,
-    priority = priority,
-    category = category,
-    type = type,
-    frequency = frequency,
-    repeatedTimes = repeatedTimes.toString(),
-    quantity = quantity.toString(),
-    color = color
+    id = this.id,
+    uid = this.uid,
+    name = this.name,
+    description = this.description,
+    priority = this.priority,
+    category = this.category,
+    type = this.type,
+    frequency = this.frequency,
+    repeatedTimes = this.repeatedTimes.toString(),
+    quantity = this.quantity.toString(),
+    color = this.colorHex.toComposeColor()
 )
+
+fun Color.toHexString(): String {
+    val argb = this.value.toLong()
+    return String.format("#%08X", argb)
+}
+
+fun String.toComposeColor(): Color = try {
+    Color(android.graphics.Color.parseColor(this))
+} catch (e: IllegalArgumentException) {
+    Color.Unspecified
+}

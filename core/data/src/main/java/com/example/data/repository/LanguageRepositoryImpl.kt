@@ -7,8 +7,11 @@ import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.domain.repository.LanguageRepository
 import com.example.model.Language
+import javax.inject.Inject
 
-class LanguageRepositoryImpl(private val context: Context) : LanguageRepository {
+class LanguageRepositoryImpl @Inject constructor(
+    private val context: Context
+) : LanguageRepository {
 
     override fun getCurrentLanguage(): String {
         val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

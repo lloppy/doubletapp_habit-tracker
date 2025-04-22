@@ -5,8 +5,11 @@ import com.example.domain.model.AppTheme
 import com.example.domain.repository.ThemeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ThemeRepositoryImpl(context: Context) : ThemeRepository {
+class ThemeRepositoryImpl @Inject constructor(
+    context: Context
+) : ThemeRepository {
 
     private val sharedPreferences =
         context.getSharedPreferences(SHARED_PREF_THEME_KEY, Context.MODE_PRIVATE)

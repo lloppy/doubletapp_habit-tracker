@@ -13,7 +13,7 @@ class InsertHabitUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun execute(habit: Habit): EmptyResult<DataError> {
+    suspend fun invoke(habit: Habit): EmptyResult<DataError> {
         localDataSource.insertHabit(habit)
             .onError { error ->
                 return Result.Error(error)

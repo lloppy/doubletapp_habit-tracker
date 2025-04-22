@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MarkHabitDoneUseCase @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun execute(habit: Habit): EmptyResult<DataError> {
+    suspend fun invoke(habit: Habit): EmptyResult<DataError> {
         val response = HabitDoneResponse(
             date = System.currentTimeMillis(),
             habitUid = habit.uid

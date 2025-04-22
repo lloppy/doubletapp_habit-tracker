@@ -11,25 +11,25 @@ import javax.inject.Inject
 
 class IncreaseHabitQuantityUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
 ) {
-    suspend fun execute(id: Int): EmptyResult<DataError> {
-        val habit = localDataSource.getHabitById(id).first()
+    suspend fun invoke(id: Int): EmptyResult<DataError> {
+        val habit = localDataSource.getHabitById(id = id).first()
+            ?: return Result.Error(DataError.Local.NOT_FOUND)
 
-        habit?.let {
-            localDataSource.insertHabit(habit)
-                .onError { error ->
-                    return Result.Error(error)
-                }
+        val increasedHabit = habit.copy(quantity = habit.quantity + 1)
 
-            remoteDataSource.updateHabit(habit)
-                .onError { error ->
-                    return Result.Error(error)
-                }
+        localDataSource.insertHabit(increasedHabit)
+            .onError { error ->
+                return Result.Error(error)
+            }
 
-            return Result.Success(Unit)
-        }
+        remoteDataSource.updateHabit(increasedHabit)
+            .onError { error ->
+                return Result.Error(error)
+            }
 
         return Result.Success(Unit)
+
     }
 }
