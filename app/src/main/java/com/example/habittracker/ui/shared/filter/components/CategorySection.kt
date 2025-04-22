@@ -23,13 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.habittracker.R
-import com.example.model.domain.HabitCategory
+import com.example.model.HabitCategory
 import com.example.habittracker.ui.shared.SectionTitle
 
 @Composable
 fun CategorySection(
-    selectedCategory: com.example.model.domain.HabitCategory?,
-    onCategorySelected: (com.example.model.domain.HabitCategory?) -> Unit,
+    selectedCategory: HabitCategory?,
+    onCategorySelected: (HabitCategory?) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -71,7 +71,7 @@ fun CategorySection(
                 )
                 HorizontalDivider()
 
-                com.example.model.domain.HabitCategory.entries.forEach { category ->
+                HabitCategory.entries.forEach { category ->
                     DropdownMenuItem(
                         text = {
                             Text(stringResource(category.categoryName))

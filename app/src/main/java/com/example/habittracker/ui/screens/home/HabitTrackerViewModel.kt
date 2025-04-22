@@ -2,11 +2,13 @@ package com.example.habittracker.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.local.entity.Habit
 import com.example.data.repository.HabitsRepository
 import com.example.habittracker.model.FilterExpression
 import com.example.habittracker.model.MultiplicationExpression
 import com.example.habittracker.ui.shared.filter.FilterState
 import com.example.habittracker.ui.shared.filter.toExpressions
+import com.example.model.HabitType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,8 +31,8 @@ class HabitTrackerViewModel(
 
         HabitTrackerState.Success(
             habits = filteredHabits,
-            positiveHabits = filteredHabits.filter { it.type == com.example.model.domain.HabitType.POSITIVE },
-            negativeHabits = filteredHabits.filter { it.type == com.example.model.domain.HabitType.NEGATIVE },
+            positiveHabits = filteredHabits.filter { it.type == HabitType.POSITIVE },
+            negativeHabits = filteredHabits.filter { it.type == HabitType.NEGATIVE },
             filterState = filterState
         )
     }.stateIn(
@@ -58,9 +60,9 @@ class HabitTrackerViewModel(
     }
 
     private fun applyFilters(
-        habits: List<com.example.model.domain.Habit>,
+        habits: List<Habit>,
         expressions: List<FilterExpression>
-    ): List<com.example.model.domain.Habit> {
+    ): List<Habit> {
         return if (expressions.isEmpty()) {
             habits
         } else {

@@ -1,22 +1,26 @@
 package com.example.habittracker.model
 
 import androidx.compose.ui.graphics.Color
+import com.example.model.Habit
+import com.example.model.HabitCategory
+import com.example.model.HabitPriority
+import com.example.model.HabitType
 
 data class HabitEntity(
     val id: Int = 0,
     val uid: String = "",
     val name: String = "",
     val description: String = "",
-    val type: com.example.model.domain.HabitType = com.example.model.domain.HabitType.POSITIVE,
-    val category: com.example.model.domain.HabitCategory = com.example.model.domain.HabitCategory.PRODUCTIVITY,
-    val priority: com.example.model.domain.HabitPriority = com.example.model.domain.HabitPriority.MEDIUM,
+    val type: HabitType = HabitType.POSITIVE,
+    val category: HabitCategory = HabitCategory.PRODUCTIVITY,
+    val priority: HabitPriority = HabitPriority.MEDIUM,
     val frequency: String = "",
     val repeatedTimes: String = "",
     val quantity: String = "",
     val color: Color = Color.Yellow
 )
 
-fun HabitEntity.toHabit(): com.example.model.domain.Habit = com.example.model.domain.Habit(
+fun HabitEntity.toHabit(): Habit = Habit(
     id = id,
     uid = uid,
     name = name,
@@ -30,7 +34,7 @@ fun HabitEntity.toHabit(): com.example.model.domain.Habit = com.example.model.do
     color = color
 )
 
-fun com.example.model.domain.Habit.toUiState(): HabitEntity = HabitEntity(
+fun Habit.toUiState(): HabitEntity = HabitEntity(
     id = id,
     uid = uid,
     name = name,

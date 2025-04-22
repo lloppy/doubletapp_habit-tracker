@@ -7,13 +7,14 @@ import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
 import com.example.domain.util.map
 import com.example.domain.util.onError
-import com.example.model.domain.Habit
+import com.example.data.local.entity.Habit
+import javax.inject.Inject
 
-class DeleteHabitUseCase(
+class DeleteHabitUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun execute(habit: Habit): EmptyResult<DataError> {
+    suspend fun execute(habit: com.example.data.local.entity.Habit): EmptyResult<DataError> {
         remoteDataSource.deleteHabit(habit.uid)
             .onError { error ->
                 return Result.Error(error)

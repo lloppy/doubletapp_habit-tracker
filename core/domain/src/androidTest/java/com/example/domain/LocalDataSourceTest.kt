@@ -8,6 +8,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.domain.TestData.testHabits
 import com.example.data.local.OfflineDatabase
 import com.example.data.local.dao.HabitDao
+import com.example.model.HabitCategory
+import com.example.model.HabitPriority
+import com.example.model.HabitType
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
@@ -29,7 +32,7 @@ class LocalDataSourceTest {
         val context: Context = ApplicationProvider.getApplicationContext()
 
         habitDatabase = Room.inMemoryDatabaseBuilder(context, OfflineDatabase::class.java)
-            .addTypeConverter(com.example.model.domain.Converters())
+            .addTypeConverter(com.example.data.local.mappers.Converters())
             .allowMainThreadQueries()
             .build()
         habitDao = habitDatabase.habitDao()
@@ -104,49 +107,49 @@ class LocalDataSourceTest {
 object TestData {
 
     val testHabits = listOf(
-        com.example.model.domain.Habit(
+        com.example.data.local.entity.Habit(
             id = 1,
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
-            category = com.example.model.domain.HabitCategory.SPORT,
-            type = com.example.model.domain.HabitType.POSITIVE,
-            priority = com.example.model.domain.HabitPriority.HIGH,
+            category = HabitCategory.SPORT,
+            type = HabitType.POSITIVE,
+            priority = HabitPriority.HIGH,
             frequency = "Ежедневно",
             repeatedTimes = 7,
             quantity = 3,
             color = Color.Red
         ),
-        com.example.model.domain.Habit(
+        com.example.data.local.entity.Habit(
             id = 2,
             name = "Чтение перед сном",
             description = "Чтение для расслабления",
-            category = com.example.model.domain.HabitCategory.RELAXATION,
-            type = com.example.model.domain.HabitType.POSITIVE,
-            priority = com.example.model.domain.HabitPriority.MEDIUM,
+            category = HabitCategory.RELAXATION,
+            type = HabitType.POSITIVE,
+            priority = HabitPriority.MEDIUM,
             frequency = "Раз в неделю",
             repeatedTimes = 4,
             quantity = 1,
             color = Color.Blue
         ),
-        com.example.model.domain.Habit(
+        com.example.data.local.entity.Habit(
             id = 1,
             name = "Просмотр лекций",
             description = "Обучение на платформе Coursera",
-            category = com.example.model.domain.HabitCategory.STUDY,
-            type = com.example.model.domain.HabitType.POSITIVE,
-            priority = com.example.model.domain.HabitPriority.LOW,
+            category = HabitCategory.STUDY,
+            type = HabitType.POSITIVE,
+            priority = HabitPriority.LOW,
             frequency = "Раз в две недели",
             repeatedTimes = 2,
             quantity = 0,
             color = Color.Green
         ),
-        com.example.model.domain.Habit(
+        com.example.data.local.entity.Habit(
             id = 2,
             name = "Планирование дня",
             description = "Планирование задач на день",
-            category = com.example.model.domain.HabitCategory.PRODUCTIVITY,
-            type = com.example.model.domain.HabitType.POSITIVE,
-            priority = com.example.model.domain.HabitPriority.MEDIUM,
+            category = HabitCategory.PRODUCTIVITY,
+            type = HabitType.POSITIVE,
+            priority = HabitPriority.MEDIUM,
             frequency = "Ежедневно",
             repeatedTimes = 10,
             quantity = 5,

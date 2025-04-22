@@ -29,7 +29,7 @@ class NetworkModule {
         .build()
 
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(API_BASE_URL)
             .client(okHttpClient)
@@ -37,7 +37,7 @@ class NetworkModule {
             .build()
 
     @Provides
-    fun provideHabitsApiService(retrofit: Retrofit): HabitsApiService =
+    fun provideApiService(retrofit: Retrofit): HabitsApiService =
         retrofit.create(HabitsApiService::class.java)
 
 

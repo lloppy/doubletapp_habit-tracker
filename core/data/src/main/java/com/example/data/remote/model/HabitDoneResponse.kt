@@ -1,4 +1,4 @@
-package com.example.model.model
+package com.example.data.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class HabitDoneResponse(
     val date: Int,
-    @SerialName("habit_uid") val habitUid: String,
+    @SerialName("habit_uid") val habitUid: String
 )

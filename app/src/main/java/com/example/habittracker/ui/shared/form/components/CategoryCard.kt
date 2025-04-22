@@ -11,15 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.model.domain.HabitCategory
+import com.example.model.HabitCategory
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import kotlin.enums.EnumEntries
 
 @Composable
 fun CategoryCard(
-    selectedValue: com.example.model.domain.HabitCategory,
-    onOptionSelected: (com.example.model.domain.HabitCategory) -> Unit = {},
-    options: EnumEntries<com.example.model.domain.HabitCategory>,
+    selectedValue: HabitCategory,
+    onOptionSelected: (HabitCategory) -> Unit = {},
+    options: EnumEntries<HabitCategory>,
     label: String,
     modifier: Modifier = Modifier
 ) {

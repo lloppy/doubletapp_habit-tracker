@@ -1,8 +1,5 @@
 package com.example.model
 
-import android.graphics.Color.blue
-import android.graphics.Color.green
-import android.graphics.Color.red
 import android.graphics.Color.rgb
 import androidx.compose.ui.graphics.Color
 

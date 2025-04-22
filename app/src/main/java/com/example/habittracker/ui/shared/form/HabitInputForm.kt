@@ -20,6 +20,9 @@ import com.example.habittracker.ui.shared.form.components.CategoryCard
 import com.example.habittracker.ui.shared.form.components.ChooseColorButton
 import com.example.habittracker.ui.shared.form.components.PriorityCard
 import com.example.habittracker.ui.shared.form.components.TypeCard
+import com.example.model.HabitCategory
+import com.example.model.HabitPriority
+import com.example.model.HabitType
 
 @Composable
 fun HabitInputForm(
@@ -95,7 +98,7 @@ fun HabitInputForm(
         onOptionSelected = {
             onAction(UpdateAction.Category(it))
         },
-        options = com.example.model.domain.HabitCategory.entries,
+        options = HabitCategory.entries,
         label = stringResource(
             R.string.set_category,
             stringResource(R.string.required)
@@ -111,7 +114,7 @@ fun HabitInputForm(
 
     PriorityCard(
         selectedValue = habitEntity.priority,
-        options = com.example.model.domain.HabitPriority.entries,
+        options = HabitPriority.entries,
         label = stringResource(R.string.set_priority),
         onOptionSelected = {
             onAction(UpdateAction.Priority(it))
@@ -124,7 +127,7 @@ fun HabitInputForm(
         onOptionSelected = {
             onAction(UpdateAction.Type(it))
         },
-        options = com.example.model.domain.HabitType.entries,
+        options = HabitType.entries,
         label = stringResource(
             R.string.set_type,
             stringResource(R.string.required)

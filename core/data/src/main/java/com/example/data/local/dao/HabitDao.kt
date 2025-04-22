@@ -5,18 +5,17 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
-import com.example.model.domain.Habit
+import com.example.data.local.entity.HabitEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(habit: Habit)
+    suspend fun insert(habitEntity: HabitEntity)
 
     @Delete
-    suspend fun delete(habit: Habit)
+    suspend fun delete(habitEntity: HabitEntity)
 
     @Query("DELETE FROM habits WHERE id = :id")
     suspend fun deleteById(id: Int)
@@ -31,9 +30,9 @@ interface HabitDao {
 //    suspend fun decreaseQuantity(id: Int)
 
     @Query("SELECT * FROM habits WHERE id = :id")
-    fun getById(id: Int): Flow<Habit>
+    fun getById(id: Int): Flow<HabitEntity>
 
     @Query("SELECT * FROM habits")
-    fun getAll(): Flow<List<Habit>>
+    fun getAll(): Flow<List<HabitEntity>>
 
 }

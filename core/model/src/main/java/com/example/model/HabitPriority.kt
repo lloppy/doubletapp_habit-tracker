@@ -1,7 +1,6 @@
-package com.example.model.domain
+package com.example.model
 
 import androidx.annotation.StringRes
-import com.example.habittracker.R
 
 enum class HabitPriority(@StringRes val priorityName: Int) {
     LOW(R.string.low),

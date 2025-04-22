@@ -7,10 +7,11 @@ import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
 import com.example.domain.util.map
 import com.example.domain.util.onError
+import javax.inject.Inject
 
-class SyncFromRemoteToLocalUseCase(
+class SyncFromRemoteToLocalUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: RemoteDataSource
 ) {
     suspend fun execute(): EmptyResult<DataError> {
         remoteDataSource.getHabits()

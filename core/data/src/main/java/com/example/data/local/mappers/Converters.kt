@@ -1,8 +1,10 @@
-package com.example.model.domain
+package com.example.data.local.mappers
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
+import com.example.model.HabitCategory
+import com.example.model.HabitPriority
+import com.example.model.HabitType
 
 @ProvidedTypeConverter
 class Converters {
@@ -40,23 +42,4 @@ class Converters {
     @TypeConverter
     fun toImpact(value: String) = HabitType.valueOf(value)
 
-    @TypeConverter
-    fun colorToString(color: Color): String {
-        return "${color.red},${color.green},${color.blue},${color.alpha}"
-    }
-
-    @TypeConverter
-    fun stringToColor(colorString: String): Color {
-        return try {
-            val parts = colorString.split(",")
-            Color(
-                red = parts[0].toFloat(),
-                green = parts[1].toFloat(),
-                blue = parts[2].toFloat(),
-                alpha = parts[3].toFloat()
-            )
-        } catch (e: Exception) {
-            Color.LightGray
-        }
-    }
 }

@@ -6,10 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.data.local.dao.HabitDao
-import com.example.model.domain.Converters
-import com.example.model.domain.Habit
+import com.example.data.local.entity.HabitEntity
+import com.example.data.local.mappers.Converters
 
-@Database(entities = [Habit::class], version = 1, exportSchema = false)
+@Database(entities = [HabitEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OfflineDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao

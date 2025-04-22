@@ -3,9 +3,10 @@ package com.example.domain.repository
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
-import com.example.model.domain.Habit
-import com.example.model.model.HabitDoneResponse
-import com.example.model.model.HabitUid
+import Habit
+import HabitDoneResponse
+import HabitUid
+import com.example.model.Habit
 
 interface RemoteDataSource {
 

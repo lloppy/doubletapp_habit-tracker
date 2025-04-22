@@ -1,15 +1,14 @@
 package com.example.data.remote.datasource
 
 import com.example.data.remote.api.HabitsApiService
-import com.example.data.remote.mapper.fromDomain
 import com.example.data.remote.mapper.toDomain
 import com.example.domain.repository.RemoteDataSource
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
-import com.example.model.domain.Habit
-import com.example.model.model.HabitDoneResponse
-import com.example.model.model.HabitUid
+import com.example.data.local.entity.Habit
+import com.example.data.remote.model.HabitDoneResponse
+import com.example.data.remote.model.HabitUid
 
 class HabitsRemoteDataSource(
     private val retrofitService: HabitsApiService,

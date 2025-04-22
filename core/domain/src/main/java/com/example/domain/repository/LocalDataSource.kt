@@ -2,7 +2,7 @@ package com.example.domain.repository
 
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
-import com.example.model.domain.Habit
+import com.example.model.Habit
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {

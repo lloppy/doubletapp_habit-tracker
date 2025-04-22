@@ -1,9 +1,9 @@
 package com.example.data.remote.api
 
-import com.example.model.model.HabitDoneResponse
-import com.example.model.model.HabitFetchResponse
-import com.example.model.model.HabitUid
-import com.example.model.model.HabitUpdateRequest
+import com.example.data.remote.model.HabitDoneResponse
+import com.example.data.remote.model.HabitFetchResponse
+import com.example.data.remote.model.HabitUid
+import com.example.data.remote.model.HabitUpdateRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP

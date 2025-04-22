@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "2.1.10-1.0.31"
 }
 
 android {
@@ -78,6 +79,10 @@ dependencies {
     // livedata
     implementation(libs.androidx.runtime.livedata)
 
+    //Room
+    implementation(libs.androidx.room.runtime)
+    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+    implementation(libs.androidx.room.ktx)
 
     // image loading
     implementation(libs.coil.compose)

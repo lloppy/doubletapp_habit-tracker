@@ -7,10 +7,11 @@ import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
 import com.example.domain.util.onError
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class SyncLocalToRemoteUseCase(
+class SyncLocalToRemoteUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: RemoteDataSource
 ) {
     suspend fun execute(): EmptyResult<DataError> {
         localDataSource

@@ -1,27 +1,33 @@
 package com.example.domain.usecase
 
 import com.example.domain.repository.LocalDataSource
+import com.example.domain.repository.RemoteDataSource
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
+import com.example.domain.util.onError
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class IncreaseHabitQuantityUseCase(
+class IncreaseHabitQuantityUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val updateUseCase: InsertHabitUseCase,
-    private val markDoneUseCase: MarkHabitDoneUseCase
+    private val remoteDataSource: RemoteDataSource
 ) {
     suspend fun execute(id: Int): EmptyResult<DataError> {
         val habit = localDataSource.getHabitById(id).first()
 
         habit?.let {
-            updateUseCase.execute(
-                habit = it.copy(quantity = it.quantity + 1)
-            )
+            localDataSource.insertHabit(habit)
+                .onError { error ->
+                    return Result.Error(error)
+                }
 
-            if (it.quantity == it.repeatedTimes) {
-                markDoneUseCase.execute(it)
-            }
+            remoteDataSource.updateHabit(habit)
+                .onError { error ->
+                    return Result.Error(error)
+                }
+
+            return Result.Success(Unit)
         }
 
         return Result.Success(Unit)

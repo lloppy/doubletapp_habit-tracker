@@ -1,18 +1,16 @@
 package com.example.data.remote.mapper
 
-import android.graphics.Color.blue
-import android.graphics.Color.green
-import android.graphics.Color.red
-import androidx.compose.ui.graphics.Color
-import com.example.model.domain.Habit
-import com.example.model.domain.HabitPriority
-import com.example.model.domain.HabitType
-import com.example.model.model.HabitFetchResponse
-import com.example.model.model.HabitUpdateRequest
+import android.graphics.Color
+import com.example.data.local.entity.HabitEntity
+import com.example.data.remote.model.HabitFetchResponse
+import com.example.data.remote.model.HabitUpdateRequest
+import com.example.model.Habit
+import com.example.model.HabitPriority
+import com.example.model.HabitType
 
-fun Habit.fromDomain(): HabitUpdateRequest {
+fun HabitEntity.toData(): HabitUpdateRequest {
     return HabitUpdateRequest(
-        color = this.color.takeIf { this.color != Color.LightGray }?.toColorInt(),
+        color = this.colorHex.toIntColor(),
         count = this.quantity,
         date = this.date,
         description = this.description,
@@ -48,18 +46,22 @@ fun HabitFetchResponse.toDomain(): Habit {
             2 -> HabitPriority.HIGH
             else -> HabitPriority.MEDIUM
         },
-        color = this.color?.toColor() ?: Color.LightGray,
+        colorHex = this.color?.toHexColor() ?: "#D3D3D3",
         repeatedTimes = this.frequency,
         quantity = this.count,
         date = this.date
     )
 }
 
-private fun Int.toColor(): Color {
-    return Color(
-        red = red(this) / 255f,
-        green = green(this) / 255f,
-        blue = blue(this) / 255f,
-        alpha = 1f
-    )
+
+fun String?.toIntColor(): Int {
+    return if (this.isNullOrEmpty()) {
+        0xFFCCCCCC.toInt()
+    } else {
+        Color.parseColor(this)
+    }
+}
+
+fun Int.toHexColor(): String {
+    return String.format("#%06X", 0xFFFFFF and this)
 }

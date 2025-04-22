@@ -1,12 +1,5 @@
-package com.example.model.model
+package com.example.data.remote.model
 
-import android.util.Log
-import androidx.compose.ui.graphics.Color
-import com.example.model.domain.Habit
-import com.example.model.domain.HabitPriority
-import com.example.model.domain.HabitType
-import com.example.habittracker.model.toColor
-import com.example.habittracker.model.toColorInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class HabitUpdateRequest(
     val color: Int? = null,
     val count: Int = 0,
-    val date: Int = 0,
+    val date: Long = 0,
     val description: String,
     @SerialName("done_dates") val doneDates: List<Int> = listOf(0),
     val frequency: Int,
