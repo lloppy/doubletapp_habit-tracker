@@ -2,8 +2,8 @@ package com.example.habittracker.ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.ThemeRepository
-import com.example.habittracker.ui.theme.AppTheme
+import com.example.domain.model.AppTheme
+import com.example.domain.repository.ThemeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,8 +13,15 @@ class MainViewModel(
     private val themeRepository: ThemeRepository
 ) : ViewModel() {
 
-    private val _themeState = MutableStateFlow(themeRepository.themeState.value)
+    private val _themeState = MutableStateFlow(AppTheme.SYSTEM)
     val themeState: StateFlow<AppTheme> = _themeState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val currentTheme = themeRepository.getTheme()
+            _themeState.value = currentTheme
+        }
+    }
 
     fun setTheme(theme: AppTheme) {
         viewModelScope.launch {

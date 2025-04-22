@@ -1,14 +1,13 @@
 package com.example.data.remote.mapper
 
 import android.graphics.Color
-import com.example.data.local.entity.HabitEntity
 import com.example.data.remote.model.HabitFetchResponse
 import com.example.data.remote.model.HabitUpdateRequest
 import com.example.model.Habit
 import com.example.model.HabitPriority
 import com.example.model.HabitType
 
-fun HabitEntity.toData(): HabitUpdateRequest {
+fun Habit.toData(): HabitUpdateRequest {
     return HabitUpdateRequest(
         color = this.colorHex.toIntColor(),
         count = this.quantity,
@@ -52,7 +51,6 @@ fun HabitFetchResponse.toDomain(): Habit {
         date = this.date
     )
 }
-
 
 fun String?.toIntColor(): Int {
     return if (this.isNullOrEmpty()) {

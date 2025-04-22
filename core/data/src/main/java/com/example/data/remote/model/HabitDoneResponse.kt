@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HabitDoneResponse(
-    val date: Int,
+    val date: Long,
     @SerialName("habit_uid") val habitUid: String
 )

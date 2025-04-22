@@ -1,11 +1,10 @@
 package com.example.domain.repository
 
+import com.example.domain.model.HabitDoneResponse
+import com.example.domain.model.HabitUid
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
-import Habit
-import HabitDoneResponse
-import HabitUid
 import com.example.model.Habit
 
 interface RemoteDataSource {

@@ -36,8 +36,6 @@ import coil3.request.crossfade
 import com.example.habittracker.LocalTheme
 import com.example.habittracker.R
 import com.example.habittracker.model.DrawerItem
-import com.example.habittracker.ui.theme.AppTheme
-import com.example.habittracker.ui.theme.LocalThemeChange
 import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
 
@@ -54,7 +52,7 @@ fun HabitDrawer(
     val scope = rememberCoroutineScope()
 
     val isDark = LocalTheme.current.isDark
-    val onChangeTheme = LocalThemeChange.current
+  //  val onChangeTheme = LocalThemeChange.current
 
     LaunchedEffect(drawerState.isOpen) {
         viewModel.setOpen(drawerState.currentValue)
@@ -75,9 +73,9 @@ fun HabitDrawer(
                         }
                     },
                     onChangeThemeClick = {
-                        onChangeTheme?.invoke(
-                            if (isDark) AppTheme.MODE_DAY else AppTheme.MODE_NIGHT
-                        )
+//                        onChangeTheme?.invoke(
+//                            if (isDark) AppTheme.MODE_DAY else AppTheme.MODE_NIGHT
+//                        )
                     },
                     isDark = isDark,
                     modifier = Modifier.padding(Spacing.medium)

@@ -1,8 +1,8 @@
 package com.example.domain.repository
 
-import androidx.compose.runtime.MutableState
+import com.example.domain.model.AppTheme
 
 interface ThemeRepository {
-    val themeState: MutableState<AppTheme>
-    fun setTheme(theme: AppTheme)
+    suspend fun getTheme(): AppTheme
+    suspend fun setTheme(theme: AppTheme)
 }

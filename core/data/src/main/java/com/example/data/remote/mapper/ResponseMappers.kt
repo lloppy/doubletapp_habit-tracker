@@ -1,24 +1,24 @@
 package com.example.data.remote.mapper
 
-import com.example.domain.entity.HabitDoneResponse
-import com.example.domain.entity.HabitUid
+import com.example.data.remote.model.HabitDoneResponse as RemoteHabitDoneResponse
+import com.example.data.remote.model.HabitUid as RemoteHabitUid
+import com.example.domain.model.HabitDoneResponse as DomainHabitDoneResponse
+import com.example.domain.model.HabitUid as DomainHabitUid
 
-
-fun HabitDoneResponse.toDomain(): HabitDoneResponse = HabitDoneResponse(
+fun RemoteHabitDoneResponse.toDomain(): DomainHabitDoneResponse = DomainHabitDoneResponse(
     date = this.date,
     habitUid = this.habitUid
 )
 
-fun HabitDoneResponse.toData(): HabitDoneResponse = HabitDoneResponse(
+fun DomainHabitDoneResponse.toData(): RemoteHabitDoneResponse = RemoteHabitDoneResponse(
     date = this.date,
     habitUid = this.habitUid
 )
 
-
-fun HabitUid.toDomain(): HabitUid = HabitUid(
+fun RemoteHabitUid.toDomain(): DomainHabitUid = DomainHabitUid(
     uid = this.uid
 )
 
-fun HabitUid.toData(): HabitUid = HabitUid(
+fun DomainHabitUid.toData(): RemoteHabitUid = RemoteHabitUid(
     uid = this.uid
 )

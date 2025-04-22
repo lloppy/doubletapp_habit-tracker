@@ -1,6 +1,6 @@
-package com.example.domain.entity
+package com.example.domain.model
 
 data class HabitDoneResponse(
-    val date: Int,
+    val date: Long,
     val habitUid: String
 )

@@ -6,6 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
+import com.example.domain.model.AppTheme
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -87,21 +88,18 @@ val LocalThemeChange = compositionLocalOf<((AppTheme) -> Unit)?> { null }
 
 @Composable
 fun HabitTrackerTheme(
-    isDarkTheme: Boolean = isSystemInDarkTheme(),
+    appTheme: AppTheme,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (isDarkTheme) darkScheme else lightScheme
-
+    val colorScheme = when (appTheme) {
+        AppTheme.LIGHT -> lightScheme
+        AppTheme.DARK -> darkScheme
+        AppTheme.SYSTEM -> if (isSystemInDarkTheme()) darkScheme else lightScheme
+    }
     MaterialTheme(
         colorScheme = colorScheme,
         typography = typography,
         content = content
     )
-}
-
-enum class AppTheme {
-    MODE_AUTO,
-    MODE_DAY,
-    MODE_NIGHT
 }
 
