@@ -17,9 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.theme.Spacing
@@ -32,8 +30,8 @@ object SyncDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SyncScreen(
+    viewModel: SyncScreenViewModel,
     onClickOpenDrawer: () -> Unit,
-    viewModel: SyncScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier,
 ) {
     val state = viewModel.state

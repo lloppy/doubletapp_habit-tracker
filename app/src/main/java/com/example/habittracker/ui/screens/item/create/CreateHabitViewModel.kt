@@ -4,14 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.data.repository.HabitsRepository
+import com.example.domain.usecase.InsertHabitUseCase
 import com.example.habittracker.model.HabitEntity
 import com.example.habittracker.model.toHabit
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.UpdateAction
+import javax.inject.Inject
 
-class CreateHabitViewModel(
-    private val habitsRepository: HabitsRepository,
+class CreateHabitViewModel @Inject constructor(
+    private val insertHabitUseCase: InsertHabitUseCase
 ) : ViewModel() {
 
     var entryUiState by mutableStateOf(HabitItemState())
@@ -31,7 +32,7 @@ class CreateHabitViewModel(
 
     suspend fun saveItem() {
         if (validateInput()) {
-            habitsRepository.insertHabit(
+            insertHabitUseCase(
                 habit = entryUiState.currentHabit.toHabit()
             )
         }

@@ -2,6 +2,7 @@ package com.example.data.local.mappers
 
 import com.example.data.local.entity.HabitEntity
 import com.example.model.Habit
+import com.example.model.toHexString
 
 fun HabitEntity.toDomain(): Habit = Habit(
     id = this.id,
@@ -29,6 +30,6 @@ fun Habit.toEntity(): HabitEntity = HabitEntity(
     frequency = this.frequency,
     repeatedTimes = this.repeatedTimes,
     quantity = this.quantity,
-    colorHex = this.colorHex,
+    colorHex = this.color.toHexString(),
     date = this.date
 )

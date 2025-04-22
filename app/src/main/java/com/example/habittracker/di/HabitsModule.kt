@@ -1,17 +1,21 @@
 package com.example.habittracker.di
 
-import android.content.Context
-import androidx.room.RoomDatabase
-import com.example.data.local.OfflineDatabase
+import com.example.domain.repository.LanguageRepository
 import com.example.domain.repository.LocalDataSource
 import com.example.domain.repository.RemoteDataSource
+import com.example.domain.repository.ThemeRepository
 import com.example.domain.usecase.DecreaseHabitQuantityUseCase
 import com.example.domain.usecase.DeleteHabitByIdUseCase
 import com.example.domain.usecase.DeleteHabitUseCase
 import com.example.domain.usecase.GetAllHabitsUseCase
+import com.example.domain.usecase.GetAvailableLanguagesUseCase
+import com.example.domain.usecase.GetCurrentLanguageUseCase
+import com.example.domain.usecase.GetHabitByIdUseCase
+import com.example.domain.usecase.GetThemeUseCase
 import com.example.domain.usecase.IncreaseHabitQuantityUseCase
 import com.example.domain.usecase.InsertHabitUseCase
 import com.example.domain.usecase.MarkHabitDoneUseCase
+import com.example.domain.usecase.SetAppLanguageUseCase
 import com.example.domain.usecase.SyncFromRemoteToLocalUseCase
 import com.example.domain.usecase.SyncLocalToRemoteUseCase
 import dagger.Module
@@ -21,11 +25,33 @@ import dagger.Provides
 class HabitsModule {
 
     @Provides
-    fun provideOfflineDatabase(context: Context): RoomDatabase =
-        OfflineDatabase.getDatabase(context)
+    fun provideGetCurrentLanguageUseCase(
+        languageRepository: LanguageRepository
+    ): GetCurrentLanguageUseCase {
+        return GetCurrentLanguageUseCase(languageRepository)
+    }
 
     @Provides
-    fun provideHabitDao(database: OfflineDatabase) = database.habitDao()
+    fun provideGetAvailableLanguagesUseCase(
+        languageRepository: LanguageRepository
+    ): GetAvailableLanguagesUseCase {
+        return GetAvailableLanguagesUseCase(languageRepository)
+    }
+
+    @Provides
+    fun provideSetAppLanguageUseCase(
+        languageRepository: LanguageRepository
+    ): SetAppLanguageUseCase {
+        return SetAppLanguageUseCase(languageRepository)
+    }
+
+    @Provides
+    fun provideGetThemeUseCase(
+        themeRepository: ThemeRepository
+    ): GetThemeUseCase {
+        return GetThemeUseCase(themeRepository)
+    }
+
 
     @Provides
     fun provideDeleteHabitUseCase(
@@ -65,6 +91,13 @@ class HabitsModule {
         remoteDataSource: RemoteDataSource
     ): InsertHabitUseCase {
         return InsertHabitUseCase(localDataSource, remoteDataSource)
+    }
+
+    @Provides
+    fun provideGetHabitByIdUseCase(
+        localDataSource: LocalDataSource
+    ): GetHabitByIdUseCase {
+        return GetHabitByIdUseCase(localDataSource)
     }
 
     @Provides

@@ -17,8 +17,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class HabitTrackerViewModel(
+class HabitTrackerViewModel @Inject constructor(
     private val getAllHabitsUseCase: GetAllHabitsUseCase,
     private val increaseHabitQuantityUseCase: IncreaseHabitQuantityUseCase,
     private val decreaseHabitQuantityUseCase: DecreaseHabitQuantityUseCase,
@@ -27,7 +28,7 @@ class HabitTrackerViewModel(
     private val _filterState = MutableStateFlow(FilterState())
 
     val uiState: StateFlow<HabitTrackerState> = combine(
-        getAllHabitsUseCase.invoke(),
+        getAllHabitsUseCase(),
         _filterState
     ) { habits, filterState ->
         val filteredHabits = applyFilters(
@@ -49,15 +50,15 @@ class HabitTrackerViewModel(
 
 
     suspend fun increaseRepeated(habitId: Int) {
-        increaseHabitQuantityUseCase.invoke(id = habitId)
+        increaseHabitQuantityUseCase(id = habitId)
     }
 
     suspend fun decreaseRepeated(habitId: Int) {
-        decreaseHabitQuantityUseCase.invoke(id = habitId)
+        decreaseHabitQuantityUseCase(id = habitId)
     }
 
     suspend fun delete(habitId: Int) {
-        deleteHabitByIdUseCase.invoke(id = habitId)
+        deleteHabitByIdUseCase(id = habitId)
     }
 
 

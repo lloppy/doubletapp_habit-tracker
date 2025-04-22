@@ -12,8 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.model.HabitType
+import com.example.habittracker.mappers.getColor
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
+import com.example.model.HabitType
 import kotlin.enums.EnumEntries
 
 @Composable

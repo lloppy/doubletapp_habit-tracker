@@ -17,9 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.shared.form.HabitInputForm
@@ -34,9 +32,9 @@ object HabitEntryDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateHabitScreen(
+    viewModel: CreateHabitViewModel,
     navigateBack: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: CreateHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
 

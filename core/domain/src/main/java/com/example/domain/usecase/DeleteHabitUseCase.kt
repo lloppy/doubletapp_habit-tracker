@@ -14,7 +14,7 @@ class DeleteHabitUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun invoke(habit: Habit): EmptyResult<DataError> {
+    suspend operator fun invoke(habit: Habit): EmptyResult<DataError> {
         remoteDataSource.deleteHabit(habit.uid)
             .onError { error ->
                 return Result.Error(error)

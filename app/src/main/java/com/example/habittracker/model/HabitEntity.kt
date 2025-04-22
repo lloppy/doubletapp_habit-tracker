@@ -5,6 +5,7 @@ import com.example.model.Habit
 import com.example.model.HabitCategory
 import com.example.model.HabitPriority
 import com.example.model.HabitType
+import com.example.model.toHexString
 
 data class HabitEntity(
     val id: Int = 0,
@@ -17,7 +18,7 @@ data class HabitEntity(
     val frequency: String = "",
     val repeatedTimes: String = "",
     val quantity: String = "",
-    val color: Color = Color.Yellow
+    val color: Color = Color.Yellow,
 )
 
 fun HabitEntity.toHabit(): Habit = Habit(
@@ -45,16 +46,5 @@ fun Habit.toUiState(): HabitEntity = HabitEntity(
     frequency = this.frequency,
     repeatedTimes = this.repeatedTimes.toString(),
     quantity = this.quantity.toString(),
-    color = this.colorHex.toComposeColor()
+    color = this.color
 )
-
-fun Color.toHexString(): String {
-    val argb = this.value.toLong()
-    return String.format("#%08X", argb)
-}
-
-fun String.toComposeColor(): Color = try {
-    Color(android.graphics.Color.parseColor(this))
-} catch (e: IllegalArgumentException) {
-    Color.Unspecified
-}

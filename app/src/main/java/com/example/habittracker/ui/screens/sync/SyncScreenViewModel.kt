@@ -5,11 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repository.HabitsRepository
+import com.example.domain.usecase.SyncFromRemoteToLocalUseCase
+import com.example.domain.usecase.SyncLocalToRemoteUseCase
+import com.example.domain.util.onError
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SyncScreenViewModel(
-    private val habitsRepository: HabitsRepository,
+class SyncScreenViewModel @Inject constructor(
+    private val syncLocalToRemoteUseCase: SyncLocalToRemoteUseCase,
+    private val syncFromRemoteToLocalUseCase: SyncFromRemoteToLocalUseCase
 ) : ViewModel() {
     var state by mutableStateOf<SyncScreenState>(SyncScreenState.Idle)
         private set
@@ -17,20 +21,25 @@ class SyncScreenViewModel(
 
     fun syncFromRemoteToLocal() = viewModelScope.launch {
         state = SyncScreenState.Loading
-        val result = habitsRepository.syncFromRemoteToLocal()
-        state = result.fold(
-            onSuccess = { SyncScreenState.Success("Sync from server completed") },
-            onFailure = { SyncScreenState.Error(it.message ?: "Unknown error occurred") }
-        )
+        val result = syncFromRemoteToLocalUseCase()
+
+        result.onError { error ->
+            state = SyncScreenState.Error(error.toString())
+        }
+        if (state is SyncScreenState.Loading) {
+            state = SyncScreenState.Success("Sync from server completed")
+        }
     }
 
     fun syncFromLocalToRemote() = viewModelScope.launch {
         state = SyncScreenState.Loading
-        val result = habitsRepository.syncFromLocalToRemote()
-        state = result.fold(
-            onSuccess = { SyncScreenState.Success("Sync to server completed") },
-            onFailure = { SyncScreenState.Error(it.message ?: "Unknown error occurred") }
-        )
-    }
+        val result = syncLocalToRemoteUseCase()
 
+        result.onError { error ->
+            state = SyncScreenState.Error(error.toString())
+        }
+        if (state is SyncScreenState.Loading) {
+            state = SyncScreenState.Success("Sync to server completed")
+        }
+    }
 }

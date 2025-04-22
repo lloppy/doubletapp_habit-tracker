@@ -13,7 +13,7 @@ class SyncFromRemoteToLocalUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun invoke(): EmptyResult<DataError> {
+    suspend operator fun invoke(): EmptyResult<DataError> {
         remoteDataSource.getHabits()
             .onError { error ->
                 return Result.Error(error)

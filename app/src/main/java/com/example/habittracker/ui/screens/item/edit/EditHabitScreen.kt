@@ -25,9 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.item.HabitItemState
@@ -45,9 +43,9 @@ object EditHabitDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditHabitScreen(
+    viewModel: EditHabitViewModel,
     navigateBack: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    modifier: Modifier = Modifier
 ) {
     val entryState by viewModel.entryUiState.observeAsState(HabitItemState())
 

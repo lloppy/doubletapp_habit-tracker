@@ -28,8 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.example.habittracker.R
-import com.example.data.local.entity.Habit
+import com.example.habittracker.mappers.getEmoji
 import com.example.habittracker.ui.theme.Spacing
+import com.example.model.Habit
 
 @Composable
 fun HabitCard(

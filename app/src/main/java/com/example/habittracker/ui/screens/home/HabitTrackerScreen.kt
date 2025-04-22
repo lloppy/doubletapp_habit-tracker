@@ -39,10 +39,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.data.local.entity.Habit
-import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.home.components.HabitCard
@@ -50,6 +47,7 @@ import com.example.habittracker.ui.shared.filter.FilterModalSheet
 import com.example.habittracker.ui.shared.pager.HabitPager
 import com.example.habittracker.ui.shared.pager.PageType
 import com.example.habittracker.ui.theme.Spacing
+import com.example.model.Habit
 import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
@@ -60,11 +58,11 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitTrackerScreen(
+    viewModel: HabitTrackerViewModel,
     onClickAddItem: () -> Unit,
     onClickHabit: (Int) -> Unit,
     onClickOpenDrawer: () -> Unit,
-    modifier: Modifier,
-    viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    modifier: Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()

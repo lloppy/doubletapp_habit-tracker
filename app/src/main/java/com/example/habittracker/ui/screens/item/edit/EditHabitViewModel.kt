@@ -4,7 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repository.HabitsRepository
+import com.example.domain.usecase.DeleteHabitUseCase
+import com.example.domain.usecase.GetHabitByIdUseCase
+import com.example.domain.usecase.InsertHabitUseCase
 import com.example.habittracker.model.HabitEntity
 import com.example.habittracker.model.toHabit
 import com.example.habittracker.model.toUiState
@@ -14,10 +16,13 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditHabitViewModel(
+class EditHabitViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val habitsRepository: HabitsRepository,
+    private val getHabitByIdUseCase: GetHabitByIdUseCase,
+    private val insertHabitUseCase: InsertHabitUseCase,
+    private val deleteHabitUseCase: DeleteHabitUseCase
 ) : ViewModel() {
     private val stringId: String = checkNotNull(savedStateHandle[EditHabitDestination.itemIdArg])
 
@@ -26,7 +31,7 @@ class EditHabitViewModel(
 
     init {
         viewModelScope.launch {
-            habitsRepository.getHabitById(id = checkNotNull(stringId.toIntOrNull()))
+            getHabitByIdUseCase(id = checkNotNull(stringId.toIntOrNull()))
                 .filterNotNull()
                 .map {
                     HabitItemState(
@@ -55,7 +60,7 @@ class EditHabitViewModel(
     suspend fun updateItem() {
         if (validateInput()) {
             entryUiState.value?.let { state ->
-                habitsRepository.insertHabit(
+                insertHabitUseCase(
                     habit = state.currentHabit.toHabit()
                 )
             }
@@ -64,7 +69,7 @@ class EditHabitViewModel(
 
     suspend fun deleteItem() {
         entryUiState.value?.let { state ->
-            habitsRepository.deleteHabit(state.currentHabit.toHabit())
+            deleteHabitUseCase(state.currentHabit.toHabit())
         }
     }
 

@@ -14,7 +14,7 @@ class DeleteHabitByIdUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun invoke(id: Int): EmptyResult<DataError> {
+    suspend operator fun invoke(id: Int): EmptyResult<DataError> {
         val habit = localDataSource.getHabitById(id = id).first()
             ?: return Result.Error(DataError.Local.NOT_FOUND)
 

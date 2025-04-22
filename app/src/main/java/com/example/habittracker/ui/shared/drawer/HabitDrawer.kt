@@ -52,7 +52,7 @@ fun HabitDrawer(
     val scope = rememberCoroutineScope()
 
     val isDark = LocalTheme.current.isDark
-  //  val onChangeTheme = LocalThemeChange.current
+    //  val onChangeTheme = LocalThemeChange.current
 
     LaunchedEffect(drawerState.isOpen) {
         viewModel.setOpen(drawerState.currentValue)

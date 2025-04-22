@@ -11,7 +11,8 @@ import javax.inject.Singleton
     modules = [
         HabitsModule::class,
         NetworkModule::class,
-        ContextModule::class
+        ContextModule::class,
+        DatabaseModule::class
     ]
 )
 interface ApplicationComponent {
