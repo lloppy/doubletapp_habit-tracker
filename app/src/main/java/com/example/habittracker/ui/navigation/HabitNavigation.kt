@@ -58,9 +58,12 @@ fun HabitNavigation(
             arguments = listOf(navArgument(EditHabitDestination.itemIdArg) {
                 type = NavType.StringType
             })
-        ) {
+        ) { backStackEntry ->
+            val stringId = backStackEntry.arguments?.getString(EditHabitDestination.itemIdArg)
+
             val viewModel: EditHabitViewModel = viewModel(factory = viewModelFactory)
             EditHabitScreen(
+                stringId = stringId,
                 viewModel = viewModel,
                 navigateBack = { navController.navigateUp() },
                 modifier = Modifier

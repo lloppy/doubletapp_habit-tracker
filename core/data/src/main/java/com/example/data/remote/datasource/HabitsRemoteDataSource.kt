@@ -12,7 +12,7 @@ import com.example.domain.util.Result
 import com.example.model.Habit
 
 class HabitsRemoteDataSource(
-    private val retrofitService: HabitsApiService,
+    private val retrofitService: HabitsApiService
 ) : RemoteDataSource {
 
     override suspend fun getHabits(): Result<List<Habit>, DataError.Network> {

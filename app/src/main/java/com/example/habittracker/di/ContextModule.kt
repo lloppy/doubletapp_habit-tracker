@@ -17,14 +17,12 @@ class ContextModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideThemeRepository(context: Context): ThemeRepository {
-        return ThemeRepositoryImpl(context)
-    }
+    fun provideThemeRepository(context: Context): ThemeRepository =
+        ThemeRepositoryImpl(context)
 
     @Provides
     @Singleton
-    fun provideLanguageRepository(context: Context): LanguageRepository {
-        return LanguageRepositoryImpl(context)
-    }
+    fun provideLanguageRepository(context: Context): LanguageRepository =
+        LanguageRepositoryImpl(context)
 
 }

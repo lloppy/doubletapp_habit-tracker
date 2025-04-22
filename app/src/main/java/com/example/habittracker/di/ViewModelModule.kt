@@ -28,29 +28,28 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(HabitTrackerViewModel::class)
+    @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(HabitTrackerViewModel::class)
+    @ViewModelKey(EditHabitViewModel::class)
     abstract fun bindEditHabitViewModel(viewModel: EditHabitViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(HabitTrackerViewModel::class)
+    @ViewModelKey(CreateHabitViewModel::class)
     abstract fun bindCreateHabitViewModel(viewModel: CreateHabitViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(HabitTrackerViewModel::class)
+    @ViewModelKey(LanguageScreenViewModel::class)
     abstract fun bindLanguageScreenViewModel(viewModel: LanguageScreenViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(HabitTrackerViewModel::class)
+    @ViewModelKey(SyncScreenViewModel::class)
     abstract fun bindSyncScreenViewModel(viewModel: SyncScreenViewModel): ViewModel
-
 
 }
 

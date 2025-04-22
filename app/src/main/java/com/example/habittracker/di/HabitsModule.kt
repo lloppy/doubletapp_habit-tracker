@@ -52,7 +52,6 @@ class HabitsModule {
         return GetThemeUseCase(themeRepository)
     }
 
-
     @Provides
     fun provideDeleteHabitUseCase(
         localDataSource: LocalDataSource,
