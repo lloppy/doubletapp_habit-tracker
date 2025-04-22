@@ -17,19 +17,22 @@ class IncreaseHabitQuantityUseCase @Inject constructor(
         val habit = localDataSource.getHabitById(id = id).first()
             ?: return Result.Error(DataError.Local.NOT_FOUND)
 
-        val increasedHabit = habit.copy(quantity = habit.quantity + 1)
+        if (habit.quantity < habit.repeatedTimes) {
+            val increasedHabit = habit.copy(quantity = habit.quantity + 1)
 
-        localDataSource.insertHabit(increasedHabit)
-            .onError { error ->
-                return Result.Error(error)
-            }
+            localDataSource.insertHabit(increasedHabit)
+                .onError { error ->
+                    return Result.Error(error)
+                }
 
-        remoteDataSource.updateHabit(increasedHabit)
-            .onError { error ->
-                return Result.Error(error)
-            }
+            remoteDataSource.updateHabit(increasedHabit)
+                .onError { error ->
+                    return Result.Error(error)
+                }
 
+            return Result.Success(Unit)
+
+        }
         return Result.Success(Unit)
-
     }
 }
