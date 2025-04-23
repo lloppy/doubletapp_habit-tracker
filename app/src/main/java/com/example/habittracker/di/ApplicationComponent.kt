@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        HabitsModule::class,
+        UseCaseModule::class,
         NetworkModule::class,
         ContextModule::class,
         DatabaseModule::class,

@@ -116,9 +116,10 @@ class UseCaseModule {
 
     @Provides
     fun provideMarkHabitDoneUseCase(
+        localDataSource: LocalDataSource,
         remoteDataSource: RemoteDataSource
     ): MarkHabitDoneUseCase {
-        return MarkHabitDoneUseCase(remoteDataSource)
+        return MarkHabitDoneUseCase(localDataSource, remoteDataSource)
     }
 
     @Provides

@@ -116,6 +116,11 @@ fun HabitTrackerScreen(
                             PageType.ONLY_POSITIVE -> state.positiveHabits
                             PageType.ONLY_NEGATIVE -> state.negativeHabits
                         },
+                        onCheckClick = {
+                            coroutineScope.launch {
+                                viewModel.markChecked(it)
+                            }
+                        },
                         onIncreaseRepeated = {
                             coroutineScope.launch {
                                 viewModel.increaseRepeated(it)
@@ -154,6 +159,7 @@ fun HabitContent(
     filteredHabits: List<Habit>,
     onClickHabit: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    onCheckClick: (Habit) -> Unit,
     onIncreaseRepeated: (Int) -> Unit,
     onDecreaseRepeated: (Int) -> Unit,
 ) {
@@ -174,6 +180,7 @@ fun HabitContent(
             items(items = filteredHabits, key = { it.id }) { habit ->
                 HabitCard(
                     habit = habit,
+                    onCheckClick = { onCheckClick(habit) },
                     onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
                     onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
                     modifier = Modifier

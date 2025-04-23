@@ -5,8 +5,8 @@ import com.example.domain.repository.RemoteDataSource
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.Result
-import com.example.domain.util.map
 import com.example.domain.util.onError
+import com.example.domain.util.onSuccess
 import com.example.model.Habit
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class DeleteHabitUseCase @Inject constructor(
             .onError { error ->
                 return Result.Error(error)
             }
-            .map {
+            .onSuccess {
                 localDataSource.deleteHabit(habit)
             }
 

@@ -6,6 +6,7 @@ import com.example.domain.usecase.DecreaseHabitQuantityUseCase
 import com.example.domain.usecase.DeleteHabitByIdUseCase
 import com.example.domain.usecase.GetAllHabitsUseCase
 import com.example.domain.usecase.IncreaseHabitQuantityUseCase
+import com.example.domain.usecase.MarkHabitDoneUseCase
 import com.example.habittracker.model.FilterExpression
 import com.example.habittracker.model.MultiplicationExpression
 import com.example.habittracker.ui.shared.filter.FilterState
@@ -23,7 +24,8 @@ class HabitTrackerViewModel @Inject constructor(
     private val getAllHabitsUseCase: GetAllHabitsUseCase,
     private val increaseHabitQuantityUseCase: IncreaseHabitQuantityUseCase,
     private val decreaseHabitQuantityUseCase: DecreaseHabitQuantityUseCase,
-    private val deleteHabitByIdUseCase: DeleteHabitByIdUseCase
+    private val deleteHabitByIdUseCase: DeleteHabitByIdUseCase,
+    private val markHabitDoneUseCase: MarkHabitDoneUseCase
 ) : ViewModel() {
     private val _filterState = MutableStateFlow(FilterState())
 
@@ -61,6 +63,9 @@ class HabitTrackerViewModel @Inject constructor(
         deleteHabitByIdUseCase(id = habitId)
     }
 
+    suspend fun markChecked(habit: Habit) {
+        markHabitDoneUseCase(habit = habit)
+    }
 
     fun applyFilter(newFilterState: FilterState) {
         _filterState.value = newFilterState
