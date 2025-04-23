@@ -16,22 +16,18 @@ data class Habit(
     val colorHex: String = "#D3D3D3",
     val date: Long = System.currentTimeMillis(),
 ) {
-    val color = colorHex.toComposeColor()
+    val color: Color = colorHex.toComposeColor()
 }
 
 fun Color.toHexString(): String {
-    val argb = this.value.toLong()
-    return String.format("#%08X", argb)
+    val red = this.red * 255
+    val green = this.green * 255
+    val blue = this.blue * 255
+    return String.format("#%02x%02x%02x", red.toInt(), green.toInt(), blue.toInt())
 }
 
 fun String.toComposeColor(): Color = try {
-    val hex = this.removePrefix("#")
-    val colorLong = when (hex.length) {
-        6 -> hex.toLong(16) or 0x00000000FF000000
-        8 -> hex.toLong(16)
-        else -> throw IllegalArgumentException("color format exception")
-    }
-    Color(colorLong)
+    Color(android.graphics.Color.parseColor(this))
 } catch (e: Exception) {
     Color.Unspecified
 }

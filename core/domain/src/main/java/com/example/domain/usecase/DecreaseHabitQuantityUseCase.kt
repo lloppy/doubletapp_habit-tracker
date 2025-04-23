@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class DecreaseHabitQuantityUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: RemoteDataSource
 ) {
     suspend operator fun invoke(id: Int): EmptyResult<DataError> {
         val habit = localDataSource.getHabitById(id = id).first()
