@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.example.habittracker.R
-import com.example.habittracker.mappers.getEmoji
+import com.example.habittracker.model.getEmoji
 import com.example.habittracker.ui.theme.Spacing
 import com.example.model.Habit
 
@@ -47,7 +47,10 @@ fun HabitCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            EmojiBox(habit.color, habit.category.getEmoji())
+            EmojiBox(
+                color = habit.color,
+                emoji = habit.category.getEmoji()
+            )
 
             Column(
                 modifier = Modifier.weight(1.2f),

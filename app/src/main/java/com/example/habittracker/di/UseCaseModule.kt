@@ -23,7 +23,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class HabitsModule {
+class UseCaseModule {
 
     @Provides
     fun provideGetCurrentLanguageUseCase(
