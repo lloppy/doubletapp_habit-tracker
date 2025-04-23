@@ -6,7 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
-import com.example.domain.model.AppTheme
+import com.example.model.AppTheme
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,

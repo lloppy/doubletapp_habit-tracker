@@ -14,12 +14,14 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HabitsLocalDataSource @Inject constructor(
-    private val dao: HabitDao
+    private val dao: HabitDao,
 ) : LocalDataSource {
 
     override suspend fun insertHabit(habit: Habit): EmptyResult<DataError.Local> {
         return try {
-            dao.insert(habitEntity = habit.toEntity())
+            dao.insert(
+                habitEntity = habit.toEntity()
+            )
             Result.Success(Unit)
         } catch (e: SQLiteFullException) {
             Result.Error(DataError.Local.DISK_FULL)
@@ -27,7 +29,9 @@ class HabitsLocalDataSource @Inject constructor(
     }
 
     override suspend fun deleteHabit(habit: Habit) {
-        dao.delete(habit.toEntity())
+        dao.delete(
+            habitEntity = habit.toEntity()
+        )
     }
 
     override suspend fun deleteHabitById(id: Int) {
@@ -39,7 +43,7 @@ class HabitsLocalDataSource @Inject constructor(
     }
 
     override fun getHabitById(id: Int): Flow<Habit?> {
-        return dao.getById(id)
+        return dao.getById(id = id)
             .map {
                 it.toDomain()
             }

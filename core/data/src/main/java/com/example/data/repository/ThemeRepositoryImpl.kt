@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import android.content.Context
-import com.example.domain.model.AppTheme
+import com.example.model.AppTheme
 import com.example.domain.repository.ThemeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HabitFetchResponse(
+data class HabitFetchResponseDto(
     val color: Int? = null,
     val count: Int = 0,
     val date: Long = 0,

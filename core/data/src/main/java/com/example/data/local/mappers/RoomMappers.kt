@@ -3,6 +3,8 @@ package com.example.data.local.mappers
 import com.example.data.local.entity.HabitEntity
 import com.example.model.Habit
 
+// domain (original) to entity (room database)
+
 fun HabitEntity.toDomain(): Habit = Habit(
     id = this.id,
     uid = this.uid,

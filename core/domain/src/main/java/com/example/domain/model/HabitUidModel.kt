@@ -1,5 +1,5 @@
 package com.example.domain.model
 
-data class HabitUid(
+data class HabitUidModel(
     val uid: String
 )

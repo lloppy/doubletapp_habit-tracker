@@ -1,6 +1,6 @@
 package com.example.domain.repository
 
-import com.example.domain.model.AppTheme
+import com.example.model.AppTheme
 
 interface ThemeRepository {
     suspend fun getTheme(): AppTheme

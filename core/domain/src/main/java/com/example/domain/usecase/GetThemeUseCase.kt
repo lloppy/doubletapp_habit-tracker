@@ -1,6 +1,6 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.AppTheme
+import com.example.model.AppTheme
 import com.example.domain.repository.ThemeRepository
 import javax.inject.Inject
 

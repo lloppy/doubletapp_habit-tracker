@@ -1,6 +1,6 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.HabitDoneResponse
+import com.example.domain.model.HabitDoneResponseModel
 import com.example.domain.repository.RemoteDataSource
 import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
@@ -13,7 +13,7 @@ class MarkHabitDoneUseCase @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) {
     suspend operator fun invoke(habit: Habit): EmptyResult<DataError> {
-        val response = HabitDoneResponse(
+        val response = HabitDoneResponseModel(
             date = System.currentTimeMillis(),
             habitUid = habit.uid
         )

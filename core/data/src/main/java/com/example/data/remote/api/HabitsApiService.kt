@@ -1,9 +1,9 @@
 package com.example.data.remote.api
 
-import com.example.data.remote.model.HabitDoneResponse
-import com.example.data.remote.model.HabitFetchResponse
-import com.example.data.remote.model.HabitUid
-import com.example.data.remote.model.HabitUpdateRequest
+import com.example.data.remote.model.HabitDoneResponseDto
+import com.example.data.remote.model.HabitFetchResponseDto
+import com.example.data.remote.model.HabitUidDto
+import com.example.data.remote.model.HabitUpdateRequestDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP
@@ -13,15 +13,15 @@ import retrofit2.http.PUT
 interface HabitsApiService {
 
     @GET("habit")
-    suspend fun getHabits(): List<HabitFetchResponse>
+    suspend fun getHabits(): List<HabitFetchResponseDto>
 
     @PUT("habit")
-    suspend fun updateHabit(@Body habit: HabitUpdateRequest): HabitUid
+    suspend fun updateHabit(@Body habitDto: HabitUpdateRequestDto): HabitUidDto
 
     @HTTP(method = "DELETE", path = "habit", hasBody = true)
-    suspend fun deleteHabit(@Body habitUid: HabitUid)
+    suspend fun deleteHabit(@Body habitUidDto: HabitUidDto)
 
     @POST("habit_done")
-    suspend fun markDoneHabit(@Body habitDone: HabitDoneResponse)
+    suspend fun markDoneHabit(@Body habitDoneDto: HabitDoneResponseDto)
 
 }
