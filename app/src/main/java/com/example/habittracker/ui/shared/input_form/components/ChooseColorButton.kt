@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.shared.form.components
+package com.example.habittracker.ui.shared.input_form.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
-import com.example.habittracker.model.HabitEntity
+import com.example.habittracker.ui.screens.item.HabitEntity
 import com.example.habittracker.ui.theme.Spacing
 
 @Composable

@@ -1,6 +1,5 @@
 package com.example.model
 
-import android.graphics.Color.rgb
 import androidx.compose.ui.graphics.Color
 
 data class RGB(val red: Int, val green: Int, val blue: Int) {
@@ -42,11 +41,3 @@ fun Color.toHsv(): HSV {
 
     return HSV(hue.toInt(), (saturation * 100).toInt(), (max * 100).toInt())
 }
-
-fun Color.toColorInt(): Int {
-    val red = (this.red * 255).toInt()
-    val green = (this.green * 255).toInt()
-    val blue = (this.blue * 255).toInt()
-    return rgb(red, green, blue)
-}
-

@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.shared.form.components
+package com.example.habittracker.ui.shared.input_form.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.habittracker.model.getColor
+import com.example.habittracker.ui.screens.item.getColor
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import com.example.model.HabitType
 import kotlin.enums.EnumEntries

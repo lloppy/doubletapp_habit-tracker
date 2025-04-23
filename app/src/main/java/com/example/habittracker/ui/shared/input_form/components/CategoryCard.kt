@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.shared.form.components
+package com.example.habittracker.ui.shared.input_form.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

@@ -12,8 +12,6 @@ import com.example.domain.util.DataError
 import com.example.domain.util.EmptyResult
 import com.example.domain.util.onError
 import com.example.domain.util.onSuccess
-import com.example.habittracker.model.FilterExpression
-import com.example.habittracker.model.MultiplicationExpression
 import com.example.habittracker.ui.shared.filter.FilterState
 import com.example.habittracker.ui.shared.filter.toExpressions
 import com.example.model.Habit

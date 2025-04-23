@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.shared.form.components
+package com.example.habittracker.ui.shared.input_form.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem

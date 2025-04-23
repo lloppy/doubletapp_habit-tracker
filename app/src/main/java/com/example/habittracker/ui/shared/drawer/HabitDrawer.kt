@@ -35,7 +35,6 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.habittracker.R
-import com.example.habittracker.model.DrawerItem
 import com.example.habittracker.ui.theme.LocalThemeChange
 import com.example.habittracker.ui.theme.Spacing
 import com.example.model.AppTheme

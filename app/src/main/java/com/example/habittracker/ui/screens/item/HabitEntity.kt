@@ -1,4 +1,4 @@
-package com.example.habittracker.model
+package com.example.habittracker.ui.screens.item
 
 import androidx.compose.ui.graphics.Color
 import com.example.habittracker.ui.theme.onErrorDark

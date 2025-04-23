@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
-import com.example.habittracker.model.SortOption
+import com.example.habittracker.ui.screens.home.SortOption
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import com.example.habittracker.ui.theme.Spacing
 

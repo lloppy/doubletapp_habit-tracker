@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.PagerItem
 
 class PagerViewModel : ViewModel() {
     var state by mutableStateOf(PagerState(pagerItems = pagerItems))

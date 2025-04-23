@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.DrawerItem
 import com.example.habittracker.ui.screens.home.HomeDestination
 import com.example.habittracker.ui.screens.info.InfoDestination
 import com.example.habittracker.ui.screens.language.LanguageDestination

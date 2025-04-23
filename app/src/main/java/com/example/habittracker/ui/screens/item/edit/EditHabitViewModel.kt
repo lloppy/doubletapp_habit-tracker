@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.DeleteHabitUseCase
 import com.example.domain.usecase.GetHabitByIdUseCase
 import com.example.domain.usecase.InsertHabitUseCase
-import com.example.habittracker.model.HabitEntity
-import com.example.habittracker.model.toHabit
-import com.example.habittracker.model.toUiState
+import com.example.habittracker.ui.screens.item.HabitEntity
+import com.example.habittracker.ui.screens.item.toHabit
+import com.example.habittracker.ui.screens.item.toUiState
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.UpdateAction
 import kotlinx.coroutines.flow.filterNotNull

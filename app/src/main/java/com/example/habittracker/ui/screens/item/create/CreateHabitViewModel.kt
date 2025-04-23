@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.domain.usecase.InsertHabitUseCase
-import com.example.habittracker.model.HabitEntity
-import com.example.habittracker.model.toHabit
+import com.example.habittracker.ui.screens.item.HabitEntity
+import com.example.habittracker.ui.screens.item.toHabit
 import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.screens.item.UpdateAction
 import javax.inject.Inject

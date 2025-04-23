@@ -1,13 +1,13 @@
-package com.example.habittracker.model
+package com.example.habittracker.ui.screens.home
 
 import androidx.annotation.StringRes
 import com.example.habittracker.R
-import com.example.habittracker.model.SortOption.DATE_NEWEST
-import com.example.habittracker.model.SortOption.DATE_OLDEST
-import com.example.habittracker.model.SortOption.NAME_ASC
-import com.example.habittracker.model.SortOption.NAME_DESC
-import com.example.habittracker.model.SortOption.PRIORITY_HIGH
-import com.example.habittracker.model.SortOption.PRIORITY_LOW
+import com.example.habittracker.ui.screens.home.SortOption.DATE_NEWEST
+import com.example.habittracker.ui.screens.home.SortOption.DATE_OLDEST
+import com.example.habittracker.ui.screens.home.SortOption.NAME_ASC
+import com.example.habittracker.ui.screens.home.SortOption.NAME_DESC
+import com.example.habittracker.ui.screens.home.SortOption.PRIORITY_HIGH
+import com.example.habittracker.ui.screens.home.SortOption.PRIORITY_LOW
 import com.example.model.Habit
 import com.example.model.HabitCategory
 import com.example.model.HabitPriority

@@ -42,7 +42,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.habittracker.R
-import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.home.components.HabitCard
 import com.example.habittracker.ui.shared.filter.FilterModalSheet

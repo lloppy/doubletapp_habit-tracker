@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.navigation
+package com.example.habittracker.navigation
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable

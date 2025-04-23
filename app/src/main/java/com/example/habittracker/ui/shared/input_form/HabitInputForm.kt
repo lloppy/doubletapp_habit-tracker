@@ -1,4 +1,4 @@
-package com.example.habittracker.ui.shared.form
+package com.example.habittracker.ui.shared.input_form
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -13,13 +13,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.habittracker.R
-import com.example.habittracker.model.HabitEntity
+import com.example.habittracker.ui.screens.item.HabitEntity
 import com.example.habittracker.ui.screens.item.UpdateAction
 import com.example.habittracker.ui.shared.ColorPickerDialog
-import com.example.habittracker.ui.shared.form.components.CategoryCard
-import com.example.habittracker.ui.shared.form.components.ChooseColorButton
-import com.example.habittracker.ui.shared.form.components.PriorityCard
-import com.example.habittracker.ui.shared.form.components.TypeCard
+import com.example.habittracker.ui.shared.input_form.components.CategoryCard
+import com.example.habittracker.ui.shared.input_form.components.ChooseColorButton
+import com.example.habittracker.ui.shared.input_form.components.PriorityCard
+import com.example.habittracker.ui.shared.input_form.components.TypeCard
 import com.example.model.HabitCategory
 import com.example.model.HabitPriority
 import com.example.model.HabitType

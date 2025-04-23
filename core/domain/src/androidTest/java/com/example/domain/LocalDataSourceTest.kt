@@ -1,13 +1,10 @@
 package com.example.domain
 
 import android.content.Context
-import androidx.compose.ui.graphics.Color
-import androidx.room.Room
+import android.graphics.Color
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.domain.TestData.testHabits
-import com.example.data.local.OfflineDatabase
-import com.example.data.local.dao.HabitDao
 import com.example.model.HabitCategory
 import com.example.model.HabitPriority
 import com.example.model.HabitType

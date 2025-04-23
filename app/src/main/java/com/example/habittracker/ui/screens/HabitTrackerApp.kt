@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.habittracker.R
-import com.example.habittracker.ui.navigation.HabitNavigation
+import com.example.habittracker.navigation.HabitNavigation
 import com.example.habittracker.ui.screens.home.HomeDestination
 import com.example.habittracker.ui.shared.drawer.HabitDrawer
 import com.example.model.AppTheme

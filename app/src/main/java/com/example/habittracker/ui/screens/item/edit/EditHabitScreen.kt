@@ -24,9 +24,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.habittracker.R
-import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.shared.form.HabitInputForm
+import com.example.habittracker.ui.shared.input_form.HabitInputForm
 import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
 
