@@ -56,7 +56,7 @@ fun HabitCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            Row{
+            Row {
                 Checkbox(
                     checked = checkedState.value,
                     onCheckedChange = {

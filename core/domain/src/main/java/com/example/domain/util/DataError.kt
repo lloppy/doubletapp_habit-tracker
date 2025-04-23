@@ -15,6 +15,8 @@ sealed interface DataError : Error {
 
     enum class Local : DataError {
         DISK_FULL,
-        NOT_FOUND
+        NOT_FOUND,
+        QUANTITY_EXCEEDED,
+        MIN_QUANTITY_REACHED
     }
 }

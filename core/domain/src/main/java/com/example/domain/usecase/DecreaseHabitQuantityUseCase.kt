@@ -11,27 +11,27 @@ import javax.inject.Inject
 
 class DecreaseHabitQuantityUseCase @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
 ) {
     suspend operator fun invoke(id: Int): EmptyResult<DataError> {
         val habit = localDataSource.getHabitById(id = id).first()
             ?: return Result.Error(DataError.Local.NOT_FOUND)
 
-        if (habit.quantity > 1) {
-            val decreasedHabit = habit.copy(quantity = habit.quantity - 1)
-
-            localDataSource.insertHabit(decreasedHabit)
-                .onError { error ->
-                    return Result.Error(error)
-                }
-
-            remoteDataSource.updateHabit(decreasedHabit)
-                .onError { error ->
-                    return Result.Error(error)
-                }
-
-            return Result.Success(Unit)
+        if (habit.quantity <= 1) {
+            return Result.Error(DataError.Local.MIN_QUANTITY_REACHED)
         }
+
+        val decreasedHabit = habit.copy(quantity = habit.quantity - 1)
+
+        localDataSource.insertHabit(decreasedHabit)
+            .onError { error ->
+                return Result.Error(error)
+            }
+
+        remoteDataSource.updateHabit(decreasedHabit)
+            .onError { error ->
+                return Result.Error(error)
+            }
 
         return Result.Success(Unit)
     }
