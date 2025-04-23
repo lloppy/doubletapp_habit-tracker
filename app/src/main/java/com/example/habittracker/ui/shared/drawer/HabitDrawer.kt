@@ -1,5 +1,6 @@
 package com.example.habittracker.ui.shared.drawer
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,15 +34,17 @@ import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.example.habittracker.LocalTheme
 import com.example.habittracker.R
 import com.example.habittracker.model.DrawerItem
+import com.example.habittracker.ui.theme.LocalThemeChange
 import com.example.habittracker.ui.theme.Spacing
+import com.example.model.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun HabitDrawer(
     navController: NavHostController,
+    appTheme: AppTheme,
     modifier: Modifier = Modifier,
     viewModel: DrawerViewModel = viewModel(),
     content: @Composable (onClickOpenDrawer: () -> Unit) -> Unit,
@@ -51,8 +54,12 @@ fun HabitDrawer(
 
     val scope = rememberCoroutineScope()
 
-    val isDark = LocalTheme.current.isDark
-    //  val onChangeTheme = LocalThemeChange.current
+    val isDark = when (appTheme) {
+        AppTheme.DARK -> true
+        AppTheme.LIGHT -> false
+        AppTheme.SYSTEM -> isSystemInDarkTheme()
+    }
+    val onChangeTheme = LocalThemeChange.current
 
     LaunchedEffect(drawerState.isOpen) {
         viewModel.setOpen(drawerState.currentValue)
@@ -73,9 +80,9 @@ fun HabitDrawer(
                         }
                     },
                     onChangeThemeClick = {
-//                        onChangeTheme?.invoke(
-//                            if (isDark) AppTheme.MODE_DAY else AppTheme.MODE_NIGHT
-//                        )
+                        onChangeTheme?.invoke(
+                            if (isDark) AppTheme.LIGHT else AppTheme.DARK
+                        )
                     },
                     isDark = isDark,
                     modifier = Modifier.padding(Spacing.medium)

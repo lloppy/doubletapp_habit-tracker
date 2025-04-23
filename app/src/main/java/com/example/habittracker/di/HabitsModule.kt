@@ -16,6 +16,7 @@ import com.example.domain.usecase.IncreaseHabitQuantityUseCase
 import com.example.domain.usecase.InsertHabitUseCase
 import com.example.domain.usecase.MarkHabitDoneUseCase
 import com.example.domain.usecase.SetAppLanguageUseCase
+import com.example.domain.usecase.SetThemeUseCase
 import com.example.domain.usecase.SyncFromRemoteToLocalUseCase
 import com.example.domain.usecase.SyncLocalToRemoteUseCase
 import dagger.Module
@@ -50,6 +51,13 @@ class HabitsModule {
         themeRepository: ThemeRepository
     ): GetThemeUseCase {
         return GetThemeUseCase(themeRepository)
+    }
+
+    @Provides
+    fun provideSetThemeUseCase(
+        themeRepository: ThemeRepository
+    ): SetThemeUseCase {
+        return SetThemeUseCase(themeRepository)
     }
 
     @Provides

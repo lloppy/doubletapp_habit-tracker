@@ -20,14 +20,17 @@ import com.example.habittracker.R
 import com.example.habittracker.ui.navigation.HabitNavigation
 import com.example.habittracker.ui.screens.home.HomeDestination
 import com.example.habittracker.ui.shared.drawer.HabitDrawer
+import com.example.model.AppTheme
 
 @Composable
 fun HabitTrackerApp(
     viewModelFactory: ViewModelProvider.Factory,
+    appTheme: AppTheme,
     navController: NavHostController = rememberNavController()
 ) {
     HabitDrawer(
-        navController = navController
+        navController = navController,
+        appTheme = appTheme
     ) { onClickOpenDrawer ->
         HabitNavigation(
             navController = navController,

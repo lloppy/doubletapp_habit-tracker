@@ -2,9 +2,9 @@ package com.example.habittracker.ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.model.AppTheme
-import com.example.domain.repository.ThemeRepository
 import com.example.domain.usecase.GetThemeUseCase
+import com.example.domain.usecase.SetThemeUseCase
+import com.example.model.AppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val themeRepository: ThemeRepository,
+    private val setThemeUseCase: SetThemeUseCase,
     private val getThemeUseCase: GetThemeUseCase
 ) : ViewModel() {
 
@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(
 
     fun setTheme(theme: AppTheme) {
         viewModelScope.launch {
-            themeRepository.setTheme(theme)
+            setThemeUseCase(theme)
             _themeState.value = theme
         }
     }
