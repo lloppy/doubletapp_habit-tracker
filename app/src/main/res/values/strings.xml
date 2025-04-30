@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Habit Tracker</string>
-    <string name="back_button">back</string>
-    <string name="item_entry_title">add item</string>
+    <string name="back_button" translatable="false">back</string>
+    <string name="item_entry_title" translatable="false">add item</string>
 
     <string name="item_edit_title">Редактировать</string>
     <string name="create_habit">Создать новую привычку</string>
@@ -36,13 +36,9 @@
     <string name="confirm">Подтвердить</string>
     <string name="menu_button">меню</string>
     <string name="switch_theme">Поменять тему</string>
-    <string name="habits">Habits</string>
-    <string name="info">Info</string>
-    <string name="all">All</string>
-    <string name="positive">Positive</string>
-    <string name="negative">Negative</string>
-    <string name="required">*</string>
-    <string name="bullet_item">• %s</string>
+
+    <string name="required" translatable="false">*</string>
+    <string name="bullet_item" translatable="false">• %s</string>
 
 
     <!-- info screen -->
@@ -88,7 +84,6 @@
     """
     </string>
 
-
     <string name="filter">Фильтр</string>
     <string name="clear">Очистить</string>
     <string name="apply_filters">Применить фильтры</string>
@@ -103,5 +98,31 @@
     <string name="name_desc">По имени (Я-А)</string>
     <string name="priority_high">По приоритету (сначала высокий)</string>
     <string name="priority_low">По приоритету (сначала низкий)</string>
+
+    <!-- Habit Categories -->
+    <string name="sport">Спорт</string>
+    <string name="study">Учеба</string>
+    <string name="relaxation">Отдых</string>
+    <string name="productivity">Продуктивность</string>
+    <string name="health">Здоровье</string>
+
+    <!-- Habit Priorities -->
+    <string name="low">Низкий</string>
+    <string name="medium">Средний</string>
+    <string name="high">Высокий</string>
+
+    <!-- Habit Types -->
+    <string name="positive">Полезная</string>
+    <string name="negative">Вредная</string>
+
+    <string name="positives">Полезные</string>
+    <string name="negatives">Вредные</string>
+    <string name="all">Все привычки</string>
+
+    <!-- Drawer items -->
+    <string name="habits">Привычки</string>
+    <string name="info">Информация</string>
+    <string name="language">Язык</string>
+    <string name="language_settings">Настройки языка</string>
 
 </resources>

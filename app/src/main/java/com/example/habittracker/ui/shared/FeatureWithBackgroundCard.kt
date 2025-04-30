@@ -16,10 +16,11 @@ import com.example.habittracker.ui.theme.Spacing
 @Composable
 fun FeatureWithBackgroundCard(
     title: String,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = Spacing.section),
         colors = CardDefaults.cardColors(

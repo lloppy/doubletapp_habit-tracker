@@ -46,7 +46,9 @@ fun CategorySection(
                 )
             ) {
                 Text(
-                    text = selectedCategory?.categoryName ?: stringResource(R.string.show_all_categories),
+                    text = stringResource(
+                        selectedCategory?.categoryName ?: R.string.show_all_categories
+                    ),
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Start
                 )
@@ -73,7 +75,7 @@ fun CategorySection(
                 HabitCategory.entries.forEach { category ->
                     DropdownMenuItem(
                         text = {
-                            Text(category.categoryName)
+                            Text(stringResource(category.categoryName))
                         },
                         onClick = {
                             onCategorySelected(category)

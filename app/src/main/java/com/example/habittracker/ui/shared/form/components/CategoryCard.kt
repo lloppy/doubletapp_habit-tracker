@@ -10,32 +10,40 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.habittracker.model.HabitCategory
 import com.example.habittracker.ui.shared.FeatureWithBackgroundCard
 import kotlin.enums.EnumEntries
 
 @Composable
 fun CategoryCard(
-    selectedValue: String,
-    onOptionSelected: (String) -> Unit = {},
+    selectedValue: HabitCategory,
+    onOptionSelected: (HabitCategory) -> Unit = {},
     options: EnumEntries<HabitCategory>,
     label: String,
     modifier: Modifier = Modifier
 ) {
-    FeatureWithBackgroundCard(label) {
-        Column(modifier.selectableGroup()) {
+    FeatureWithBackgroundCard(
+        title = label,
+        modifier = Modifier.selectableGroup()
+    ) {
+        Column {
             options.forEach { option ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(onClick = { onOptionSelected(option.categoryName) }),
+                        .clickable(
+                            onClick = { onOptionSelected(option) }
+                        ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = (option.categoryName == selectedValue),
-                        onClick = { onOptionSelected(option.categoryName) }
+                        selected = option == selectedValue,
+                        onClick = {
+                            onOptionSelected(option)
+                        }
                     )
-                    Text(text = option.categoryName)
+                    Text(text = stringResource(option.categoryName))
                 }
             }
         }

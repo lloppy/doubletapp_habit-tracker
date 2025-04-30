@@ -1,12 +1,16 @@
-package com.example.habittracker.data
+package com.example.habittracker.data.repository
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.habittracker.ui.theme.AppTheme
 
+interface ThemeRepository {
+    val themeState: MutableState<AppTheme>
+    fun setTheme(theme: AppTheme)
+}
 
-class ThemeRepository(context: Context) {
+class ThemeRepositoryImpl(context: Context) : ThemeRepository {
 
     private val sharedPreferences =
         context.getSharedPreferences(SHAR_PREF_THEME_KEY, Context.MODE_PRIVATE)
@@ -17,9 +21,9 @@ class ThemeRepository(context: Context) {
                 ?: AppTheme.MODE_AUTO.name
         )
     )
-    val themeState: MutableState<AppTheme> = _themeState
+    override val themeState: MutableState<AppTheme> = _themeState
 
-    fun setTheme(theme: AppTheme) {
+    override fun setTheme(theme: AppTheme) {
         _themeState.value = theme
         sharedPreferences.edit().putString(THEME_KEY, theme.name).apply()
     }

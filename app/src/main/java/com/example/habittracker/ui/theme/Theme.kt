@@ -88,7 +88,7 @@ val LocalThemeChange = compositionLocalOf<((AppTheme) -> Unit)?> { null }
 @Composable
 fun HabitTrackerTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colorScheme = if (isDarkTheme) darkScheme else lightScheme
 

@@ -39,12 +39,12 @@ class PagerViewModel : ViewModel() {
                 selectedIcon = Icons.AutoMirrored.Filled.ViewList
             ),
             PagerItem(
-                title = R.string.positive,
+                title = R.string.positives,
                 unselectedIcon = Icons.Outlined.ThumbUp,
                 selectedIcon = Icons.Filled.ThumbUp
             ),
             PagerItem(
-                title = R.string.negative,
+                title = R.string.negatives,
                 unselectedIcon = Icons.Outlined.ThumbDown,
                 selectedIcon = Icons.Filled.ThumbDown
             )

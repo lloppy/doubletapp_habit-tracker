@@ -37,7 +37,7 @@ fun PrioritySection(
             HabitPriority.entries.forEach { priority ->
                 FilterCard(
                     selected = selectedPriority == priority,
-                    priorityName = priority.priorityName,
+                    priorityName = stringResource(priority.priorityName),
                     onClick = {
                         onPrioritySelected(
                             if (selectedPriority == priority) null else priority

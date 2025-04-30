@@ -40,6 +40,10 @@ android {
         compose = true
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
         arg("room.generateKotlin", "true")
@@ -59,6 +63,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.appcompat)
 
     // testing
     androidTestImplementation(libs.androidx.junit)
@@ -78,5 +83,7 @@ dependencies {
     // icons
     implementation(libs.material.icons.extended)
 
+    // livedata
+    implementation(libs.androidx.runtime.livedata)
 
 }

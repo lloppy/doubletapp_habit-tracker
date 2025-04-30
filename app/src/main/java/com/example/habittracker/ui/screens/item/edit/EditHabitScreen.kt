@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +30,7 @@ import com.example.habittracker.R
 import com.example.habittracker.ui.AppViewModelProvider
 import com.example.habittracker.ui.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
+import com.example.habittracker.ui.screens.item.HabitItemState
 import com.example.habittracker.ui.shared.form.HabitInputForm
 import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
@@ -45,6 +49,8 @@ fun EditHabitScreen(
     modifier: Modifier = Modifier,
     viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val entryState by viewModel.entryUiState.observeAsState(HabitItemState())
+
     val coroutineScope = rememberCoroutineScope()
 
     val openDialog = remember { mutableStateOf(false) }
@@ -90,6 +96,7 @@ fun EditHabitScreen(
 
         Column(
             modifier = modifier
+                .imePadding()
                 .verticalScroll(rememberScrollState())
                 .padding(
                     horizontal = Spacing.medium
@@ -104,9 +111,9 @@ fun EditHabitScreen(
         ) {
 
             HabitInputForm(
-                habitEntity = viewModel.entryUiState.currentHabit,
-                onValueChange = viewModel::updateUiState,
-                modifier = modifier
+                habitEntity = entryState.currentHabit,
+                onAction = viewModel::handleAction,
+                modifier = Modifier.fillMaxWidth()
             )
 
             Button(
@@ -116,7 +123,7 @@ fun EditHabitScreen(
                         navigateBack()
                     }
                 },
-                enabled = viewModel.entryUiState.isEntryValid,
+                enabled = entryState.isEntryValid,
                 modifier = modifier
                     .fillMaxWidth()
                     .height(Spacing.button)
