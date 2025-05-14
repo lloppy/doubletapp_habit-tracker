@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as HabitTrackerApplication).applicationComponent.inject(this)
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             val themeState by mainViewModel.themeState.collectAsState()
