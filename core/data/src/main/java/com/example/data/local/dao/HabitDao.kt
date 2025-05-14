@@ -23,12 +23,6 @@ interface HabitDao {
     @Query("DELETE FROM habits")
     suspend fun deleteAll()
 
-//    @Query("UPDATE habits SET quantity = quantity + 1 WHERE id = :id AND quantity < repeated_times")
-//    suspend fun increaseQuantity(id: Int)
-//
-//    @Query("UPDATE habits SET quantity = quantity - 1 WHERE id = :id AND quantity > 0")
-//    suspend fun decreaseQuantity(id: Int)
-
     @Query("SELECT * FROM habits WHERE id = :id")
     fun getById(id: Int): Flow<HabitEntity>
 
