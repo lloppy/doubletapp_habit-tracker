@@ -52,6 +52,14 @@ class LocalDataSourceTest {
     private val habit1 = testHabits[0]
     private val habit2 = testHabits[1]
 
+    @Test
+    fun testMappers() {
+        val habit = testHabits[0]
+        val entity = habit.toEntity()
+        val mappedBack = entity.toDomain()
+
+        assertEquals(habit, mappedBack)
+    }
 
     @Test
     @Throws(Exception::class)
