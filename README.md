@@ -1,6 +1,6 @@
 # HabitTracker — приложение для отслеживания привычек
 
-<img src="https://github.com/user-attachments/assets/c0d47ede-5f78-4193-bd79-315b907c002e" alt="HabitTracker Icon" width="40" height="40" />
+<img src="https://github.com/user-attachments/assets/c0d47ede-5f78-4193-bd79-315b907c002e" alt="HabitTracker Icon" width="80" height="80" />
 
 **Описание:**  
 HabitTracker — это современное Android-приложение для управления привычками с удобным и интуитивно понятным интерфейсом, созданным на базе Jetpack Compose. Основные функции включают создание и редактирование привычек, настройку параметров и отслеживание прогресса пользователя.
