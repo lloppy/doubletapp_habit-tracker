@@ -1,10 +1,17 @@
-package com.example.domain
+package com.example.data
 
 import android.content.Context
 import android.graphics.Color
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.domain.TestData.testHabits
+import com.example.data.TestData.testHabits
+import com.example.data.local.OfflineDatabase
+import com.example.data.local.dao.HabitDao
+import com.example.data.local.mappers.toDomain
+import com.example.data.local.mappers.toEntity
+import com.example.data.remote.mapper.toHexColor
+import com.example.model.Habit
 import com.example.model.HabitCategory
 import com.example.model.HabitPriority
 import com.example.model.HabitType
@@ -45,14 +52,27 @@ class LocalDataSourceTest {
     private val habit1 = testHabits[0]
     private val habit2 = testHabits[1]
 
+    @Test
+    fun testMappers() {
+        val habit = testHabits[0]
+        val entity = habit.toEntity()
+        val mappedBack = entity.toDomain()
+
+        assertEquals(habit, mappedBack)
+    }
 
     @Test
     @Throws(Exception::class)
     fun saveHabit_shouldAddHabitToRepository() = runBlocking {
         addSingleHabitToRepository()
 
-        val allItems = habitDao.getAll().first()
-        assertEquals(habit1, allItems.first())
+        val allItems = habitDao.getAll()
+        assertEquals(
+            habit1,
+            allItems.first()
+                .first()
+                .toDomain() // первая из бд -> из потока первая -> из entity в habit
+        )
     }
 
     @Test
@@ -61,8 +81,8 @@ class LocalDataSourceTest {
         addTwoHabitsToRepository()
 
         val allItems = habitDao.getAll().first()
-        assertEquals(habit1, allItems[0])
-        assertEquals(habit2, allItems[1])
+        assertEquals(habit1, allItems[0].toDomain())
+        assertEquals(habit2, allItems[1].toDomain())
     }
 
     @Test
@@ -70,12 +90,12 @@ class LocalDataSourceTest {
     fun updateHabit_shouldUpdateHabitInRepository() = runBlocking {
         addTwoHabitsToRepository()
 
-        habitDao.update(testHabits[2])
-        habitDao.update(testHabits[3])
+        habitDao.insert(testHabits[2].toEntity())
+        habitDao.insert(testHabits[3].toEntity())
 
         val allItems = habitDao.getAll().first()
-        assertEquals(testHabits[2], allItems[0])
-        assertEquals(testHabits[3], allItems[1])
+        assertEquals(testHabits[2], allItems[0].toDomain())
+        assertEquals(testHabits[3], allItems[1].toDomain())
     }
 
     @Test
@@ -83,8 +103,8 @@ class LocalDataSourceTest {
     fun deleteHabit_shouldDeletesAllItemsFromDB() = runBlocking {
         addTwoHabitsToRepository()
 
-        habitDao.delete(habit1)
-        habitDao.delete(habit2)
+        habitDao.delete(habit1.toEntity())
+        habitDao.delete(habit2.toEntity())
 
         val allItems = habitDao.getAll().first()
         assertTrue(allItems.isEmpty())
@@ -92,31 +112,30 @@ class LocalDataSourceTest {
 
 
     private suspend fun addSingleHabitToRepository() {
-        habitDao.insert(habit1)
+        habitDao.insert(habit1.toEntity())
     }
 
     private suspend fun addTwoHabitsToRepository() {
-        habitDao.insert(habit1)
-        habitDao.insert(habit2)
+        habitDao.insert(habit1.toEntity())
+        habitDao.insert(habit2.toEntity())
     }
 }
 
 object TestData {
-
     val testHabits = listOf(
-        com.example.data.local.entity.Habit(
+        Habit(
             id = 1,
             name = "Утренняя зарядка",
             description = "Зарядка для улучшения настроения",
-            category = HabitCategory.SPORT,
             type = HabitType.POSITIVE,
+            category = HabitCategory.SPORT,
             priority = HabitPriority.HIGH,
             frequency = "Ежедневно",
             repeatedTimes = 7,
             quantity = 3,
-            color = Color.Red
+            colorHex = Color.RED.toHexColor()
         ),
-        com.example.data.local.entity.Habit(
+        Habit(
             id = 2,
             name = "Чтение перед сном",
             description = "Чтение для расслабления",
@@ -126,9 +145,9 @@ object TestData {
             frequency = "Раз в неделю",
             repeatedTimes = 4,
             quantity = 1,
-            color = Color.Blue
+            colorHex = Color.BLUE.toHexColor()
         ),
-        com.example.data.local.entity.Habit(
+        Habit(
             id = 1,
             name = "Просмотр лекций",
             description = "Обучение на платформе Coursera",
@@ -138,9 +157,9 @@ object TestData {
             frequency = "Раз в две недели",
             repeatedTimes = 2,
             quantity = 0,
-            color = Color.Green
+            colorHex = Color.GREEN.toHexColor()
         ),
-        com.example.data.local.entity.Habit(
+        Habit(
             id = 2,
             name = "Планирование дня",
             description = "Планирование задач на день",
@@ -150,7 +169,7 @@ object TestData {
             frequency = "Ежедневно",
             repeatedTimes = 10,
             quantity = 5,
-            color = Color.Yellow
+            colorHex = Color.YELLOW.toHexColor()
         )
     )
 }

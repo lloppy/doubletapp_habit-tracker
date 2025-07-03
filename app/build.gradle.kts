@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.habittracker.HabitTrackerTestRunner"
     }
 
     buildTypes {
@@ -66,6 +66,8 @@ dependencies {
     // testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4")
+    androidTestImplementation("org.mockito:mockito-core:5.3.1")
 
     // view model
     implementation(libs.androidx.lifecycle.viewmodel.compose)
