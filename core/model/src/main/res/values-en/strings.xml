@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Habit Categories -->
+    <string name="sport">Sports</string>
+    <string name="study">Study</string>
+    <string name="relaxation">Relaxation</string>
+    <string name="productivity">Productivity</string>
+    <string name="health">Health</string>
+
+    <!-- Habit Priorities -->
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+
+    <!-- Habit Types -->
+    <string name="positive">Good</string>
+    <string name="negative">Bad</string>
+
+</resources>

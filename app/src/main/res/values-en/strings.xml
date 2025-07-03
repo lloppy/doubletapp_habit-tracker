@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Habit Tracker</string>
+
+    <string name="item_edit_title">Edit</string>
+    <string name="create_habit">Create new habit</string>
+
+    <string name="save">Save</string>
+    <string name="detail">Habit details</string>
+    <string name="create">Done</string>
+
+    <string name="no_items">No habits created yet</string>
+
+    <string name="set_name">Name</string>
+    <string name="set_description">Description</string>
+    <string name="set_repeated_times">Times per day</string>
+    <string name="set_frequency">Frequency</string>
+    <string name="set_type">Habit type%s</string>
+    <string name="set_category">Habit category%s</string>
+    <string name="set_priority">Set priority</string>
+    <string name="priority">Priority</string>
+
+    <string name="current_color">Current color</string>
+    <string name="change_color">Change color</string>
+    <string name="times">times</string>
+    <string name="select_color">Select habit color</string>
+    <string name="ok">OK</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string name="delete_habit">Delete habit</string>
+    <string name="sure_delete">Are you sure you want to delete this habit?</string>
+    <string name="confirm">Confirm</string>
+    <string name="menu_button">menu</string>
+    <string name="switch_theme">Switch theme</string>
+
+    <!-- info screen -->
+    <string name="about_app">About app</string>
+    <string name="app_description">Habit tracker with modern Jetpack Compose interface. Main features:</string>
+
+    <string name="feature_habit_management">Habit management</string>
+    <string name="feature_settings">Settings configuration</string>
+    <string name="feature_progress_tracking">Progress tracking</string>
+
+    <string name="technical_features">Technical features</string>
+    <string name="architecture_description">Application architecture includes:</string>
+    <string name="navigation_title">Navigation</string>
+    <string name="navigation_code_snippet">
+    """
+        ModalNavigationDrawer {
+            NavHost(startDestination = "home") {
+                composable("home") { HomeScreen() }
+                composable("info") { InfoScreen() }
+            }
+        }
+    """
+    </string>
+
+    <string name="interface_state_title">UI State</string>
+    <string name="state_management_viewmodel">Management via ViewModel and StateFlow</string>
+    <string name="state_management_theme">Dark/light theme</string>
+    <string name="state_management_orientation">Portrait/landscape orientation support</string>
+    <string name="state_management_cards">Adaptive habit cards</string>
+
+    <string name="implementation_example">Implementation example</string>
+    <string name="implementation_code_snippet">
+    """
+        @Composable
+        fun HabitInputForm(habitEntity: HabitEntity) {
+            OutlinedTextField(
+                value = habitEntity.name,
+                onValueChange = { /* Update logic */ },
+                label = { Text("Habit name") }
+            )
+            // Other fields
+        }
+    """
+    </string>
+
+    <string name="filter">Filter</string>
+    <string name="clear">Clear</string>
+    <string name="apply_filters">Apply filters</string>
+    <string name="clear_filters">Reset filters</string>
+    <string name="sort_by">Sort by</string>
+    <string name="search_by_name">Search by name</string>
+    <string name="show_all_categories">Show all</string>
+    <string name="category">Category</string>
+    <string name="date_newest">Newest first</string>
+    <string name="date_oldest">Oldest first</string>
+    <string name="name_asc">By name (A-Z)</string>
+    <string name="name_desc">By name (Z-A)</string>
+    <string name="priority_high">By priority (high first)</string>
+    <string name="priority_low">By priority (low first)</string>
+
+    <!-- Habit Categories -->
+    <string name="sport">Sports</string>
+    <string name="study">Study</string>
+    <string name="relaxation">Relaxation</string>
+    <string name="productivity">Productivity</string>
+    <string name="health">Health</string>
+
+    <!-- Habit Priorities -->
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+
+    <!-- Habit Types -->
+    <string name="positive">Good</string>
+    <string name="negative">Bad</string>
+
+    <string name="positives">Good habits</string>
+    <string name="negatives">Bad habits</string>
+    <string name="all">All habits</string>
+
+    <!-- Drawer items -->
+    <string name="habits">Habits</string>
+    <string name="info">Info</string>
+    <string name="language">Language</string>
+    <string name="language_settings">Language Settings</string>
+
+    <string name="sync_download_from_server">Download from server</string>
+    <string name="sync_upload_to_server">Upload to server</string>
+
+</resources>

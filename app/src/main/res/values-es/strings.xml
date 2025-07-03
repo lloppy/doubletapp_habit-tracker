@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rastreador de Hábitos</string>
+
+    <string name="item_edit_title">Editar</string>
+    <string name="create_habit">Crear nuevo hábito</string>
+
+    <string name="save">Guardar</string>
+    <string name="detail">Detalles del hábito</string>
+    <string name="create">Listo</string>
+
+    <string name="no_items">Aún no hay hábitos creados</string>
+
+    <string name="set_name">Nombre</string>
+    <string name="set_description">Descripción</string>
+    <string name="set_repeated_times">Veces al día</string>
+    <string name="set_frequency">Frecuencia</string>
+    <string name="set_type">Tipo de hábito%s</string>
+    <string name="set_category">Categoría del hábito%s</string>
+    <string name="set_priority">Establecer prioridad</string>
+    <string name="priority">Prioridad</string>
+
+    <string name="current_color">Color actual</string>
+    <string name="change_color">Cambiar color</string>
+    <string name="times">veces</string>
+    <string name="select_color">Seleccionar color del hábito</string>
+    <string name="ok">Aceptar</string>
+
+    <string name="cancel">Cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+
+    <string name="delete_habit">Eliminar hábito</string>
+    <string name="sure_delete">¿Estás seguro de que quieres eliminar este hábito?</string>
+    <string name="confirm">Confirmar</string>
+    <string name="menu_button">menú</string>
+    <string name="switch_theme">Cambiar tema</string>
+
+    <!-- info screen -->
+    <string name="about_app">Acerca de la app</string>
+    <string name="app_description">Rastreador de hábitos con interfaz moderna en Jetpack Compose. Funciones principales:</string>
+
+    <string name="feature_habit_management">Gestión de hábitos</string>
+    <string name="feature_settings">Configuración</string>
+    <string name="feature_progress_tracking">Seguimiento de progreso</string>
+
+    <string name="technical_features">Características técnicas</string>
+    <string name="architecture_description">La arquitectura de la aplicación incluye:</string>
+    <string name="navigation_title">Navegación</string>
+    <string name="navigation_code_snippet">
+    """
+        ModalNavigationDrawer {
+            NavHost(startDestination = "home") {
+                composable("home") { HomeScreen() }
+                composable("info") { InfoScreen() }
+            }
+        }
+    """
+    </string>
+
+    <string name="interface_state_title">Estado de la interfaz</string>
+    <string name="state_management_viewmodel">Gestión mediante ViewModel y StateFlow</string>
+    <string name="state_management_theme">Tema oscuro/claro</string>
+    <string name="state_management_orientation">Soporte para orientación vertical/horizontal</string>
+    <string name="state_management_cards">Tarjetas de hábitos adaptables</string>
+
+    <string name="implementation_example">Ejemplo de implementación</string>
+    <string name="implementation_code_snippet">
+    """
+        @Composable
+        fun HabitInputForm(habitEntity: HabitEntity) {
+            OutlinedTextField(
+                value = habitEntity.name,
+                onValueChange = { /* Lógica de actualización */ },
+                label = { Text("Nombre del hábito") }
+            )
+            // Otros campos
+        }
+    """
+    </string>
+
+    <string name="filter">Filtrar</string>
+    <string name="clear">Limpiar</string>
+    <string name="apply_filters">Aplicar filtros</string>
+    <string name="clear_filters">Restablecer filtros</string>
+    <string name="sort_by">Ordenar por</string>
+    <string name="search_by_name">Buscar por nombre</string>
+    <string name="show_all_categories">Mostrar todo</string>
+    <string name="category">Categoría</string>
+    <string name="date_newest">Más nuevos primero</string>
+    <string name="date_oldest">Más antiguos primero</string>
+    <string name="name_asc">Por nombre (A-Z)</string>
+    <string name="name_desc">Por nombre (Z-A)</string>
+    <string name="priority_high">Por prioridad (alta primero)</string>
+    <string name="priority_low">Por prioridad (baja primero)</string>
+
+    <!-- Habit Categories -->
+    <string name="sport">Deportes</string>
+    <string name="study">Estudio</string>
+    <string name="relaxation">Relajación</string>
+    <string name="productivity">Productividad</string>
+    <string name="health">Salud</string>
+
+    <!-- Habit Priorities -->
+    <string name="low">Baja</string>
+    <string name="medium">Media</string>
+    <string name="high">Alta</string>
+
+    <!-- Habit Types -->
+    <string name="positive">Bueno</string>
+    <string name="negative">Malo</string>
+
+    <string name="positives">Hábitos buenos</string>
+    <string name="negatives">Hábitos malos</string>
+    <string name="all">Todos los hábitos</string>
+
+    <!-- Drawer items -->
+    <string name="habits">Hábitos</string>
+    <string name="info">Información</string>
+    <string name="language">Idioma</string>
+    <string name="language_settings">Configuración de idioma</string>
+
+    <string name="sync_download_from_server">Descargar del servidor</string>
+    <string name="sync_upload_to_server">Subir al servidor</string>
+
+</resources>

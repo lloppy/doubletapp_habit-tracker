@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Habit Categories -->
+    <string name="sport">Спорт</string>
+    <string name="study">Учеба</string>
+    <string name="relaxation">Отдых</string>
+    <string name="productivity">Продуктивность</string>
+    <string name="health">Здоровье</string>
+
+    <!-- Habit Priorities -->
+    <string name="low">Низкий</string>
+    <string name="medium">Средний</string>
+    <string name="high">Высокий</string>
+
+    <!-- Habit Types -->
+    <string name="positive">Полезная</string>
+    <string name="negative">Вредная</string>
+
+</resources>
