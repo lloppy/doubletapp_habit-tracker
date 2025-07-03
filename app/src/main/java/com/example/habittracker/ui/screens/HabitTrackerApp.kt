@@ -13,22 +13,28 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.habittracker.R
-import com.example.habittracker.ui.navigation.HabitNavigation
+import com.example.habittracker.navigation.HabitNavigation
 import com.example.habittracker.ui.screens.home.HomeDestination
 import com.example.habittracker.ui.shared.drawer.HabitDrawer
+import com.example.model.AppTheme
 
 @Composable
 fun HabitTrackerApp(
+    viewModelFactory: ViewModelProvider.Factory,
+    appTheme: AppTheme,
     navController: NavHostController = rememberNavController()
 ) {
     HabitDrawer(
-        navController = navController
+        navController = navController,
+        appTheme = appTheme
     ) { onClickOpenDrawer ->
         HabitNavigation(
             navController = navController,
+            viewModelFactory = viewModelFactory,
             onClickOpenDrawer = onClickOpenDrawer
         )
     }

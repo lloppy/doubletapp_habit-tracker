@@ -1,13 +1,13 @@
 package com.example.habittracker.ui.shared.filter
 
-import com.example.habittracker.model.CategoryInterpreter
-import com.example.habittracker.model.FilterExpression
-import com.example.habittracker.model.HabitCategory
-import com.example.habittracker.model.HabitPriority
-import com.example.habittracker.model.PriorityInterpreter
-import com.example.habittracker.model.SearchInterpreter
-import com.example.habittracker.model.SortInterpreter
-import com.example.habittracker.model.SortOption
+import com.example.habittracker.ui.screens.home.CategoryInterpreter
+import com.example.habittracker.ui.screens.home.FilterExpression
+import com.example.model.HabitCategory
+import com.example.habittracker.ui.screens.home.PriorityInterpreter
+import com.example.habittracker.ui.screens.home.SearchInterpreter
+import com.example.habittracker.ui.screens.home.SortInterpreter
+import com.example.habittracker.ui.screens.home.SortOption
+import com.example.model.HabitPriority
 
 data class FilterState(
     val searchQuery: String = "",

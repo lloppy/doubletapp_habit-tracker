@@ -2,26 +2,40 @@ package com.example.habittracker.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habittracker.data.repository.HabitsRepository
-import com.example.habittracker.model.FilterExpression
-import com.example.habittracker.model.Habit
-import com.example.habittracker.model.HabitType
-import com.example.habittracker.model.MultiplicationExpression
+import com.example.domain.usecase.DecreaseHabitQuantityUseCase
+import com.example.domain.usecase.DeleteHabitByIdUseCase
+import com.example.domain.usecase.GetAllHabitsUseCase
+import com.example.domain.usecase.GetHabitByIdUseCase
+import com.example.domain.usecase.IncreaseHabitQuantityUseCase
+import com.example.domain.usecase.MarkHabitDoneUseCase
+import com.example.domain.util.DataError
+import com.example.domain.util.EmptyResult
+import com.example.domain.util.onError
+import com.example.domain.util.onSuccess
 import com.example.habittracker.ui.shared.filter.FilterState
 import com.example.habittracker.ui.shared.filter.toExpressions
+import com.example.model.Habit
+import com.example.model.HabitType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class HabitTrackerViewModel(
-    private val repository: HabitsRepository
+class HabitTrackerViewModel @Inject constructor(
+    private val getAllHabitsUseCase: GetAllHabitsUseCase,
+    private val increaseHabitQuantityUseCase: IncreaseHabitQuantityUseCase,
+    private val decreaseHabitQuantityUseCase: DecreaseHabitQuantityUseCase,
+    private val deleteHabitByIdUseCase: DeleteHabitByIdUseCase,
+    private val markHabitDoneUseCase: MarkHabitDoneUseCase,
+    private val getHabitByIdUseCase: GetHabitByIdUseCase,
 ) : ViewModel() {
     private val _filterState = MutableStateFlow(FilterState())
 
     val uiState: StateFlow<HabitTrackerState> = combine(
-        repository.getAllHabits(),
+        getAllHabitsUseCase(),
         _filterState
     ) { habits, filterState ->
         val filteredHabits = applyFilters(
@@ -41,19 +55,35 @@ class HabitTrackerViewModel(
         initialValue = HabitTrackerState.Loading
     )
 
-
-    suspend fun increaseRepeated(habitId: Int) {
-        repository.increaseHabitQuantity(id = habitId)
+    suspend fun increaseRepeated(
+        habitId: Int,
+        showMessage: (String) -> Unit,
+    ) {
+        handleHabitResult(
+            habitId = habitId,
+            result = increaseHabitQuantityUseCase(habitId),
+            showMessage = showMessage
+        )
     }
 
-    suspend fun decreaseRepeated(habitId: Int) {
-        repository.decreaseHabitQuantity(id = habitId)
+    suspend fun decreaseRepeated(
+        habitId: Int,
+        showMessage: (String) -> Unit,
+    ) {
+        handleHabitResult(
+            habitId = habitId,
+            result = decreaseHabitQuantityUseCase(habitId),
+            showMessage = showMessage
+        )
     }
 
     suspend fun delete(habitId: Int) {
-        repository.deleteByHabitId(id = habitId)
+        deleteHabitByIdUseCase(id = habitId)
     }
 
+    suspend fun markChecked(habit: Habit) {
+        markHabitDoneUseCase(habit = habit)
+    }
 
     fun applyFilter(newFilterState: FilterState) {
         _filterState.value = newFilterState
@@ -61,7 +91,7 @@ class HabitTrackerViewModel(
 
     private fun applyFilters(
         habits: List<Habit>,
-        expressions: List<FilterExpression>
+        expressions: List<FilterExpression>,
     ): List<Habit> {
         return if (expressions.isEmpty()) {
             habits
@@ -69,6 +99,29 @@ class HabitTrackerViewModel(
             MultiplicationExpression(expressions).interpret(habits)
         }
     }
+
+    private suspend fun handleHabitResult(
+        habitId: Int,
+        result: EmptyResult<DataError>,
+        showMessage: (String) -> Unit,
+    ) {
+        result.onSuccess {
+            val habit = getHabitByIdUseCase(habitId).first()
+            val message = when (habit.type) {
+                HabitType.POSITIVE -> "Стоит выполнить это еще ${habit.repeatedTimes - habit.quantity} раз"
+                HabitType.NEGATIVE -> "Можете выполнить это еще ${habit.repeatedTimes - habit.quantity} раз"
+            }
+            showMessage(message)
+        }.onError { error ->
+            val errorMessage = when (error) {
+                DataError.Local.QUANTITY_EXCEEDED -> "Хватит это делать!"
+                DataError.Local.MIN_QUANTITY_REACHED -> "You are breathtaking!"
+                else -> "Unknown error"
+            }
+            showMessage(errorMessage)
+        }
+    }
+
 
     companion object {
         const val DELAY_FOR_KEEPING_INSTANCE_AFTER_CLOSING = 3_000L

@@ -4,19 +4,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.outlined.Sync
 import androidx.compose.material3.DrawerValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.DrawerItem
 import com.example.habittracker.ui.screens.home.HomeDestination
 import com.example.habittracker.ui.screens.info.InfoDestination
 import com.example.habittracker.ui.screens.language.LanguageDestination
+import com.example.habittracker.ui.screens.sync.SyncDestination
 
 class DrawerViewModel : ViewModel() {
     var state by mutableStateOf(DrawerState(drawerItems = drawerItems))
@@ -52,6 +54,12 @@ class DrawerViewModel : ViewModel() {
                 selectedIcon = Icons.Filled.Language,
                 unselectedIcon = Icons.Outlined.Language,
                 route = LanguageDestination.route
+            ),
+            DrawerItem(
+                title = R.string.sync,
+                selectedIcon = Icons.Filled.Sync,
+                unselectedIcon = Icons.Outlined.Sync,
+                route = SyncDestination.route
             )
         )
     }

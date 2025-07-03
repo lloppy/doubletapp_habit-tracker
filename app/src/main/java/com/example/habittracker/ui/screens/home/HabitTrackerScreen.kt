@@ -1,5 +1,6 @@
 package com.example.habittracker.ui.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,20 +37,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.model.Habit
-import com.example.habittracker.ui.AppViewModelProvider
-import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.screens.home.components.HabitCard
 import com.example.habittracker.ui.shared.filter.FilterModalSheet
 import com.example.habittracker.ui.shared.pager.HabitPager
 import com.example.habittracker.ui.shared.pager.PageType
 import com.example.habittracker.ui.theme.Spacing
+import com.example.model.Habit
 import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
@@ -60,14 +60,15 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitTrackerScreen(
+    viewModel: HabitTrackerViewModel,
     onClickAddItem: () -> Unit,
     onClickHabit: (Int) -> Unit,
     onClickOpenDrawer: () -> Unit,
     modifier: Modifier,
-    viewModel: HabitTrackerViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -118,19 +119,34 @@ fun HabitTrackerScreen(
                             PageType.ONLY_POSITIVE -> state.positiveHabits
                             PageType.ONLY_NEGATIVE -> state.negativeHabits
                         },
+                        onCheckClick = {
+                            coroutineScope.launch {
+                                viewModel.markChecked(it)
+                            }
+                        },
                         onIncreaseRepeated = {
                             coroutineScope.launch {
-                                viewModel.increaseRepeated(it)
+                                viewModel.increaseRepeated(
+                                    habitId = it,
+                                    showMessage = { message ->
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                    }
+                                )
                             }
                         },
                         onDecreaseRepeated = {
                             coroutineScope.launch {
-                                viewModel.decreaseRepeated(it)
+                                viewModel.decreaseRepeated(
+                                    habitId = it,
+                                    showMessage = { message ->
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                    }
+                                )
                             }
                         },
                         onClickHabit = {
                             coroutineScope.launch {
-                                onClickHabit.invoke(it)
+                                onClickHabit(it)
                             }
                         },
                         modifier = Modifier.fillMaxSize()
@@ -156,6 +172,7 @@ fun HabitContent(
     filteredHabits: List<Habit>,
     onClickHabit: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    onCheckClick: (Habit) -> Unit,
     onIncreaseRepeated: (Int) -> Unit,
     onDecreaseRepeated: (Int) -> Unit,
 ) {
@@ -173,9 +190,10 @@ fun HabitContent(
             modifier = modifier,
             verticalArrangement = Arrangement.Top
         ) {
-            items(items = filteredHabits, key = { it.name }) { habit ->
+            items(items = filteredHabits, key = { it.id }) { habit ->
                 HabitCard(
                     habit = habit,
+                    onCheckClick = { onCheckClick(habit) },
                     onIncreaseRepeated = { onIncreaseRepeated(habit.id) },
                     onDecreaseRepeated = { onDecreaseRepeated(habit.id) },
                     modifier = Modifier

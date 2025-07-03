@@ -1,6 +1,6 @@
 package com.example.habittracker.ui.shared.drawer
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,31 +24,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.habittracker.LocalTheme
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.example.habittracker.R
-import com.example.habittracker.model.DrawerItem
-import com.example.habittracker.ui.theme.AppTheme
 import com.example.habittracker.ui.theme.LocalThemeChange
 import com.example.habittracker.ui.theme.Spacing
+import com.example.model.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun HabitDrawer(
     navController: NavHostController,
+    appTheme: AppTheme,
     modifier: Modifier = Modifier,
     viewModel: DrawerViewModel = viewModel(),
-    content: @Composable (onClickOpenDrawer: () -> Unit) -> Unit
+    content: @Composable (onClickOpenDrawer: () -> Unit) -> Unit,
 ) {
     val state = viewModel.state
     val drawerState = rememberDrawerState(initialValue = state.openState)
 
     val scope = rememberCoroutineScope()
 
-    val isDark = LocalTheme.current.isDark
+    val isDark = when (appTheme) {
+        AppTheme.DARK -> true
+        AppTheme.LIGHT -> false
+        AppTheme.SYSTEM -> isSystemInDarkTheme()
+    }
     val onChangeTheme = LocalThemeChange.current
 
     LaunchedEffect(drawerState.isOpen) {
@@ -69,7 +80,7 @@ fun HabitDrawer(
                     },
                     onChangeThemeClick = {
                         onChangeTheme?.invoke(
-                            if (isDark) AppTheme.MODE_DAY else AppTheme.MODE_NIGHT
+                            if (isDark) AppTheme.LIGHT else AppTheme.DARK
                         )
                     },
                     isDark = isDark,
@@ -92,14 +103,29 @@ fun DrawerContent(
     onDrawerClick: (DrawerItem) -> Unit,
     onChangeThemeClick: () -> Unit,
     isDark: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = modifier) {
-            Image(painterResource(R.mipmap.ic_app_icon_foreground), contentDescription = null)
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data("https://i.pinimg.com/736x/fd/e0/8a/fde08aeda674c9c3bbb374b879954217.jpg")
+                    .crossfade(true)
+                    .build(),
+                contentDescription = stringResource(R.string.cute_kitty),
+                error = painterResource(id = R.drawable.error_outline),
+                placeholder = painterResource(id = R.drawable.baseline_downloading),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(Spacing.image)
+                    .clip(CircleShape)
+            )
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineMedium

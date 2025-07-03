@@ -18,13 +18,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.ui.AppViewModelProvider
-import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
 import com.example.habittracker.ui.theme.Spacing
+import com.example.habittracker.util.TestTags
 
 object LanguageDestination : NavigationDestination {
     override val route = "language"
@@ -34,9 +34,9 @@ object LanguageDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LanguageScreen(
+    viewModel: LanguageScreenViewModel,
     onClickOpenDrawer: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: LanguageScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state = viewModel.state
 
@@ -64,7 +64,9 @@ fun LanguageScreen(
                     onClick = {
                         viewModel.onLanguageSelected(language.code)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag(TestTags.LANGUAGE_ITEM)
                 )
             }
         }

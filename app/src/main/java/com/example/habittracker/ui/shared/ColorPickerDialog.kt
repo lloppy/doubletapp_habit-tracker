@@ -29,17 +29,16 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
-import com.example.habittracker.model.toHsv
-import com.example.habittracker.model.toRgb
-import com.example.habittracker.ui.screens.item.create.HabitEntity
+import com.example.habittracker.ui.screens.item.HabitEntity
 import com.example.habittracker.ui.theme.Spacing
-
+import com.example.model.toHsv
+import com.example.model.toRgb
 
 @Composable
 fun ColorPickerDialog(
     onDismissRequest: () -> Unit,
     onColorSelected: (Color) -> Unit,
-    habitEntity: HabitEntity
+    habitEntity: HabitEntity,
 ) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
@@ -69,7 +68,7 @@ fun ColorPickerDialog(
 @Composable
 private fun ColorMapSelector(
     modifier: Modifier = Modifier,
-    onColorSelected: (Color) -> Unit = {}
+    onColorSelected: (Color) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
 
@@ -115,7 +114,7 @@ private fun ColorMapSelector(
 private fun ColorSquare(
     index: Int,
     modifier: Modifier = Modifier,
-    boxModifier: Modifier = Modifier
+    boxModifier: Modifier = Modifier,
 ) {
     if (index != 0) {
         Box(

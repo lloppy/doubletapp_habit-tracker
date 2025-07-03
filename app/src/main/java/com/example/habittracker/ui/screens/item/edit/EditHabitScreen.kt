@@ -18,20 +18,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittracker.R
-import com.example.habittracker.ui.AppViewModelProvider
-import com.example.habittracker.ui.navigation.NavigationDestination
+import com.example.habittracker.navigation.NavigationDestination
 import com.example.habittracker.ui.screens.HabitAppBar
-import com.example.habittracker.ui.screens.item.HabitItemState
-import com.example.habittracker.ui.shared.form.HabitInputForm
+import com.example.habittracker.ui.shared.input_form.HabitInputForm
 import com.example.habittracker.ui.theme.Spacing
 import kotlinx.coroutines.launch
 
@@ -45,16 +40,23 @@ object EditHabitDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditHabitScreen(
+    stringId: String?,
+    viewModel: EditHabitViewModel,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: EditHabitViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val entryState by viewModel.entryUiState.observeAsState(HabitItemState())
-
+    val habitId = stringId?.toIntOrNull()
+    val entryState = viewModel.entryUiState
     val coroutineScope = rememberCoroutineScope()
 
     val openDialog = remember { mutableStateOf(false) }
     val deleteConfirmed = remember { mutableStateOf(false) }
+
+    LaunchedEffect(habitId) {
+        habitId?.let {
+            viewModel.loadHabitById(it)
+        }
+    }
 
     LaunchedEffect(deleteConfirmed.value) {
         if (deleteConfirmed.value) {
@@ -93,7 +95,6 @@ fun EditHabitScreen(
             )
         }
     ) { paddingValue ->
-
         Column(
             modifier = modifier
                 .imePadding()
@@ -109,7 +110,6 @@ fun EditHabitScreen(
                 ),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-
             HabitInputForm(
                 habitEntity = entryState.currentHabit,
                 onAction = viewModel::handleAction,

@@ -1,7 +1,7 @@
 package com.example.habittracker.ui.screens.home
 
-import com.example.habittracker.model.Habit
 import com.example.habittracker.ui.shared.filter.FilterState
+import com.example.model.Habit
 
 sealed interface HabitTrackerState {
     data class Success(

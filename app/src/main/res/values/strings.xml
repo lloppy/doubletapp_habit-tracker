@@ -12,7 +12,7 @@
 
     <string name="no_items">Привычки еще не созданы</string>
 
-    <string name="set_name">Название%s</string>
+    <string name="set_name">Название</string>
     <string name="set_description">Описание</string>
     <string name="set_repeated_times">Сколько раз в день повторять</string>
     <string name="set_frequency">Частота</string>
@@ -124,5 +124,10 @@
     <string name="info">Информация</string>
     <string name="language">Язык</string>
     <string name="language_settings">Настройки языка</string>
+    <string name="cute_kitty">Милый котик из пинтереста</string>
+    <string name="sync">Синхронизация</string>
+
+    <string name="sync_download_from_server">Загрузить с сервера</string>
+    <string name="sync_upload_to_server">Выгрузить на сервер</string>
 
 </resources>

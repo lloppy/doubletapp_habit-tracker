@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "HabitTracker"
 include(":app")
- 
+include(":core")
+include(":core:domain")
+include(":core:model")
+include(":core:data")

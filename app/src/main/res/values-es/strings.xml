@@ -11,7 +11,7 @@
 
     <string name="no_items">Aún no hay hábitos creados</string>
 
-    <string name="set_name">Nombre%s</string>
+    <string name="set_name">Nombre</string>
     <string name="set_description">Descripción</string>
     <string name="set_repeated_times">Veces al día</string>
     <string name="set_frequency">Frecuencia</string>
@@ -119,5 +119,8 @@
     <string name="info">Información</string>
     <string name="language">Idioma</string>
     <string name="language_settings">Configuración de idioma</string>
+
+    <string name="sync_download_from_server">Descargar del servidor</string>
+    <string name="sync_upload_to_server">Subir al servidor</string>
 
 </resources>

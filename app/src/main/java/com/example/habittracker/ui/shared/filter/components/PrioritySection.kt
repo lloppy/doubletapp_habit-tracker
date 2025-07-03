@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
-import com.example.habittracker.model.HabitPriority
+import com.example.model.HabitPriority
 import com.example.habittracker.ui.shared.SectionTitle
 import com.example.habittracker.ui.theme.Spacing
 

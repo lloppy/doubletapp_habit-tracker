@@ -1,6 +1,6 @@
 package com.example.habittracker.ui.screens.language
 
-import com.example.habittracker.model.Language
+import com.example.model.Language
 
 data class LanguageScreenState(
     val currentLanguage: String = "",
